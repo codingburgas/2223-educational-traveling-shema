@@ -1,1 +1,1 @@
-*.c linguist-vendored
+app/libs/* linguist-vendored
