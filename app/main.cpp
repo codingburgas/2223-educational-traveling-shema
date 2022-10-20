@@ -1,5 +1,5 @@
-#include "raylib.h"
 #include "GameManager.hpp"
+
 int main(void)
 {
 	GameManager* gameManager = new GameManager();
@@ -7,6 +7,5 @@ int main(void)
 	{
 		gameManager->Update();
 	}
-	gameManager->~GameManager();
 
 }
