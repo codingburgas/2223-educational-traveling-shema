@@ -3,6 +3,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+
+enum SCENE
+{
+	MAIN_MENU
+};
+
 class GameManager
 {
 public:
@@ -10,7 +16,7 @@ public:
 	~GameManager();
 	void Update();
 	bool getShouldClose();
-	void LoadScene(std::string sceneName, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
+	void LoadScene(int sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
 	void SceneError();
 	void UnloadScene();
 	void Draw();
@@ -18,7 +24,7 @@ public:
 private:
 	int screenWidth = 800;
 	int screenHeight = 450;
-	std::string currentScene = "mainMenu";
 	std::vector<Texture2D> textures;
 	std::vector<Vector2> texturePositions;
+	SCENE currentScene = MAIN_MENU;
 };
