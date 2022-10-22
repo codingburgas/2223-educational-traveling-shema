@@ -18,14 +18,25 @@ bool Menu::GameShouldClose() const
     return WindowShouldClose();
 }
 
-void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, bool animEnd)
+void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
+    Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner,
+    Texture2D topRightCorner, Texture2D bottomLeftCorner, Texture2D bottomRightCorner)
 {
     rec = rect;
     rotation = rot;
     alpha = alp;
     state = sta;
     framesCounter = frmsCounter;
-    animationEnd = animEnd;
+    play = pl;
+    animationEnd = anim_end;
+    options = opt;
+    rules = rls;
+    quit = exit;
+    name_of_the_team = nott;
+    topLCorner = topLeftCorner;
+    topRCorner = topRightCorner;
+    bottomLCorner = bottomLeftCorner;
+    bottomRCorner = bottomRightCorner;
 }
 
 void Menu::toggleFullScreenWindow(int windowWidth, int windowHeight)
@@ -137,6 +148,19 @@ void Menu::Animation()
     }
 }
 
+void Menu::UnloadTextures()
+{
+    UnloadTexture(name_of_the_team);
+    UnloadTexture(play);
+    UnloadTexture(options);
+    UnloadTexture(rules);
+    UnloadTexture(quit);
+    UnloadTexture(topLCorner);
+    UnloadTexture(topRCorner);
+    UnloadTexture(bottomLCorner);
+    UnloadTexture(bottomRCorner);
+}
+
 void Menu::drawAnimation()
 {
     DrawRectanglePro(rec, Vector2{ float(rec.width / 2 + 40), float(rec.height / 2) }, rotation, Fade(BLUE, alpha));
@@ -147,5 +171,19 @@ void Menu::checkAnimation()
     if (animationEnd)
     {
         ClearBackground(BLUE);
+        MainMenu();
     }
+}
+
+void Menu::MainMenu()
+{
+    DrawTexture(topLCorner, 0, 0, RAYWHITE);
+    DrawTexture(topRCorner, GetDisplayWidth() - topRCorner.width, 0, RAYWHITE);
+    DrawTexture(bottomLCorner, 0, GetDisplayHeight() - bottomLCorner.height, RAYWHITE);
+    DrawTexture(bottomRCorner, GetDisplayWidth() - bottomRCorner.width / 2, GetDisplayHeight() - bottomRCorner.height / 2, RAYWHITE);
+    DrawTexture(name_of_the_team, GetDisplayWidth() / 2 - name_of_the_team.width / 2, GetDisplayHeight() / 2 - name_of_the_team.height / 2 - 250, RAYWHITE);
+    DrawTexture(play, GetDisplayWidth() / 2 - play.width / 2 - 20, GetDisplayHeight() / 2 - play.height / 2 - 10, RAYWHITE);
+    DrawTexture(options, GetDisplayWidth() / 2 - options.width / 2 - 20, GetDisplayHeight() / 2 - options.height / 2 + 85, RAYWHITE);
+    DrawTexture(rules, GetDisplayWidth() / 2 - rules.width / 2 - 20, GetDisplayHeight() / 2 - rules.height / 2 + 180, RAYWHITE);
+    DrawTexture(quit, GetDisplayWidth() / 2 - quit.width / 2 - 20, GetDisplayHeight() / 2 - quit.height / 2 + 275, RAYWHITE);
 }
