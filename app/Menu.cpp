@@ -66,3 +66,40 @@ int Menu::GetDisplayHeight() const
         return GetScreenHeight();
     }
 }
+
+void Menu::Animation()
+{
+    switch (state)
+    {
+    case 0:
+    {
+        framesCounter += 2.00f;
+
+        rec.y = EaseElasticOut((float)framesCounter, -100, GetDisplayHeight() / 2.0f + 100, 120);
+
+        if (framesCounter >= 120)
+        {
+            framesCounter = 0;
+            state = 1;
+        }
+    } break;
+    case 1:
+    {
+        
+    } break;
+    case 2:
+    {
+        
+    } break;
+    case 3:
+    {
+        
+    } break;
+    case 4:
+    {
+        
+    } break;
+    default:
+        break;
+    }
+}
