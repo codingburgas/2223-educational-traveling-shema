@@ -18,13 +18,14 @@ bool Menu::GameShouldClose() const
     return WindowShouldClose();
 }
 
-void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter)
+void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, bool animEnd)
 {
     rec = rect;
     rotation = rot;
     alpha = alp;
     state = sta;
     framesCounter = frmsCounter;
+    animationEnd = animEnd;
 }
 
 void Menu::toggleFullScreenWindow(int windowWidth, int windowHeight)
@@ -139,4 +140,12 @@ void Menu::Animation()
 void Menu::drawAnimation()
 {
     DrawRectanglePro(rec, Vector2{ float(rec.width / 2 + 40), float(rec.height / 2) }, rotation, Fade(BLUE, alpha));
+}
+
+void Menu::checkAnimation()
+{
+    if (animationEnd)
+    {
+        ClearBackground(BLUE);
+    }
 }

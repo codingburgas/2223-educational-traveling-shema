@@ -17,7 +17,9 @@ public:
     void Animation();
     void drawAnimation();
 
-    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter);
+    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, bool animEnd);
+
+    void checkAnimation();
 
 private:
     Rectangle rec;
