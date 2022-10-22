@@ -5,7 +5,7 @@ int main()
 {
 	Menu menu(900, 800, "Game");
     menu.toggleFullScreenWindow(menu.GetDisplayWidth(), menu.GetDisplayHeight());
-    menu.SetAll({ menu.GetDisplayWidth() / 2.0f, -100, 150, 150 }, 0.0f, 1.0f, 0, 0);
+    menu.SetAll({ menu.GetDisplayWidth() / 2.0f, -100, 150, 150 }, 0.0f, 1.0f, 0, 0, false);
 
     while (!menu.GameShouldClose())
     {
@@ -15,6 +15,7 @@ int main()
         ClearBackground(BLACK);
 
         menu.drawAnimation();
+        menu.checkAnimation();
 
         EndDrawing();
     }
