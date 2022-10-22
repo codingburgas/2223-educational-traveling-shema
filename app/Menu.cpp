@@ -122,9 +122,21 @@ void Menu::Animation()
     } break;
     case 4:
     {
-        
+        framesCounter += 2.00f;
+        alpha = EaseSineOut((float)framesCounter, 1.0f, -1.0f, 160);
+
+        if (framesCounter >= 160)
+        {
+            framesCounter = 0;
+            state = 5;
+        }
     } break;
     default:
         break;
     }
+}
+
+void Menu::drawAnimation()
+{
+    DrawRectanglePro(rec, Vector2{ float(rec.width / 2 + 40), float(rec.height / 2) }, rotation, Fade(BLUE, alpha));
 }

@@ -9,8 +9,13 @@ int main()
 
     while (!menu.GameShouldClose())
     {
+        menu.Animation();
+
         BeginDrawing();
         ClearBackground(BLACK);
+
+        menu.drawAnimation();
+
         EndDrawing();
     }
 }

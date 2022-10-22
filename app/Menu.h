@@ -15,6 +15,7 @@ public:
     int GetDisplayHeight() const;
 
     void Animation();
+    void drawAnimation();
 
     void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter);
 
