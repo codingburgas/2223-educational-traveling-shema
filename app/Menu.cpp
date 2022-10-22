@@ -97,11 +97,18 @@ void Menu::Animation()
     } break;
     case 2:
     {
-        
+        framesCounter += 3.00f;
+        rotation = EaseQuadOut((float)framesCounter, 0.0f, 270.0f, 240);
+
+        if (framesCounter >= 240)
+        {
+            framesCounter = 0;
+            state = 3;
+        }
     } break;
     case 3:
     {
-        
+
     } break;
     case 4:
     {
