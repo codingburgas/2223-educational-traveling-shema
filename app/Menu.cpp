@@ -18,6 +18,15 @@ bool Menu::GameShouldClose() const
     return WindowShouldClose();
 }
 
+void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter)
+{
+    rec = rect;
+    rotation = rot;
+    alpha = alp;
+    state = sta;
+    framesCounter = frmsCounter;
+}
+
 void Menu::toggleFullScreenWindow(int windowWidth, int windowHeight)
 {
     if (!IsWindowFullscreen())

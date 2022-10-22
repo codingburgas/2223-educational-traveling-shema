@@ -13,4 +13,18 @@ public:
 
     int GetDisplayWidth() const;
     int GetDisplayHeight() const;
+
+    void Animation();
+
+    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter);
+
+private:
+    Rectangle rec;
+    float rotation = 0.0f;
+    float alpha = 0.0f;
+
+    bool animationEnd = false;
+
+    int state = 0;
+    float framesCounter = 0;
 };
