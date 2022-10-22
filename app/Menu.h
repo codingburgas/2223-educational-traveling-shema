@@ -16,12 +16,28 @@ public:
 
     void Animation();
     void drawAnimation();
-
-    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, bool animEnd);
-
     void checkAnimation();
 
+    void MainMenu();
+
+    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
+        Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner, Texture2D topRightCorner,
+        Texture2D bottomLeftCorner, Texture2D bottomRightCorner);
+
+    void UnloadTextures();
+
 private:
+    Texture2D name_of_the_team;
+    Texture2D play;
+    Texture2D options;
+    Texture2D rules;
+    Texture2D quit;
+
+    Texture2D topLCorner;
+    Texture2D topRCorner;
+    Texture2D bottomLCorner;
+    Texture2D bottomRCorner;
+
     Rectangle rec;
     float rotation = 0.0f;
     float alpha = 0.0f;
