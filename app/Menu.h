@@ -7,27 +7,27 @@ public:
     Menu(int width, int height, std::string title);
     ~Menu() noexcept;
 
-    bool GameShouldClose() const;
+    bool gameShouldClose() const;
 
     void toggleFullScreenWindow(int windowWidth, int windowHeight);
 
-    int GetDisplayWidth() const;
-    int GetDisplayHeight() const;
+    int getDisplayWidth() const;
+    int getDisplayHeight() const;
 
-    void Animation();
+    void animation();
     void drawAnimation();
     void checkAnimation();
 
-    void MainMenu();
+    void mainMenu();
 
-    void SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
+    void setAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
         Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner, Texture2D topRightCorner,
         Texture2D bottomLeftCorner, Texture2D bottomRightCorner);
 
-    void UnloadTextures();
+    void unloadTextures();
 
 private:
-    Texture2D name_of_the_team;
+    Texture2D nameOfTheTeam;
     Texture2D play;
     Texture2D options;
     Texture2D rules;

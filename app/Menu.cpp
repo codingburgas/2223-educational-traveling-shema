@@ -13,12 +13,12 @@ Menu::~Menu() noexcept
     CloseWindow();
 }
 
-bool Menu::GameShouldClose() const
+bool Menu::gameShouldClose() const
 {
     return WindowShouldClose();
 }
 
-void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
+void Menu::setAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
     Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner,
     Texture2D topRightCorner, Texture2D bottomLeftCorner, Texture2D bottomRightCorner)
 {
@@ -32,7 +32,7 @@ void Menu::SetAll(Rectangle rect, float rot, float alp, int sta, float frmsCount
     options = opt;
     rules = rls;
     quit = exit;
-    name_of_the_team = nott;
+    nameOfTheTeam = nott;
     topLCorner = topLeftCorner;
     topRCorner = topRightCorner;
     bottomLCorner = bottomLeftCorner;
@@ -53,7 +53,7 @@ void Menu::toggleFullScreenWindow(int windowWidth, int windowHeight)
     }
 }
 
-int Menu::GetDisplayWidth() const
+int Menu::getDisplayWidth() const
 {
     if (IsWindowFullscreen())
     {
@@ -66,7 +66,7 @@ int Menu::GetDisplayWidth() const
     }
 }
 
-int Menu::GetDisplayHeight() const
+int Menu::getDisplayHeight() const
 {
     if (IsWindowFullscreen())
     {
@@ -79,7 +79,7 @@ int Menu::GetDisplayHeight() const
     }
 }
 
-void Menu::Animation()
+void Menu::animation()
 {
     switch (state)
     {
@@ -87,7 +87,7 @@ void Menu::Animation()
     {
         framesCounter += 2.00f;
 
-        rec.y = EaseElasticOut((float)framesCounter, -100, GetDisplayHeight() / 2.0f + 100, 120);
+        rec.y = EaseElasticOut((float)framesCounter, -100, getDisplayHeight() / 2.0f + 100, 120);
 
         if (framesCounter >= 120)
         {
@@ -99,7 +99,7 @@ void Menu::Animation()
     {
         framesCounter += 2.00f;
         rec.height = EaseBounceOut((float)framesCounter, 100, -90, 120);
-        rec.width = EaseBounceOut((float)framesCounter, 100, (float)GetDisplayWidth() + 180, 120);
+        rec.width = EaseBounceOut((float)framesCounter, 100, (float)getDisplayWidth() + 180, 120);
 
         if (framesCounter >= 120)
         {
@@ -121,7 +121,7 @@ void Menu::Animation()
     case 3:
     {
         framesCounter += 3.00f;
-        rec.height = EaseCircOut((float)framesCounter, 10, (float)GetDisplayWidth() + 180, 120);
+        rec.height = EaseCircOut((float)framesCounter, 10, (float)getDisplayWidth() + 180, 120);
 
         if (framesCounter >= 80)
             animationEnd = true;
@@ -148,9 +148,9 @@ void Menu::Animation()
     }
 }
 
-void Menu::UnloadTextures()
+void Menu::unloadTextures()
 {
-    UnloadTexture(name_of_the_team);
+    UnloadTexture(nameOfTheTeam);
     UnloadTexture(play);
     UnloadTexture(options);
     UnloadTexture(rules);
@@ -171,19 +171,19 @@ void Menu::checkAnimation()
     if (animationEnd)
     {
         ClearBackground(BLUE);
-        MainMenu();
+        mainMenu();
     }
 }
 
-void Menu::MainMenu()
+void Menu::mainMenu()
 {
     DrawTexture(topLCorner, 0, 0, RAYWHITE);
-    DrawTexture(topRCorner, GetDisplayWidth() - topRCorner.width, 0, RAYWHITE);
-    DrawTexture(bottomLCorner, 0, GetDisplayHeight() - bottomLCorner.height, RAYWHITE);
-    DrawTexture(bottomRCorner, GetDisplayWidth() - bottomRCorner.width / 2, GetDisplayHeight() - bottomRCorner.height / 2, RAYWHITE);
-    DrawTexture(name_of_the_team, GetDisplayWidth() / 2 - name_of_the_team.width / 2, GetDisplayHeight() / 2 - name_of_the_team.height / 2 - 250, RAYWHITE);
-    DrawTexture(play, GetDisplayWidth() / 2 - play.width / 2 - 20, GetDisplayHeight() / 2 - play.height / 2 - 10, RAYWHITE);
-    DrawTexture(options, GetDisplayWidth() / 2 - options.width / 2 - 20, GetDisplayHeight() / 2 - options.height / 2 + 85, RAYWHITE);
-    DrawTexture(rules, GetDisplayWidth() / 2 - rules.width / 2 - 20, GetDisplayHeight() / 2 - rules.height / 2 + 180, RAYWHITE);
-    DrawTexture(quit, GetDisplayWidth() / 2 - quit.width / 2 - 20, GetDisplayHeight() / 2 - quit.height / 2 + 275, RAYWHITE);
+    DrawTexture(topRCorner, getDisplayWidth() - topRCorner.width, 0, RAYWHITE);
+    DrawTexture(bottomLCorner, 0, getDisplayHeight() - bottomLCorner.height, RAYWHITE);
+    DrawTexture(bottomRCorner, getDisplayWidth() - bottomRCorner.width / 2, getDisplayHeight() - bottomRCorner.height / 2, RAYWHITE);
+    DrawTexture(nameOfTheTeam, getDisplayWidth() / 2 - nameOfTheTeam.width / 2, getDisplayHeight() / 2 - nameOfTheTeam.height / 2 - 250, RAYWHITE);
+    DrawTexture(play, getDisplayWidth() / 2 - play.width / 2 - 20, getDisplayHeight() / 2 - play.height / 2 - 10, RAYWHITE);
+    DrawTexture(options, getDisplayWidth() / 2 - options.width / 2 - 20, getDisplayHeight() / 2 - options.height / 2 + 85, RAYWHITE);
+    DrawTexture(rules, getDisplayWidth() / 2 - rules.width / 2 - 20, getDisplayHeight() / 2 - rules.height / 2 + 180, RAYWHITE);
+    DrawTexture(quit, getDisplayWidth() / 2 - quit.width / 2 - 20, getDisplayHeight() / 2 - quit.height / 2 + 275, RAYWHITE);
 }
