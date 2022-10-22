@@ -108,7 +108,17 @@ void Menu::Animation()
     } break;
     case 3:
     {
+        framesCounter += 3.00f;
+        rec.height = EaseCircOut((float)framesCounter, 10, (float)GetDisplayWidth() + 180, 120);
 
+        if (framesCounter >= 80)
+            animationEnd = true;
+
+        if (framesCounter >= 120)
+        {
+            framesCounter = 0;
+            state = 4;
+        }
     } break;
     case 4:
     {
