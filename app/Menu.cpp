@@ -85,7 +85,15 @@ void Menu::Animation()
     } break;
     case 1:
     {
-        
+        framesCounter += 2.00f;
+        rec.height = EaseBounceOut((float)framesCounter, 100, -90, 120);
+        rec.width = EaseBounceOut((float)framesCounter, 100, (float)GetDisplayWidth() + 180, 120);
+
+        if (framesCounter >= 120)
+        {
+            framesCounter = 0;
+            state = 2;
+        }
     } break;
     case 2:
     {
