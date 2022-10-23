@@ -37,12 +37,12 @@ void GameManager::UnloadScene()
 		UnloadTexture(textures[i]);
 	}
 }
-void GameManager::LoadScene(int sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions)
+void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions)
 {
-	if (int(currentScene) != sceneID)
+	if (currentScene != sceneID)
 	{
 		UnloadScene();
-		int(currentScene) = sceneID;
+		currentScene = sceneID;
 		for (int i = 0; i < textureFiles.size(); i++)
 		{
 			textures.push_back(LoadTexture(textureFiles[i].c_str()));

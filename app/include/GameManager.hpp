@@ -6,6 +6,7 @@
 
 enum SCENE
 {
+	NO_SCENE,
 	MAIN_MENU
 };
 
@@ -16,7 +17,7 @@ public:
 	~GameManager();
 	void Update();
 	bool getShouldClose();
-	void LoadScene(int sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
+	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
 	void SceneError();
 	void UnloadScene();
 	void Draw();
@@ -26,5 +27,5 @@ private:
 	int screenHeight = 450;
 	std::vector<Texture2D> textures;
 	std::vector<Vector2> texturePositions;
-	SCENE currentScene = MAIN_MENU;
+	SCENE currentScene = NO_SCENE;
 };
