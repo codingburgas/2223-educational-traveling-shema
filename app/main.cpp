@@ -1,5 +1,5 @@
 #include <GameManager.hpp>
-#include "Menu.h"
+#include "Menu.hpp"
 
 int main()
 {
