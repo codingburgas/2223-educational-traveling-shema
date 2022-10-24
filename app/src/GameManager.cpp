@@ -81,9 +81,11 @@ void GameManager::DrawButtons()
 {
 	for (size_t i = 0; i < buttons.size(); i++)
 	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 		DrawTexture(buttons[i], buttonPositions[i].x, buttonPositions[i].y, WHITE);
 		if (CheckCollisionPointRec(mousePos, {buttonPositions[i].x, buttonPositions[i].y, float(buttons[i].width), float(buttons[i].height)}))
 		{
+			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 			DrawTexture(onHoverButtons[i], buttonPositions[i].x, buttonPositions[i].y, WHITE);
 		}
 	}
