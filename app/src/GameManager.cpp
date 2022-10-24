@@ -2,9 +2,11 @@
 
 GameManager::GameManager()
 {
-	InitWindow(screenWidth, screenHeight, "Game Window");
+	this->m_screenHeight = GetScreenHeight();
+	this->m_screenWidth = GetScreenWidth();
+	InitWindow(this->m_screenWidth, this->m_screenHeight, "Game Window");
 	ToggleFullscreen();
-	SetTargetFPS(60);
+	SetTargetFPS(this->k_windowFPS);
 }
 GameManager::~GameManager()
 {
@@ -14,17 +16,17 @@ void GameManager::Update()
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
-	mousePos = GetMousePosition();
-	DrawText(TextFormat("Mouse Position: %f, %f", mousePos.x, mousePos.y), 10, 10, 20, LIGHTGRAY);
-	Draw();
+	m_mousePos = GetMousePosition();
+	DrawText(TextFormat("Mouse Position: %f, %f", this->m_mousePos.x, this->m_mousePos.y), 10, 10, 20, LIGHTGRAY);
+	DrawTextures();
 	DrawButtons();
 	EndDrawing();
 }
-void GameManager::Draw()
+void GameManager::DrawTextures()
 {
-	for (size_t i = 0; i < textures.size(); i++)
+	for (size_t i = 0; i < this->textures.size(); i++)
 	{
-		DrawTexture(textures[i], texturePositions[i].x, texturePositions[i].y, WHITE);
+		DrawTexture(this->textures[i], this->texturePositions[i].x, this->texturePositions[i].y, WHITE);
 	}
 }
 
@@ -34,31 +36,31 @@ bool GameManager::getShouldClose()
 }
 void GameManager::UnloadScene()
 {
-	for (size_t i = 0; i < textures.size(); i++)
+	for (size_t i = 0; i < this->textures.size(); i++)
 	{
-		UnloadTexture(textures[i]);
+		UnloadTexture(this->textures[i]);
 	}
-	textures.clear();
-	texturePositions.clear();
-	for (size_t i = 0; i < buttons.size(); i++)
+	this->textures.clear();
+	this->texturePositions.clear();
+	for (size_t i = 0; i < this->buttons.size(); i++)
 	{
-		UnloadTexture(buttons[i]);
-		UnloadTexture(onHoverButtons[i]);
+		UnloadTexture(this->buttons[i]);
+		UnloadTexture(this->onHoverButtons[i]);
 	}
-	buttons.clear();
-	onHoverButtons.clear();
-	buttonPositions.clear();
+	this->buttons.clear();
+	this->onHoverButtons.clear();
+	this->buttonPositions.clear();
 }
 void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions)
 {
-	if (currentScene != sceneID)
+	if (this->currentScene != sceneID)
 	{
 		UnloadScene();
-		currentScene = sceneID;
+		this->currentScene = sceneID;
 		for (int i = 0; i < textureFiles.size(); i++)
 		{
-			textures.push_back(LoadTexture(textureFiles[i].c_str()));
-			texturePositions.push_back(positions[i]);
+			this->textures.push_back(LoadTexture(textureFiles[i].c_str()));
+			this->texturePositions.push_back(positions[i]);
 			std::cout << "Loaded Texture: " << textureFiles[i] << std::endl;
 		}
 	}
@@ -72,29 +74,36 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 {
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
-		buttons.push_back(LoadTexture(textureFiles[i].c_str()));
-		onHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
-		buttonPositions.push_back(positions[i]);
+		this->buttons.push_back(LoadTexture(textureFiles[i].c_str()));
+		this->onHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
+		this->buttonPositions.push_back(positions[i]);
 	}
 }
 
 void GameManager::DrawButtons()
 {
-	for (size_t i = 0; i < buttons.size(); i++)
+	for (size_t i = 0; i < this->buttons.size(); i++)
 	{
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		DrawTexture(buttons[i], buttonPositions[i].x, buttonPositions[i].y, WHITE);
-		if (CheckCollisionPointRec(mousePos, {buttonPositions[i].x, buttonPositions[i].y, float(buttons[i].width), float(buttons[i].height)}))
+		DrawTexture(this->buttons[i], this->buttonPositions[i].x, this->buttonPositions[i].y, WHITE);
+		Rectangle buttonRect = { this->buttonPositions[i].x, this->buttonPositions[i].y, this->buttons[i].width, this->buttons[i].height };
+		if (CheckCollisionPointRec(this->m_mousePos, buttonRect))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-			DrawTexture(onHoverButtons[i], buttonPositions[i].x, buttonPositions[i].y, WHITE);
+			DrawTexture(this->onHoverButtons[i], this->buttonPositions[i].x, this->buttonPositions[i].y, WHITE);
 		}
 	}
 }
 
 bool GameManager::isButtonClicked(size_t buttonID)
 {
-	if (CheckCollisionPointRec(mousePos, {buttonPositions[buttonID].x, buttonPositions[buttonID].y, float(buttons[buttonID].width), float(buttons[buttonID].height)}))
+	if (buttonID >= this->buttons.size())
+	{
+		std::cout << "Button ID out of range\n";
+		return false;
+	}
+	Rectangle buttonRect = { this->buttonPositions[buttonID].x, this->buttonPositions[buttonID].y, this->buttons[buttonID].width, this->buttons[buttonID].height };
+	if (CheckCollisionPointRec(this->m_mousePos, buttonRect))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{

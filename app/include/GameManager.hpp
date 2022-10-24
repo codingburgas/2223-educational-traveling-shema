@@ -3,30 +3,32 @@
 #include <vector>
 #include <iostream>
 
-enum SCENE
-{
-	NO_SCENE,
-	MAIN_MENU
-};
 
 class GameManager
 {
 public:
+	enum SCENE
+	{
+		NO_SCENE,
+		MAIN_MENU
+	};
+	
 	GameManager();
 	void Update();
 	bool getShouldClose();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
 	void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
-	void Draw();
+	void DrawTextures();
 	void DrawButtons();
 	bool isButtonClicked(size_t buttonID);
 	void UnloadScene();
 	~GameManager();
 
 private:
-	int screenWidth = GetScreenWidth();
-	int screenHeight = GetScreenHeight();
-	Vector2 mousePos;
+	const int k_windowFPS = 60;
+	int m_screenWidth;
+	int m_screenHeight;
+	Vector2 m_mousePos = {0, 0};
 	SCENE currentScene = NO_SCENE;
 	std::vector<Texture2D> textures;
 	std::vector<Vector2> texturePositions;
