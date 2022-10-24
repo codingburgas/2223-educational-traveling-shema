@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include <vector>
 #include <iostream>
-#include <fstream>
 
 enum SCENE
 {
@@ -25,10 +24,10 @@ public:
 	~GameManager();
 
 private:
-	SCENE currentScene = NO_SCENE;
-	int screenWidth = 1920;
-	int screenHeight = 1080;
+	int screenWidth = GetScreenWidth();
+	int screenHeight = GetScreenHeight();
 	Vector2 mousePos;
+	SCENE currentScene = NO_SCENE;
 	std::vector<Texture2D> textures;
 	std::vector<Vector2> texturePositions;
 	std::vector<Texture2D> buttons;

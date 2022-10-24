@@ -3,6 +3,7 @@
 GameManager::GameManager()
 {
 	InitWindow(screenWidth, screenHeight, "Game Window");
+	ToggleFullscreen();
 	SetTargetFPS(60);
 }
 GameManager::~GameManager()
