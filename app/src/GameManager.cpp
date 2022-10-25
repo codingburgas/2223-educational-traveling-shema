@@ -1,5 +1,6 @@
 #include <GameManager.hpp>
-
+#include <Menu.hpp>
+GameManager *GameManager::instance;
 GameManager::GameManager()
 {
 	this->m_screenHeight = GetScreenHeight();
@@ -11,6 +12,14 @@ GameManager::GameManager()
 GameManager::~GameManager()
 {
 	CloseWindow();
+}
+GameManager* GameManager::getInstance()
+{
+	if(!instance)
+	{
+		instance = new GameManager();
+	}
+	return instance;
 }
 void GameManager::Update()
 {

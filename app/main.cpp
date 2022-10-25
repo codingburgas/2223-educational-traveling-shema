@@ -3,17 +3,14 @@
 
 int main()
 {
-    GameManager* gameManager = new GameManager();
+    GameManager *gameManager = GameManager::getInstance();
     while (!gameManager->getShouldClose())
     {
         gameManager->Update();
     }
     return 0;
 	/*Menu menu(900, 800, "Game");
-    menu.setAll({ menu.getDisplayWidth() / 2.0f, -100, 150, 150 }, 0.0f, 1.0f, 0, 0, LoadTexture("resources/Play.png"), false,
-        LoadTexture("resources/Options.png"), LoadTexture("resources/Rules.png"), LoadTexture("resources/Exit.png"),
-        LoadTexture("resources/nott.png"), LoadTexture("resources/topLeftCorner.png"), LoadTexture("resources/topRightCorner.png"),
-        LoadTexture("resources/bottomLeftCorner.png"), LoadTexture("resources/bottomRightCorner.png"));
+    menu.setAll();
 
     while (!menu.gameShouldClose())
     {
