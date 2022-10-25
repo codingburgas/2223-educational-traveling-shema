@@ -12,7 +12,6 @@ public:
 		NO_SCENE,
 		MAIN_MENU
 	};
-	
 	static GameManager* getInstance();
 	void Update();
 	bool getShouldClose();
@@ -22,14 +21,15 @@ public:
 	void DrawButtons();
 	bool isButtonClicked(size_t buttonID);
 	void UnloadScene();
+	Vector2 getScreenSize();
 	~GameManager();
 
 private:
 	GameManager();
 	static GameManager* instance;
 	const int k_windowFPS = 60;
-	int m_screenWidth;
-	int m_screenHeight;
+	float m_screenWidth;
+	float m_screenHeight;
 	Vector2 m_mousePos = {0, 0};
 	SCENE currentScene = NO_SCENE;
 	std::vector<Texture2D> m_textures;

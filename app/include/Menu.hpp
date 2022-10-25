@@ -1,40 +1,21 @@
 #pragma once
-#include <string>
-#include <raylib.h>
+#include <GameManager.hpp>
+#include <reasings.hpp>
 class Menu
 {
 public:
-    Menu(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
-        Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner,
-        Texture2D topRightCorner, Texture2D bottomLeftCorner, Texture2D bottomRightCorner);
-    ~Menu() noexcept;
-
+    Menu();
+    ~Menu();
     void animation();
-    void drawAnimation();
-    void checkAnimation();
-
-    void mainMenu();
-
-    void unloadTextures();
 
 private:
-    Texture2D nameOfTheTeam;
-    Texture2D play;
-    Texture2D options;
-    Texture2D rules;
-    Texture2D quit;
-
-    Texture2D topLCorner;
-    Texture2D topRCorner;
-    Texture2D bottomLCorner;
-    Texture2D bottomRCorner;
-
-    Rectangle rec;
+    GameManager *gameManager = GameManager::getInstance();
+    Rectangle rect = {GetScreenWidth()/2.0f, -100, 150, 150};
     float rotation = 0.0f;
-    float alpha = 0.0f;
-
+    float alpha = 1.0f;
     bool animationEnd = false;
-
     int state = 0;
     float framesCounter = 0;
+    float width = GetScreenWidth();
+    float height = GetScreenHeight();
 };
