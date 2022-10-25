@@ -30,9 +30,9 @@ private:
 	int m_screenHeight;
 	Vector2 m_mousePos = {0, 0};
 	SCENE currentScene = NO_SCENE;
-	std::vector<Texture2D> textures;
-	std::vector<Vector2> texturePositions;
-	std::vector<Texture2D> buttons;
-	std::vector<Texture2D> onHoverButtons;
-	std::vector<Vector2> buttonPositions;
+	std::vector<Texture2D> m_textures;
+	std::vector<Vector2> m_texturePositions;
+	std::vector<Texture2D> m_buttons;
+	std::vector<Texture2D> m_onHoverButtons;
+	std::vector<Vector2> m_buttonPositions;
 };
