@@ -24,7 +24,6 @@ GameManager* GameManager::getInstance()
 void GameManager::Update()
 {
 	BeginDrawing();
-	ClearBackground(BLACK);
 	m_mousePos = GetMousePosition();
 	DrawText(TextFormat("Mouse Position: %f, %f", this->m_mousePos.x, this->m_mousePos.y), 10, 10, 20, LIGHTGRAY);
 	DrawTextures();
@@ -68,6 +67,7 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles
 		this->currentScene = sceneID;
 		for (int i = 0; i < textureFiles.size(); i++)
 		{
+			textureFiles[i] = "./assets/" + textureFiles[i];
 			this->m_textures.push_back(LoadTexture(textureFiles[i].c_str()));
 			this->m_texturePositions.push_back(positions[i]);
 			std::cout << "Loaded Texture: " << textureFiles[i] << std::endl;
@@ -120,4 +120,8 @@ bool GameManager::isButtonClicked(size_t buttonID)
 		}
 	}
 	return false;
+}
+Vector2 GameManager::getScreenSize()
+{
+	return Vector2{ this->m_screenWidth, this->m_screenHeight };
 }
