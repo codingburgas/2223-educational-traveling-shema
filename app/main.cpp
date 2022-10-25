@@ -5,7 +5,7 @@ int main()
 {
     GameManager *gameManager = GameManager::getInstance(); 
     Menu* mainMenu = new Menu();
-    while (gameManager->NO_SCENE && !gameManager->getShouldClose())
+    while (!gameManager->getShouldClose())
     {
         gameManager->Update();
     }
