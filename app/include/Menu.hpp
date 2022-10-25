@@ -4,25 +4,16 @@
 class Menu
 {
 public:
-    Menu(int width, int height, std::string title);
+    Menu(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
+        Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner,
+        Texture2D topRightCorner, Texture2D bottomLeftCorner, Texture2D bottomRightCorner);
     ~Menu() noexcept;
-
-    bool gameShouldClose() const;
-
-    void toggleFullScreenWindow(int windowWidth, int windowHeight);
-
-    int getDisplayWidth() const;
-    int getDisplayHeight() const;
 
     void animation();
     void drawAnimation();
     void checkAnimation();
 
     void mainMenu();
-
-    void setAll(Rectangle rect, float rot, float alp, int sta, float frmsCounter, Texture2D pl, bool anim_end,
-        Texture2D opt, Texture2D rls, Texture2D exit, Texture2D nott, Texture2D topLeftCorner, Texture2D topRightCorner,
-        Texture2D bottomLeftCorner, Texture2D bottomRightCorner);
 
     void unloadTextures();
 
