@@ -2,8 +2,8 @@
 Menu::Menu()
 {
     gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, 
-    {"Options.png", "Rules.png", "Exit.png", "Logo.png", "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png"},
-    {{width / 2 - 250 / 2 - 20, height / 2 - 75 / 2 + 180} , {width / 2 - 250 / 2 - 20, height / 2 - 75 / 2 + 275} , {width / 2 - 750 / 2 - 20, height / 2 - 200 / 2 - 250} , {0, 0} , {width - 600, 0} , {width - 250, 0} , {0, height - 500} , {width - 600 / 2, height - 500/2}});
+		{ "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "Play.png", "Options.png", "Rules.png", "Exit.png" },
+        { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
 
     while (gameManager->MAIN_MENU && !gameManager->getShouldClose())
     {
