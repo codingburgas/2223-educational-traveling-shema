@@ -13,7 +13,7 @@ public:
 		MAIN_MENU
 	};
 	
-	GameManager();
+	static GameManager* getInstance();
 	void Update();
 	bool getShouldClose();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
@@ -25,6 +25,8 @@ public:
 	~GameManager();
 
 private:
+	GameManager();
+	static GameManager* instance;
 	const int k_windowFPS = 60;
 	int m_screenWidth;
 	int m_screenHeight;
