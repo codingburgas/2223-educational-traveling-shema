@@ -24,9 +24,9 @@ void GameManager::Update()
 }
 void GameManager::DrawTextures()
 {
-	for (size_t i = 0; i < this->textures.size(); i++)
+	for (size_t i = 0; i < this->m_textures.size(); i++)
 	{
-		DrawTexture(this->textures[i], this->texturePositions[i].x, this->texturePositions[i].y, WHITE);
+		DrawTexture(this->m_textures[i], this->m_texturePositions[i].x, this->m_texturePositions[i].y, WHITE);
 	}
 }
 
@@ -36,20 +36,20 @@ bool GameManager::getShouldClose()
 }
 void GameManager::UnloadScene()
 {
-	for (size_t i = 0; i < this->textures.size(); i++)
+	for (size_t i = 0; i < this->m_textures.size(); i++)
 	{
-		UnloadTexture(this->textures[i]);
+		UnloadTexture(this->m_textures[i]);
 	}
-	this->textures.clear();
-	this->texturePositions.clear();
-	for (size_t i = 0; i < this->buttons.size(); i++)
+	this->m_textures.clear();
+	this->m_texturePositions.clear();
+	for (size_t i = 0; i < this->m_buttons.size(); i++)
 	{
-		UnloadTexture(this->buttons[i]);
-		UnloadTexture(this->onHoverButtons[i]);
+		UnloadTexture(this->m_buttons[i]);
+		UnloadTexture(this->m_onHoverButtons[i]);
 	}
-	this->buttons.clear();
-	this->onHoverButtons.clear();
-	this->buttonPositions.clear();
+	this->m_buttons.clear();
+	this->m_onHoverButtons.clear();
+	this->m_buttonPositions.clear();
 }
 void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions)
 {
@@ -59,8 +59,8 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles
 		this->currentScene = sceneID;
 		for (int i = 0; i < textureFiles.size(); i++)
 		{
-			this->textures.push_back(LoadTexture(textureFiles[i].c_str()));
-			this->texturePositions.push_back(positions[i]);
+			this->m_textures.push_back(LoadTexture(textureFiles[i].c_str()));
+			this->m_texturePositions.push_back(positions[i]);
 			std::cout << "Loaded Texture: " << textureFiles[i] << std::endl;
 		}
 	}
@@ -74,35 +74,35 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 {
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
-		this->buttons.push_back(LoadTexture(textureFiles[i].c_str()));
-		this->onHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
-		this->buttonPositions.push_back(positions[i]);
+		this->m_buttons.push_back(LoadTexture(textureFiles[i].c_str()));
+		this->m_onHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
+		this->m_buttonPositions.push_back(positions[i]);
 	}
 }
 
 void GameManager::DrawButtons()
 {
-	for (size_t i = 0; i < this->buttons.size(); i++)
+	for (size_t i = 0; i < this->m_buttons.size(); i++)
 	{
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		DrawTexture(this->buttons[i], this->buttonPositions[i].x, this->buttonPositions[i].y, WHITE);
-		Rectangle buttonRect = { this->buttonPositions[i].x, this->buttonPositions[i].y, this->buttons[i].width, this->buttons[i].height };
+		DrawTexture(this->m_buttons[i], this->m_buttonPositions[i].x, this->m_buttonPositions[i].y, WHITE);
+		Rectangle buttonRect = { this->m_buttonPositions[i].x, this->m_buttonPositions[i].y, this->m_buttons[i].width, this->m_buttons[i].height };
 		if (CheckCollisionPointRec(this->m_mousePos, buttonRect))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-			DrawTexture(this->onHoverButtons[i], this->buttonPositions[i].x, this->buttonPositions[i].y, WHITE);
+			DrawTexture(this->m_onHoverButtons[i], this->m_buttonPositions[i].x, this->m_buttonPositions[i].y, WHITE);
 		}
 	}
 }
 
 bool GameManager::isButtonClicked(size_t buttonID)
 {
-	if (buttonID >= this->buttons.size())
+	if (buttonID >= this->m_buttons.size())
 	{
 		std::cout << "Button ID out of range\n";
 		return false;
 	}
-	Rectangle buttonRect = { this->buttonPositions[buttonID].x, this->buttonPositions[buttonID].y, this->buttons[buttonID].width, this->buttons[buttonID].height };
+	Rectangle buttonRect = { this->m_buttonPositions[buttonID].x, this->m_buttonPositions[buttonID].y, this->m_buttons[buttonID].width, this->m_buttons[buttonID].height };
 	if (CheckCollisionPointRec(this->m_mousePos, buttonRect))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
