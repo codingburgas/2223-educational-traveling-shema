@@ -1,9 +1,13 @@
 #include "Menu.hpp"
 Menu::Menu()
 {
-    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, 
-		{ "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "Play.png", "Options.png", "Rules.png", "Exit.png" },
-        { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
+    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU,
+                           {"TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png"},
+                           {{0, 0}, {this->width - 600, 0}, {0, this->height - 500}, {this->width - 600, this->height - 500}, {this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250}});
+
+    gameManager->LoadButtons({"Play.png", "Options.png", "Rules.png", "Exit.png"},
+                             {"PlayHover.png", "OptionsHover.png", "RulesHover.png", "ExitHover.png"},
+                             {{this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10}, {this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85}, {this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180}, {this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275}});
 
     while (gameManager->MAIN_MENU && !gameManager->getShouldClose())
     {
@@ -12,13 +16,16 @@ Menu::Menu()
             BeginDrawing();
             ClearBackground(BLACK);
             this->animation();
-            this->hoverEffects();
             EndDrawing();
         }
         else
         {
             ClearBackground(BLUE);
             gameManager->Update();
+            if (gameManager->isButtonClicked(3))
+            {
+                delete gameManager;
+            }
         }
     }
 }
@@ -30,6 +37,8 @@ Menu::~Menu()
 
 void Menu::animation()
 {
+    if(!this->animationEnd)
+    
     switch (this->state)
     {
     case 0:
@@ -97,70 +106,4 @@ void Menu::animation()
     }
 
     DrawRectanglePro(this->rect, Vector2{ float(this->rect.width / 2 + 40), float(this->rect.height / 2) }, this->rotation, Fade(BLUE, this->alpha));
-}
-
-void Menu::hoverEffects()
-{
-	Rectangle playBounds = { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10, 250, 75 };
-	Rectangle optionsBounds = { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85, 250, 75 };
-	Rectangle rulesBounds = { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180, 250, 75 };
-	Rectangle exitBounds = { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275, 250, 75 };
-    if (CheckCollisionPointRec(this->mousePos, playBounds) && this->animationEnd)
-    {
-        gameManager->LoadScene(gameManager->SCENE::MAIN_MENU,
-            { "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "PlayHover.png", "Options.png", "Rules.png", "Exit.png" },
-            { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
-
-        //DrawTexture(playHover, this->width / 2 - playHover.width / 2 - 20, this->height / 2 - playHover.height / 2 - 10, RAYWHITE);
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            DrawText("Play button is working!", 200, this->height / 2, 24, RAYWHITE);
-            ClearBackground(BLUE);
-        }
-    }
-
-    if (CheckCollisionPointRec(this->mousePos, optionsBounds) && animationEnd)
-    {
-        gameManager->LoadScene(gameManager->SCENE::MAIN_MENU,
-            { "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "Play.png", "OptionsHover.png", "Rules.png", "Exit.png" },
-            { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
-
-        //DrawTexture(optionsHover, this->width / 2 - optionsHover.width / 2 - 20, this->height / 2 - optionsHover.height / 2 + 85, RAYWHITE);
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            DrawText("Settings button is working!", 200, this->height / 2, 24, RAYWHITE);
-            ClearBackground(BLUE);
-        }
-    }
-
-    if (CheckCollisionPointRec(this->mousePos, rulesBounds) && animationEnd)
-    {
-        gameManager->LoadScene(gameManager->SCENE::MAIN_MENU,
-            { "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "Play.png", "Options.png", "RulesOptions.png", "Exit.png" },
-            { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
-
-        //DrawTexture(rulesHover, this->width / 2 - rulesHover.width / 2 - 20, this->height / 2 - rulesHover.height / 2 + 180, RAYWHITE);
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            DrawText("Rules button is working!", 200, this->height / 2, 24, RAYWHITE);
-            ClearBackground(BLUE);
-        }
-    }
-
-    if (CheckCollisionPointRec(this->mousePos, exitBounds) && animationEnd)
-    {
-        gameManager->LoadScene(gameManager->SCENE::MAIN_MENU,
-            { "TopLeftCorner.png", "TopRightCorner.png", "BottomLeftCorner.png", "BottomRightCorner.png", "Logo.png", "Play.png", "Options.png", "Rules.png", "ExitHover.png" },
-            { { 0,0 } , { this->width - 600, 0 } , { 0, this->height - 500 } , { this->width - 600, this->height - 500} , { this->width / 2 - 750 / 2, this->height / 2 - 200 / 2 - 250 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 - 10 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 85 } , { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 180 }, { this->width / 2 - 250 / 2 - 20, this->height / 2 - 75 / 2 + 275 } });
-
-        //DrawTexture(quitHover, this->width / 2 - quitHover.width / 2 - 20, this->height / 2 - quitHover.height / 2 + 275, RAYWHITE);
-
-        /*if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            isRunning = false;
-        }*/
-    }
 }
