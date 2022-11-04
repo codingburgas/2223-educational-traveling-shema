@@ -7,7 +7,6 @@ public:
     Menu();
     ~Menu();
     void animation();
-    void hoverEffects();
 
 private:
     GameManager *gameManager = GameManager::getInstance();

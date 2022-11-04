@@ -3,8 +3,8 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
-	this->m_screenHeight = GetScreenHeight();
 	this->m_screenWidth = GetScreenWidth();
+	this->m_screenHeight = GetScreenHeight();
 	InitWindow(this->m_screenWidth, this->m_screenHeight, "Game Window");
 	ToggleFullscreen();
 	SetTargetFPS(this->k_windowFPS);
@@ -83,6 +83,8 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 {
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
+		textureFiles[i] = "./assets/" + textureFiles[i];
+		onHoverTextures[i] = "./assets/" + onHoverTextures[i];
 		this->m_buttons.push_back(LoadTexture(textureFiles[i].c_str()));
 		this->m_onHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
 		this->m_buttonPositions.push_back(positions[i]);
@@ -91,9 +93,9 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 
 void GameManager::DrawButtons()
 {
+	SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	for (size_t i = 0; i < this->m_buttons.size(); i++)
 	{
-		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 		DrawTexture(this->m_buttons[i], this->m_buttonPositions[i].x, this->m_buttonPositions[i].y, WHITE);
 		Rectangle buttonRect = { this->m_buttonPositions[i].x, this->m_buttonPositions[i].y, this->m_buttons[i].width, this->m_buttons[i].height };
 		if (CheckCollisionPointRec(this->m_mousePos, buttonRect))
