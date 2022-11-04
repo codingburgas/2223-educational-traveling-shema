@@ -7,15 +7,17 @@ public:
     Menu();
     ~Menu();
     void animation();
+    void hoverEffects();
 
 private:
     GameManager *gameManager = GameManager::getInstance();
     Rectangle rect = {GetScreenWidth()/2.0f, -100, 150, 150};
-    float rotation = 0.0f;
-    float alpha = 1.0f;
-    bool animationEnd = false;
-    int state = 0;
-    float framesCounter = 0;
+    Vector2 mousePos = GetMousePosition();
     float width = GetScreenWidth();
     float height = GetScreenHeight();
+    float rotation = 0.0f;
+    float alpha = 1.0f;
+    float framesCounter = 0;
+    bool animationEnd = false;
+    int state = 0;
 };
