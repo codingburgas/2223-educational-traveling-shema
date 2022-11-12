@@ -7,12 +7,14 @@
 class GameManager
 {
 public:
+	static GameManager* getInstance();
 	enum SCENE
 	{
 		NO_SCENE,
-		MAIN_MENU
+		MAIN_MENU,
+		GAME
 	};
-	static GameManager* getInstance();
+	SCENE currentScene = NO_SCENE;
 	void Update();
 	bool getShouldClose();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
@@ -31,7 +33,6 @@ private:
 	float m_screenWidth;
 	float m_screenHeight;
 	Vector2 m_mousePos = {0, 0};
-	SCENE currentScene = NO_SCENE;
 	std::vector<Texture2D> m_textures;
 	std::vector<Vector2> m_texturePositions;
 	std::vector<Texture2D> m_buttons;
