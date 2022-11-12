@@ -29,6 +29,10 @@ void GameManager::Update()
 	DrawTextures();
 	DrawButtons();
 	EndDrawing();
+	if (getShouldClose())
+	{
+		delete this;
+	}
 }
 void GameManager::DrawTextures()
 {

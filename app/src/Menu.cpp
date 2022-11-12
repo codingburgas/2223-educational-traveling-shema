@@ -1,11 +1,22 @@
 #include "Menu.hpp"
+
 Menu::Menu()
 {
     gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, this->clouds, this->cloudsPositions);
 
     gameManager->LoadButtons(this->buttons, this->buttonsHover, this->buttonPositions);
 
-    while (gameManager->MAIN_MENU && !gameManager->getShouldClose())
+    this->drawMenu();
+}
+
+Menu::~Menu()
+{
+    
+}
+
+void Menu::drawMenu()
+{
+    while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->getShouldClose())
     {
         if (!this->animationEnd)
         {
@@ -22,13 +33,14 @@ Menu::Menu()
             {
                 delete gameManager;
             }
+            if (gameManager->isButtonClicked(0))
+            {
+                MapManager* map = new MapManager();
+                delete this;
+                break;
+            }
         }
     }
-}
-
-Menu::~Menu()
-{
-    gameManager->UnloadScene();
 }
 
 void Menu::animation()

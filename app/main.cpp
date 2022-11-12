@@ -5,9 +5,9 @@ int main()
 {
     GameManager *gameManager = GameManager::getInstance(); 
     Menu* mainMenu = new Menu();
-    while (!gameManager->getShouldClose())
-    {
-        gameManager->Update();
-    }
+    //while (!gameManager->getShouldClose())
+    //{
+    //    gameManager->Update();
+    //}
     return 0;
 }

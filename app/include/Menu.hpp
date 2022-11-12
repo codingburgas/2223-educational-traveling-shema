@@ -1,6 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <reasings.hpp>
+#include <MapManager.hpp>
 
 class Menu
 {
@@ -11,6 +12,7 @@ public:
 
 private:
     GameManager *gameManager = GameManager::getInstance();
+    void drawMenu();
     const float width = GetScreenWidth();
     const float height = GetScreenHeight();
 	const int buttonWidth = 250;
