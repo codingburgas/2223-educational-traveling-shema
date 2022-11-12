@@ -3,9 +3,8 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
-	this->m_screenWidth = GetScreenWidth();
-	this->m_screenHeight = GetScreenHeight();
-	InitWindow(this->m_screenWidth, this->m_screenHeight, "Game Window");
+	InitWindow(this->screenSize().x, this->screenSize().y, "Game Window");
+	std::cout << "Width: " << this->width << " Height: " << this->height << std::endl;
 	ToggleFullscreen();
 	SetTargetFPS(this->k_windowFPS);
 }
@@ -127,7 +126,7 @@ bool GameManager::isButtonClicked(size_t buttonID)
 	}
 	return false;
 }
-Vector2 GameManager::getScreenSize()
+Vector2 GameManager::screenSize()
 {
-	return Vector2{ this->m_screenWidth, this->m_screenHeight };
+	return Vector2{ float(GetScreenWidth()), float(GetScreenHeight())};
 }

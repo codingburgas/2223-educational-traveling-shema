@@ -45,6 +45,7 @@ void Menu::drawMenu()
 
 void Menu::animation()
 {
+    std::cout << gameManager->screenSize().x;
     if(!this->animationEnd)
     
     switch (this->state)
@@ -53,7 +54,7 @@ void Menu::animation()
     {
         this->framesCounter += 2.00f;
 
-        this->rect.y = EaseElasticOut((float)this->framesCounter, - 100, this->height / 2.0f + 100, 120);
+        this->rect.y = EaseElasticOut((float)this->framesCounter, - 100, gameManager->screenSize().y / 2.0f + 100, 120);
 
         if (this->framesCounter >= 120)
         {
@@ -65,7 +66,7 @@ void Menu::animation()
     {
         this->framesCounter += 2.00f;
         this->rect.height = EaseBounceOut((float)this->framesCounter, 100, -90, 120);
-        this->rect.width = EaseBounceOut((float)this->framesCounter, 100, this->width + 180, 120);
+        this->rect.width = EaseBounceOut((float)this->framesCounter, 100, gameManager->screenSize().x + 180, 120);
 
         if (this->framesCounter >= 120)
         {
@@ -87,7 +88,7 @@ void Menu::animation()
     case 3:
     {
         this->framesCounter += 3.00f;
-        this->rect.height = EaseCircOut((float)this->framesCounter, 10, this->width + 180, 120);
+        this->rect.height = EaseCircOut((float)this->framesCounter, 10, gameManager->screenSize().x + 180, 120);
 
         if (this->framesCounter >= 80)
             this->animationEnd = true;
