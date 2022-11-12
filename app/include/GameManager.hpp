@@ -21,17 +21,17 @@ public:
 	void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
 	void DrawTextures();
 	void DrawButtons();
-	bool isButtonClicked(size_t buttonID);
 	void UnloadScene();
-	Vector2 getScreenSize();
+	bool isButtonClicked(size_t buttonID);
+	Vector2 screenSize();
 	~GameManager();
 
 private:
 	GameManager();
 	static GameManager* instance;
 	const int k_windowFPS = 60;
-	float m_screenWidth;
-	float m_screenHeight;
+	float width = GetScreenWidth();
+	float height = GetScreenHeight();
 	Vector2 m_mousePos = {0, 0};
 	std::vector<Texture2D> m_textures;
 	std::vector<Vector2> m_texturePositions;
