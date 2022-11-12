@@ -3,7 +3,7 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
-	InitWindow(this->screenSize().x, this->screenSize().y, "Game Window");
+	InitWindow(screenSize().x, screenSize().y, "Game Window");
 	std::cout << "Width: " << this->width << " Height: " << this->height << std::endl;
 	ToggleFullscreen();
 	SetTargetFPS(this->k_windowFPS);
@@ -37,7 +37,7 @@ void GameManager::DrawTextures()
 {
 	for (size_t i = 0; i < this->m_textures.size(); i++)
 	{
-		DrawTexture(this->m_textures[i], this->m_texturePositions[i].x, this->m_texturePositions[i].y, WHITE);
+		DrawTextureEx(this->m_textures[i], this->m_texturePositions[i], 0, screenSize().x / 1920, WHITE);
 	}
 }
 
