@@ -9,7 +9,8 @@ MapManager::MapManager()
 		ClearBackground(BLUE);
 		this->m_mousePos = GetMousePosition();
 		gameManager->Update();
-		DrawWaypoints(this->waypoints, this->scale);
+		DrawTexture(this->toggler, 0, 300, WHITE);
+		ToggleWaypoints();
 		EndDrawing();
 	}
 }
@@ -28,5 +29,20 @@ void MapManager::DrawWaypoints(std::vector<Vector2> waypoints, std::vector<float
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		}
+	}
+}
+
+void MapManager::ToggleWaypoints() {
+	if (CheckCollisionPointRec(this->m_mousePos, { 0, 300, 50, 50 }))
+	{
+		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			this->toggleWaypoints = !this->toggleWaypoints;
+		}
+	}
+	if (this->toggleWaypoints)
+	{
+		DrawWaypoints(this->waypoints, this->scale);
 	}
 }
