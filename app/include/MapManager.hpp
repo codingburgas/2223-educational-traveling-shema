@@ -11,4 +11,5 @@ private:
 	GameManager *gameManager = GameManager::getInstance();
 	const int mapWidth = 1920;
 	const int mapHeight = 1080;
+	void DrawWaypoints(Texture2D waypoint);
 };

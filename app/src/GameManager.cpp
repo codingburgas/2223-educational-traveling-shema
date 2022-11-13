@@ -22,16 +22,10 @@ GameManager* GameManager::getInstance()
 }
 void GameManager::Update()
 {
-	BeginDrawing();
 	m_mousePos = GetMousePosition();
-	DrawText(TextFormat("Mouse Position: %f, %f", this->m_mousePos.x, this->m_mousePos.y), 10, 10, 20, LIGHTGRAY);
 	DrawTextures();
 	DrawButtons();
-	EndDrawing();
-	if (getShouldClose())
-	{
-		delete this;
-	}
+	DrawText(TextFormat("Mouse Position: %g, %g", this->m_mousePos.x, this->m_mousePos.y), 10, 10, 20, BLACK);
 }
 void GameManager::DrawTextures()
 {
