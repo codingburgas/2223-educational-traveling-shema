@@ -27,6 +27,7 @@ void Menu::drawMenu()
         }
         else
         {
+            BeginDrawing();
             ClearBackground(BLUE);
             gameManager->Update();
             if (gameManager->isButtonClicked(3))
@@ -39,6 +40,7 @@ void Menu::drawMenu()
                 delete this;
                 break;
             }
+            EndDrawing();
         }
     }
 }
