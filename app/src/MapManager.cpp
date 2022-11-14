@@ -10,7 +10,9 @@ MapManager::MapManager()
 		this->m_mousePos = GetMousePosition();
 		gameManager->Update();
 		DrawTexture(this->toggler, 0, 300, WHITE);
+		DrawTexture(this->ship, 8, 370, WHITE);
 		ToggleWaypoints();
+		TogglePorts();
 		EndDrawing();
 	}
 }
@@ -44,5 +46,31 @@ void MapManager::ToggleWaypoints() {
 	if (this->toggleWaypoints)
 	{
 		DrawWaypoints(this->waypoints, this->scale);
+	}
+}
+
+void MapManager::DrawPorts(std::vector<Vector2> ports, std::vector<float> portScale) {
+	for (size_t i = 0; i < ports.size(); i++)
+	{
+		DrawTextureEx(this->ship, ports[i], 0, portScale[i], WHITE);
+		if (CheckCollisionPointRec(this->m_mousePos, { ports[i].x, ports[i].y, this->toggler.width * portScale[i], this->toggler.height * portsScale[i] }))
+		{
+			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+		}
+	}
+};
+
+void MapManager::TogglePorts() {
+	if (CheckCollisionPointRec(this->m_mousePos, { 8, 370, 40, 40 }))
+	{
+		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			this->togglePorts = !this->togglePorts;
+		}
+	}
+	if (this->togglePorts)
+	{
+		DrawPorts(this->ports, this->portsScale);
 	}
 }
