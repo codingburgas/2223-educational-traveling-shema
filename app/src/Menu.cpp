@@ -18,7 +18,7 @@ void Menu::drawMenu()
 {
     while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->getShouldClose())
     {
-        if (!this->animationEnd)
+        if (this->animationEnd)
         {
             BeginDrawing();
             ClearBackground(BLACK);
