@@ -2,15 +2,13 @@
 #include <iostream>
 MapManager::MapManager()
 {
-	gameManager->LoadScene(gameManager->SCENE::GAME, {"Map.png"}, {{gameManager->getScreenSize().x / 2 - this->mapWidth / 2, gameManager->getScreenSize().y / 2 - this->mapHeight / 2}});
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->getScreenSize().x / 2 - this->mapWidth / 2, gameManager->getScreenSize().y / 2 - this->mapHeight / 2} });
 	while (gameManager->currentScene == gameManager->SCENE::GAME && !gameManager->getShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(BLUE);
 		this->m_mousePos = GetMousePosition();
 		gameManager->Update();
-		DrawTexture(this->toggler, 0, 300, WHITE);
-		DrawTexture(this->ship, 8, 370, WHITE);
 		ToggleWaypoints();
 		TogglePorts();
 		EndDrawing();
@@ -19,15 +17,15 @@ MapManager::MapManager()
 
 MapManager::~MapManager()
 {
-	
+
 }
 
-void MapManager::DrawWaypoints(std::vector<Vector2> waypoints, std::vector<float> scale)
+void MapManager::DrawWaypoints(std::vector<Coordinate> waypoints)
 {
 	for (size_t i = 0; i < waypoints.size(); i++)
 	{
-		DrawTextureEx(this->waypoint, waypoints[i],0 , scale[i], WHITE);
-		if (CheckCollisionPointRec(this->m_mousePos, { waypoints[i].x, waypoints[i].y, this->waypoint.width * scale[i], this->waypoint.height * scale[i] }))
+		DrawTextureEx(this->waypoint, waypoints[i].pos, 0, waypoints[i].scale, WHITE);
+		if (CheckCollisionPointRec(this->m_mousePos, { waypoints[i].pos.x, waypoints[i].pos.y, this->waypoint.width * waypoints[i].scale, this->waypoint.height * waypoints[i].scale }))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		}
@@ -35,6 +33,7 @@ void MapManager::DrawWaypoints(std::vector<Vector2> waypoints, std::vector<float
 }
 
 void MapManager::ToggleWaypoints() {
+	DrawTexture(this->waypoint, 0, 300, WHITE);
 	if (CheckCollisionPointRec(this->m_mousePos, { 0, 300, 50, 50 }))
 	{
 		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
@@ -45,15 +44,15 @@ void MapManager::ToggleWaypoints() {
 	}
 	if (this->toggleWaypoints)
 	{
-		DrawWaypoints(this->waypoints, this->scale);
+		DrawWaypoints(this->waypoints);
 	}
 }
 
-void MapManager::DrawPorts(std::vector<Vector2> ports, std::vector<float> portScale) {
+void MapManager::DrawPorts(std::vector<Coordinate> ports) {
 	for (size_t i = 0; i < ports.size(); i++)
 	{
-		DrawTextureEx(this->ship, ports[i], 0, portScale[i], WHITE);
-		if (CheckCollisionPointRec(this->m_mousePos, { ports[i].x, ports[i].y, this->toggler.width * portScale[i], this->toggler.height * portsScale[i] }))
+		DrawTextureEx(this->ship, ports[i].pos, 0, ports[i].scale, WHITE);
+		if (CheckCollisionPointRec(this->m_mousePos, { ports[i].pos.x, ports[i].pos.y, this->ship.width * ports[i].scale, this->ship.height * ports[i].scale }))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		}
@@ -61,6 +60,7 @@ void MapManager::DrawPorts(std::vector<Vector2> ports, std::vector<float> portSc
 };
 
 void MapManager::TogglePorts() {
+	DrawTexture(this->ship, 8, 370, WHITE);
 	if (CheckCollisionPointRec(this->m_mousePos, { 8, 370, 40, 40 }))
 	{
 		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
@@ -71,6 +71,6 @@ void MapManager::TogglePorts() {
 	}
 	if (this->togglePorts)
 	{
-		DrawPorts(this->ports, this->portsScale);
+		DrawPorts(this->ports);
 	}
 }
