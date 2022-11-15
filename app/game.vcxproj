@@ -137,10 +137,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\MapManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\MapManager.hpp" />
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\reasings.hpp" />

@@ -1,18 +1,7 @@
 #include <MapManager.hpp>
-#include <iostream>
+
 MapManager::MapManager()
 {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->getScreenSize().x / 2 - this->mapWidth / 2, gameManager->getScreenSize().y / 2 - this->mapHeight / 2} });
-	while (gameManager->currentScene == gameManager->SCENE::GAME && !gameManager->getShouldClose())
-	{
-		BeginDrawing();
-		ClearBackground(BLUE);
-		this->m_mousePos = GetMousePosition();
-		gameManager->Update();
-		ToggleWaypoints();
-		TogglePorts();
-		EndDrawing();
-	}
 }
 
 MapManager::~MapManager()
@@ -20,7 +9,14 @@ MapManager::~MapManager()
 
 }
 
-void MapManager::DrawWaypoints(std::vector<Coordinate> waypoints)
+void MapManager::UpdateMap()
+{	
+	this->m_mousePos = GetMousePosition();
+	ToggleWaypoints();
+	TogglePorts();
+}
+
+void MapManager::DrawWaypoints(std::vector<Country> waypoints)
 {
 	for (size_t i = 0; i < waypoints.size(); i++)
 	{
@@ -28,6 +24,10 @@ void MapManager::DrawWaypoints(std::vector<Coordinate> waypoints)
 		if (CheckCollisionPointRec(this->m_mousePos, { waypoints[i].pos.x, waypoints[i].pos.y, this->waypoint.width * waypoints[i].scale, this->waypoint.height * waypoints[i].scale }))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				std::cout << waypoints[i].name << std::endl;
+			}
 		}
 	}
 }
@@ -48,13 +48,17 @@ void MapManager::ToggleWaypoints() {
 	}
 }
 
-void MapManager::DrawPorts(std::vector<Coordinate> ports) {
+void MapManager::DrawPorts(std::vector<Country> ports) {
 	for (size_t i = 0; i < ports.size(); i++)
 	{
 		DrawTextureEx(this->ship, ports[i].pos, 0, ports[i].scale, WHITE);
 		if (CheckCollisionPointRec(this->m_mousePos, { ports[i].pos.x, ports[i].pos.y, this->ship.width * ports[i].scale, this->ship.height * ports[i].scale }))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				std::cout << ports[i].name << std::endl;
+			}
 		}
 	}
 };
@@ -73,4 +77,8 @@ void MapManager::TogglePorts() {
 	{
 		DrawPorts(this->ports);
 	}
+}
+Vector2 MapManager::getMapSize()
+{
+	return { this->mapWidth, this->mapHeight };
 }
