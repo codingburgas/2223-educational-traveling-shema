@@ -40,4 +40,5 @@ private:
 	std::vector<Texture2D> m_buttons;
 	std::vector<Texture2D> m_onHoverButtons;
 	std::vector<Vector2> m_buttonPositions;
+	
 };

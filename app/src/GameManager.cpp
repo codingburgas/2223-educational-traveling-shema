@@ -3,10 +3,11 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
-	InitWindow(getScreenSize().x, getScreenSize().y, "Game Window");
+	SetConfigFlags(FLAG_VSYNC_HINT);
+	InitWindow(1920, 1080, "Game Window");
 	std::cout << "Width: " << this->m_width << " Height: " << this->m_height << std::endl;
-	ToggleFullscreen();
-	SetTargetFPS(this->k_windowFPS);
+	//ToggleFullscreen();
+	//SetTargetFPS(this->k_windowFPS);
 }
 GameManager::~GameManager()
 {

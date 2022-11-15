@@ -30,14 +30,15 @@ void Menu::drawMenu()
             BeginDrawing();
             ClearBackground(BLUE);
             gameManager->Update();
+            if (gameManager->isButtonClicked(0))
+            {
+                Game* game = new Game();
+                delete this;
+                break;
+            }
             if (gameManager->isButtonClicked(3))
             {
                 delete gameManager;
-            }
-            if (gameManager->isButtonClicked(0))
-            {
-                MapManager* map = new MapManager();
-                delete this;
                 break;
             }
             EndDrawing();

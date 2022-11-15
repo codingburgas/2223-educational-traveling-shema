@@ -1,7 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <reasings.hpp>
-#include <MapManager.hpp>
+#include <Game.hpp>
 
 class Menu
 {
