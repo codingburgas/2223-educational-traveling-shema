@@ -129,3 +129,12 @@ Vector2 GameManager::getScreenSize()
 {
 	return Vector2{ float(GetScreenWidth()), float(GetScreenHeight())};
 }
+void GameManager::StartTimer(double seconds)
+{
+	this->m_startTime = GetTime();
+	this->m_timerDuration = seconds;
+}
+bool GameManager::TimerEnded()
+{
+	return (GetTime() - this->m_startTime) >= this->m_timerDuration;
+}

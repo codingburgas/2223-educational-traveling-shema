@@ -25,6 +25,8 @@ public:
 	void UnloadScene();
 	bool isButtonClicked(size_t buttonID);
 	Vector2 getScreenSize();
+	void StartTimer(double seconds);
+	bool TimerEnded();
 	~GameManager();
 
 private:
@@ -40,5 +42,7 @@ private:
 	std::vector<Texture2D> m_buttons;
 	std::vector<Texture2D> m_onHoverButtons;
 	std::vector<Vector2> m_buttonPositions;
+	double m_startTime = 0;
+	double m_timerDuration = 0;
 	
 };
