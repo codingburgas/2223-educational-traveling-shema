@@ -3,8 +3,8 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
-	InitWindow(screenSize().x, screenSize().y, "Game Window");
-	std::cout << "Width: " << this->width << " Height: " << this->height << std::endl;
+	InitWindow(getScreenSize().x, getScreenSize().y, "Game Window");
+	std::cout << "Width: " << this->m_width << " Height: " << this->m_height << std::endl;
 	ToggleFullscreen();
 	SetTargetFPS(this->k_windowFPS);
 }
@@ -12,13 +12,17 @@ GameManager::~GameManager()
 {
 	CloseWindow();
 }
-GameManager* GameManager::getInstance()
+GameManager *GameManager::getInstance()
 {
 	if(!instance)
 	{
 		instance = new GameManager();
 	}
 	return instance;
+}
+std::string GameManager::getAssetPath()
+{
+	return this->m_assetPath;
 }
 void GameManager::Update()
 {
@@ -31,7 +35,7 @@ void GameManager::DrawTextures()
 {
 	for (size_t i = 0; i < this->m_textures.size(); i++)
 	{
-		DrawTextureEx(this->m_textures[i], this->m_texturePositions[i], 0, screenSize().x / 1920, WHITE);
+		DrawTextureEx(this->m_textures[i], this->m_texturePositions[i], 0, getScreenSize().x / 1920, WHITE);
 	}
 }
 
@@ -64,7 +68,7 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textureFiles
 		this->currentScene = sceneID;
 		for (int i = 0; i < textureFiles.size(); i++)
 		{
-			textureFiles[i] = "./assets/" + textureFiles[i];
+			textureFiles[i] = this->getAssetPath() + textureFiles[i];
 			this->m_textures.push_back(LoadTexture(textureFiles[i].c_str()));
 			this->m_texturePositions.push_back(positions[i]);
 			std::cout << "Loaded Texture: " << textureFiles[i] << std::endl;
@@ -120,7 +124,7 @@ bool GameManager::isButtonClicked(size_t buttonID)
 	}
 	return false;
 }
-Vector2 GameManager::screenSize()
+Vector2 GameManager::getScreenSize()
 {
 	return Vector2{ float(GetScreenWidth()), float(GetScreenHeight())};
 }
