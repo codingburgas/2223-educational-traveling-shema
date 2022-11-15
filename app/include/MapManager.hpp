@@ -13,9 +13,9 @@ private:
 	void ToggleWaypoints();
 	void TogglePorts();
 	void DrawPorts(std::vector<Vector2> ports, std::vector<float> scale);
-	Texture2D waypoint = LoadTexture("./assets/Waypoint.png");
-	Texture2D toggler = LoadTexture("./assets/Waypoint.png");
-	Texture2D ship = LoadTexture("./assets/Ship.png");
+	Texture2D waypoint = LoadTexture((gameManager->getAssetPath() + "Waypoint.png").c_str());
+	Texture2D toggler = waypoint;
+	Texture2D ship = LoadTexture((gameManager->getAssetPath() + "Ship.png").c_str());
 	std::vector<Vector2> waypoints = { {350,50} , {430,220} , {600,580} , {480,535} , {820,400} , {940,350} , {830,650} , {1200,830} , {700,750} , {500,900} , 
 		{350,915} , {760,620} , {740,665} , {1100,340} , {1200,750} , {1170,930} , {870,830} , {1300,660} , {1200,550} , {1030,600} , {1400,880} , {950,670} , 
 		{950,730} , {800,750} , {955,775} , {1000,785} , {1100,810} , {1150,860} , {1110,880} , {1040,820} , {1090,855} , {1050,760} , {1050,700} , {1130,520} , 

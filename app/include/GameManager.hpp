@@ -15,6 +15,7 @@ public:
 		GAME
 	};
 	SCENE currentScene = NO_SCENE;
+	std::string getAssetPath();
 	void Update();
 	bool getShouldClose();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
@@ -23,16 +24,17 @@ public:
 	void DrawButtons();
 	void UnloadScene();
 	bool isButtonClicked(size_t buttonID);
-	Vector2 screenSize();
+	Vector2 getScreenSize();
 	~GameManager();
 
 private:
 	GameManager();
 	static GameManager* instance;
 	const int k_windowFPS = 60;
-	float width = GetScreenWidth();
-	float height = GetScreenHeight();
+	float m_width = GetScreenWidth();
+	float m_height = GetScreenHeight();
 	Vector2 m_mousePos = {0, 0};
+	const std::string m_assetPath = "./assets/";
 	std::vector<Texture2D> m_textures;
 	std::vector<Vector2> m_texturePositions;
 	std::vector<Texture2D> m_buttons;
