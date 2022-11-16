@@ -10,7 +10,7 @@ Game::Game()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		mapManager->UpdateMap();
-		if (!this->isCountryChosen) DrawText("Choose a country!", gameManager->getScreenSize().x / 2 - MeasureText("Choose a country!", 60) / 2, 50, 60, RED);
+		if (mapManager->getChosenCountry().empty()) ChooseStartingCountry();
 		EndDrawing();
 	}
 }
@@ -32,5 +32,14 @@ void Game::ChooseCountryAnimation(bool displayText)
 			DrawText("Choose a country", gameManager->getScreenSize().x / 2 - MeasureText("Choose a country", 100) / 2, gameManager->getScreenSize().y / 2 - 20 / 2, 100, RED);
 		} else DrawRectangle(0, 0, gameManager->getScreenSize().x, gameManager->getScreenSize().y, Fade(BLACK, 0.5f));
 		EndDrawing();
+	}
+}
+
+void Game::ChooseStartingCountry()
+{
+	DrawText("Choose a country!", gameManager->getScreenSize().x / 2 - MeasureText("Choose a country!", 60) / 2, 50, 60, RED);
+	if (!mapManager->isWaypointClicked().name.empty())
+	{
+		mapManager->setChosenCountry(mapManager->isWaypointClicked().name);
 	}
 }
