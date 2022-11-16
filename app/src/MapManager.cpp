@@ -20,7 +20,8 @@ void MapManager::DrawWaypoints(std::vector<Country> waypoints)
 {
 	for (size_t i = 0; i < waypoints.size(); i++)
 	{
-		DrawTextureEx(waypoints[i].unlocked ? this->UnlockedWaypoint : this->LockedWaypoint, waypoints[i].pos, 0, waypoints[i].scale, WHITE);
+		if (this->chosenCountry.empty()) DrawTextureEx(this->waypoint, waypoints[i].pos, 0, waypoints[i].scale, WHITE);
+		else DrawTextureEx(waypoints[i].unlocked ? this->UnlockedWaypoint : this->LockedWaypoint, waypoints[i].pos, 0, waypoints[i].scale, WHITE);
 	}
 }
 
@@ -127,5 +128,4 @@ void MapManager::unlockCountry(std::string countryName)
 			ports[i].unlocked = 1;
 		}
 	}
-
 }
