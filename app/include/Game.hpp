@@ -11,5 +11,5 @@ private:
 	GameManager *gameManager = GameManager::getInstance();
 	MapManager *mapManager = new MapManager();
 	void ChooseCountryAnimation(bool displayText);
-	bool isCountryChosen = false;
+	void ChooseStartingCountry();
 };
