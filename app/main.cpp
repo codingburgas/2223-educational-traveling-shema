@@ -53,6 +53,41 @@ int main()
     ImageResize(hookImagePtr, 70, 70);
     Texture2D hook = LoadTextureFromImage(*hookImagePtr);
 	
+    int mouseX, mouseY;
+
+    bool checkIfObjectIsClicked[20] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+    bool cleaned[20] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+    bool carrying = 0;
+
+    int rubbishX[20] = { 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+    int rubbishY[20] = { 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+
+    short rubbishType[20] = { 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }, remainingRubbish = 20;
+
+    srand(time(NULL));
+
+    for (int i = 0; i < 20; i++)
+    {
+        rubbishType[i] = rand() % 3 + 1;
+    }
+
+    for (int i = 0; i < 20; i++)
+    {
+        rubbishX[i] = rand() % 1820 + 1;
+        rubbishY[i] = rand() % 450 + 450;
+        for (int j = 0; j < i; j++)
+        {
+            while (abs(rubbishX[i] - rubbishX[j]) < 100)
+            {
+                rubbishX[i] = rand() % 1820 + 1;
+            }
+            while (abs(rubbishY[i] - rubbishY[j]) < 100)
+            {
+                rubbishY[i] = rand() % 450 + 450;
+            }
+        }
+    }
+
 	while (!WindowShouldClose())
 <<<<<<< HEAD
     	{
