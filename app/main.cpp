@@ -103,70 +103,86 @@ int main()
         HideCursor();
         ClearBackground(RAYWHITE);
 
-        mouseX = GetMouseX();
-        mouseY = GetMouseY();
-        DrawTexture(waves, 0, 0, RAYWHITE);
-        DrawTexture(rope, mouseX - 29, mouseY - rope.height - 10, RAYWHITE);
-        DrawTexture(hook, mouseX - 20, mouseY - 25, RAYWHITE);
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (remainingRubbish == 0)
         {
+            DrawTexture(waves, 0, 0, RAYWHITE);
+            DrawText("Congratulations!", GetScreenWidth() / 2 - 500, GetScreenHeight() / 2 - 400, 120, BLACK);
+        }
+        else
+        {
+            remainingRubbish = 20;
+            mouseX = GetMouseX();
+            mouseY = GetMouseY();
+            DrawTexture(waves, 0, 0, RAYWHITE);
+            DrawTexture(rope, mouseX - 29, mouseY - rope.height - 10, RAYWHITE);
+            DrawTexture(hook, mouseX - 20, mouseY - 25, RAYWHITE);
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    if ((mouseX >= rubbishX[i] && mouseX <= rubbishX[i] + 65) && (mouseY >= rubbishY[i] && mouseY <= rubbishY[i] + 55) && !checkIfObjectIsClicked[i] && !cleaned[i] && !carrying)
+                    {
+                        SetMousePosition(rubbishX[i] + 20, rubbishY[i] + 20);
+                        checkIfObjectIsClicked[i] = 1;
+                        carrying = 1;
+                        break;
+                    }
+                    else if ((mouseX >= 0 && mouseX <= 1920) && (mouseY >= 0 && mouseY <= 345))
+                    {
+                        for (int j = 0; j < 20; j++)
+                        {
+                            if (checkIfObjectIsClicked[j] == 1)
+                            {
+                                checkIfObjectIsClicked[j] = 0;
+                                cleaned[j] = 1;
+                                break;
+                            }
+                        }
+                        carrying = 0;
+                        break;
+                    }
+                }
+
+            }
             for (int i = 0; i < 20; i++)
             {
-                if ((mouseX >= rubbishX[i] && mouseX <= rubbishX[i] + 65) && (mouseY >= rubbishY[i] && mouseY <= rubbishY[i] + 55) && !checkIfObjectIsClicked[i] && !cleaned[i] && !carrying)
+                if (checkIfObjectIsClicked[i] && !cleaned[i])
                 {
-                    SetMousePosition(rubbishX[i] + 20, rubbishY[i] + 20);
-                    checkIfObjectIsClicked[i] = 1;
-                    carrying = 1;
-                    break;
-                }
-                else if ((mouseX >= 0 && mouseX <= 1920) && (mouseY >= 0 && mouseY <= 345))
-                {
-                    for (int j = 0; j < 20; j++)
+                    if (rubbishType[i] == 1)
                     {
-                        if (checkIfObjectIsClicked[j] == 1)
-                        {
-                            checkIfObjectIsClicked[j] = 0;
-                            cleaned[j] = 1;
-                            break;
-                        }
+                        DrawTexture(bag, mouseX - 25, mouseY - 15, RAYWHITE);
                     }
-                    carrying = 0;
-                    break;
+                    else if (rubbishType[i] == 2)
+                    {
+                        DrawTexture(can, mouseX - 25, mouseY, RAYWHITE);
+                    }
+                    else
+                    {
+                        DrawTexture(bottle, mouseX - 25, mouseY, RAYWHITE);
+                    }
+                }
+                else if (!checkIfObjectIsClicked[i] && !cleaned[i])
+                {
+                    if (rubbishType[i] == 1)
+                    {
+                        DrawTexture(bag, rubbishX[i], rubbishY[i], RAYWHITE);
+                    }
+                    else if (rubbishType[i] == 2)
+                    {
+                        DrawTexture(can, rubbishX[i], rubbishY[i], RAYWHITE);
+                    }
+                    else
+                    {
+                        DrawTexture(bottle, rubbishX[i], rubbishY[i], RAYWHITE);
+                    }
                 }
             }
-
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            if (checkIfObjectIsClicked[i] && !cleaned[i])
+            for (int i = 0; i < 20; i++)
             {
-                if (rubbishType[i] == 1)
+                if (cleaned[i] == 1)
                 {
-                    DrawTexture(bag, mouseX - 25, mouseY - 15, RAYWHITE);
-                }
-                else if (rubbishType[i] == 2)
-                {
-                    DrawTexture(can, mouseX - 25, mouseY, RAYWHITE);
-                }
-                else
-                {
-                    DrawTexture(bottle, mouseX - 25, mouseY, RAYWHITE);
-                }
-            }
-            else if (!checkIfObjectIsClicked[i] && !cleaned[i])
-            {
-                if (rubbishType[i] == 1)
-                {
-                    DrawTexture(bag, rubbishX[i], rubbishY[i], RAYWHITE);
-                }
-                else if (rubbishType[i] == 2)
-                {
-                    DrawTexture(can, rubbishX[i], rubbishY[i], RAYWHITE);
-                }
-                else
-                {
-                    DrawTexture(bottle, rubbishX[i], rubbishY[i], RAYWHITE);
+                    remainingRubbish--;
                 }
             }
         }
