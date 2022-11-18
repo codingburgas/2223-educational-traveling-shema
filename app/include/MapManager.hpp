@@ -18,10 +18,11 @@ public:
 	Vector2 GetMapSize();
 	void UpdateMap();
 	std::string GetChosenCountry();
-	void SetChosenCountry(std::string countryName);
+	void SetChosenCountry(std::string countryName, Vector2 pos);
 	Country IsWaypointClicked();
 	Country IsPortClicked();
 	void UnlockCountry(std::string countryName);
+	void TravelToCountry();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	void DrawWaypoints(std::vector<Country> waypoints);
@@ -32,7 +33,7 @@ private:
 	Texture2D LockedWaypoint = LoadTexture((gameManager->getAssetPath() + "LockedWaypoint.png").c_str());
 	Texture2D UnlockedWaypoint = LoadTexture((gameManager->getAssetPath() + "UnlockedWaypoint.png").c_str());
 	Texture2D ship = LoadTexture((gameManager->getAssetPath() + "Ship.png").c_str());
-	std::vector<Country> waypoints = { {"Greenland", {350,50} , 1, 0}, {"Iceland", {430,220} , 1, 0} , {"England", {600,580} , 1, 0} , {"Ireland", {480,535} , 1, 0} , {"Norway", {820,400} , 1, 0} , {"Sweden", {940,350} , 1, 0} , {"Germany", {830,650} , 1, 0} , {"Bulgaria", {1200,830} , 1, 0} , {"France", {700,750} , 1, 0} , {"Spain", {500,900} , 1, 0} ,
+	std::vector<Country> waypoints = { {"Greenland", {350,50} , 1, 1}, {"Iceland", {430,220} , 1, 0} , {"England", {600,580} , 1, 0} , {"Ireland", {480,535} , 1, 0} , {"Norway", {820,400} , 1, 0} , {"Sweden", {940,350} , 1, 0} , {"Germany", {830,650} , 1, 0} , {"Bulgaria", {1200,830} , 1, 0} , {"France", {700,750} , 1, 0} , {"Spain", {500,900} , 1, 0} ,
 		{"Portugal", {350,915} , 1, 0} , {"The Netherlands", {760,620} , 0.7, 0} , {"Belgium", {740,665} , 0.75, 0} , {"Finland", {1100,340} , 1, 0} , {"Romania", {1200,750} , 1, 0} , {"Greece", {1170,930} , 1, 0} , {"Italy", {870,830} , 1, 0} , {"Ukraine", {1300,660} , 1, 0} , {"Belarus", {1200,550} , 1, 0} , {"Poland", {1030,600} , 1, 0} , {"Turkey", {1400,910} , 1, 0} , {"Czech Republic", {950,670} , 1, 0} ,
 		{"Austria", {950,730} , 1, 0} , {"Switzerland", {800,750} , 1, 0} , {"Slovenia", {955,775} , 0.75, 0} , {"Croatia", {1000,785} , 0.75, 0} , {"Serbia", {1100,810} , 1, 0} , {"North Macedonia", {1150,860} , 1, 0} , {"Albania", {1110,880} , 0.75, 0} , {"Bosnia and Herzegovina", {1040,820} , 0.75, 0} , {"Montenegro", {1090,855} , 0.5, 0} , {"Hungary", {1050,760} , 0.5, 0} , {"Slovakia", {1050,700} , 1, 0} , {"Lithuania", {1130,520} , 0.75, 0} ,
 		{"Latvia", {1140,480} , 0.75, 0} , {"Estonia", {1150,435} , 0.75, 0} , {"Russia", {1300,450} , 1, 0} , {"Denmark", {840,510} , 1, 0} , {"Moldova", {1290,710} , 0.75, 0} };
@@ -46,4 +47,6 @@ private:
 	const float mapWidth = 1920;
 	const float mapHeight = 1080;
 	std::string chosenCountry;
+	std::string playerCountry;
+	Vector2 playerPos;
 };

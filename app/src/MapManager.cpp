@@ -106,10 +106,12 @@ std::string MapManager::GetChosenCountry()
 	return this->chosenCountry;
 }
 
-void MapManager::SetChosenCountry(std::string countryName)
+void MapManager::SetChosenCountry(std::string countryName, Vector2 pos)
 {
 	this->chosenCountry = countryName;
 	UnlockCountry(countryName);
+	playerCountry = chosenCountry;
+	playerPos = pos;
 }
 
 void MapManager::UnlockCountry(std::string countryName)
@@ -126,6 +128,31 @@ void MapManager::UnlockCountry(std::string countryName)
 		if (ports[i].name == countryName)
 		{
 			ports[i].unlocked = 1;
+		}
+	}
+}
+
+void MapManager::TravelToCountry()
+{
+	if (!this->IsWaypointClicked().name.empty())
+	{
+		for (size_t i = 0; i < this->waypoints.size(); i++)
+		{
+			if (this->waypoints[i].name == this->IsWaypointClicked().name && this->waypoints[i].unlocked && this->waypoints[i].name!=playerCountry)
+			{
+				gameManager->StartTimer(3);
+				HideCursor();
+				while (!gameManager->TimerEnded()) 
+				{
+					BeginDrawing();
+					ClearBackground(BLACK);
+					DrawText("Traveling...", gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2, gameManager->GetScreenSize().y/2 - 150, 150, WHITE);
+					EndDrawing();
+				}
+				this->playerCountry = waypoints[i].name;
+				this->playerPos = waypoints[i].pos;
+				ShowCursor();
+			}
 		}
 	}
 }
