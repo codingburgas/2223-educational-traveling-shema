@@ -140,6 +140,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\MapManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\SeaMinigame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\reasings.hpp" />
     <ClCompile Include="src\GameManager.cpp" />
+    <ClInclude Include="include\SeaMinigame.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameManager.hpp" />
