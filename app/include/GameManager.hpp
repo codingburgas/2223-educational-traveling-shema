@@ -7,7 +7,7 @@
 class GameManager
 {
 public:
-	static GameManager* getInstance();
+	static GameManager* GetInstance();
 	enum SCENE
 	{
 		NO_SCENE,
@@ -17,14 +17,14 @@ public:
 	SCENE currentScene = NO_SCENE;
 	std::string getAssetPath();
 	void Update();
-	bool getShouldClose();
+	bool GetShouldClose();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
 	void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
 	void DrawTextures();
 	void DrawButtons();
 	void UnloadScene();
-	bool isButtonClicked(size_t buttonID);
-	Vector2 getScreenSize();
+	bool IsButtonClicked(size_t buttonID);
+	Vector2 GetScreenSize();
 	void StartTimer(double seconds);
 	bool TimerEnded();
 	~GameManager();

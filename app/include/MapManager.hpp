@@ -15,15 +15,15 @@ private:
 public:
 	MapManager();
 	~MapManager();
-	Vector2 getMapSize();
+	Vector2 GetMapSize();
 	void UpdateMap();
-	std::string getChosenCountry();
-	void setChosenCountry(std::string countryName);
-	Country isWaypointClicked();
-	Country isPortClicked();
-	void unlockCountry(std::string countryName);
+	std::string GetChosenCountry();
+	void SetChosenCountry(std::string countryName);
+	Country IsWaypointClicked();
+	Country IsPortClicked();
+	void UnlockCountry(std::string countryName);
 private:
-	GameManager* gameManager = GameManager::getInstance();
+	GameManager* gameManager = GameManager::GetInstance();
 	void DrawWaypoints(std::vector<Country> waypoints);
 	void DrawPorts(std::vector<Country> ports);
 	void ToggleWaypoints();

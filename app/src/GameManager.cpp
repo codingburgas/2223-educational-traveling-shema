@@ -13,7 +13,7 @@ GameManager::~GameManager()
 {
 	CloseWindow();
 }
-GameManager *GameManager::getInstance()
+GameManager *GameManager::GetInstance()
 {
 	if(!instance)
 	{
@@ -36,11 +36,11 @@ void GameManager::DrawTextures()
 {
 	for (size_t i = 0; i < this->m_textures.size(); i++)
 	{
-		DrawTextureEx(this->m_textures[i], this->m_texturePositions[i], 0, getScreenSize().x / 1920, WHITE);
+		DrawTextureEx(this->m_textures[i], this->m_texturePositions[i], 0, GetScreenSize().x / 1920, WHITE);
 	}
 }
 
-bool GameManager::getShouldClose()
+bool GameManager::GetShouldClose()
 {
 	return WindowShouldClose();
 }
@@ -108,7 +108,7 @@ void GameManager::DrawButtons()
 	}
 }
 
-bool GameManager::isButtonClicked(size_t buttonID)
+bool GameManager::IsButtonClicked(size_t buttonID)
 {
 	if (buttonID >= this->m_buttons.size())
 	{
@@ -125,7 +125,7 @@ bool GameManager::isButtonClicked(size_t buttonID)
 	}
 	return false;
 }
-Vector2 GameManager::getScreenSize()
+Vector2 GameManager::GetScreenSize()
 {
 	return Vector2{ float(GetScreenWidth()), float(GetScreenHeight())};
 }

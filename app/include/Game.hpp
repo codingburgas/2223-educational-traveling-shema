@@ -8,7 +8,7 @@ public:
 	Game();
 	~Game();
 private:
-	GameManager *gameManager = GameManager::getInstance();
+	GameManager *gameManager = GameManager::GetInstance();
 	MapManager *mapManager = new MapManager();
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();

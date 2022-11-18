@@ -16,7 +16,7 @@ Menu::~Menu()
 
 void Menu::drawMenu()
 {
-    while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->getShouldClose())
+    while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->GetShouldClose())
     {
         if (this->animationEnd)
         {
@@ -30,13 +30,13 @@ void Menu::drawMenu()
             BeginDrawing();
             ClearBackground(BLUE);
             gameManager->Update();
-            if (gameManager->isButtonClicked(0))
+            if (gameManager->IsButtonClicked(0))
             {
                 Game* game = new Game();
                 delete this;
                 break;
             }
-            if (gameManager->isButtonClicked(3))
+            if (gameManager->IsButtonClicked(3))
             {
                 delete gameManager;
                 break;
@@ -48,7 +48,7 @@ void Menu::drawMenu()
 
 void Menu::animation()
 {
-    std::cout << gameManager->getScreenSize().x;
+    std::cout << gameManager->GetScreenSize().x;
     if(!this->animationEnd)
     
     switch (this->state)
@@ -57,7 +57,7 @@ void Menu::animation()
     {
         this->framesCounter += 2.00f;
 
-        this->rect.y = EaseElasticOut((float)this->framesCounter, - 100, gameManager->getScreenSize().y / 2.0f + 100, 120);
+        this->rect.y = EaseElasticOut((float)this->framesCounter, - 100, gameManager->GetScreenSize().y / 2.0f + 100, 120);
 
         if (this->framesCounter >= 120)
         {
@@ -69,7 +69,7 @@ void Menu::animation()
     {
         this->framesCounter += 2.00f;
         this->rect.height = EaseBounceOut((float)this->framesCounter, 100, -90, 120);
-        this->rect.width = EaseBounceOut((float)this->framesCounter, 100, gameManager->getScreenSize().x + 180, 120);
+        this->rect.width = EaseBounceOut((float)this->framesCounter, 100, gameManager->GetScreenSize().x + 180, 120);
 
         if (this->framesCounter >= 120)
         {
@@ -91,7 +91,7 @@ void Menu::animation()
     case 3:
     {
         this->framesCounter += 3.00f;
-        this->rect.height = EaseCircOut((float)this->framesCounter, 10, gameManager->getScreenSize().x + 180, 120);
+        this->rect.height = EaseCircOut((float)this->framesCounter, 10, gameManager->GetScreenSize().x + 180, 120);
 
         if (this->framesCounter >= 80)
             this->animationEnd = true;
