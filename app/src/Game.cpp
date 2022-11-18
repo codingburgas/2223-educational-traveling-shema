@@ -11,6 +11,7 @@ Game::Game()
 		gameManager->Update();
 		mapManager->UpdateMap();
 		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
+		mapManager->TravelToCountry();
 		EndDrawing();
 		if (IsKeyPressed(257))
 		{
@@ -44,6 +45,7 @@ void Game::ChooseCountryAnimation(bool displayText)
 void Game::ChooseStartingCountry()
 {
 	DrawText("Choose a country!", gameManager->GetScreenSize().x / 2 - MeasureText("Choose a country!", 60) / 2, 50, 60, RED);
+	gameManager->StartTimer(0.5);
 	if (!mapManager->IsWaypointClicked().name.empty())
 	{
 		bool chosen = false;
@@ -73,9 +75,9 @@ void Game::ChooseStartingCountry()
 			{
 				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 				DrawTextureEx(YesButton, {gameManager->GetScreenSize().x / 2 - YesButton.width * 3 + 50, gameManager->GetScreenSize().y / 2 + YesButton.height + 50}, 0, 2, Fade(BLACK, 0.5f));
-				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
 				{
-					mapManager->SetChosenCountry(mapManager->IsWaypointClicked().name);
+					mapManager->SetChosenCountry(mapManager->IsWaypointClicked().name, mapManager->IsWaypointClicked().pos);
 					UnloadTexture(ModalWindow);
 					UnloadTexture(YesButton);
 					UnloadTexture(NoButton);
@@ -88,7 +90,7 @@ void Game::ChooseStartingCountry()
 			{
 				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 				DrawTextureEx(NoButton, { gameManager->GetScreenSize().x / 2 + NoButton.width - 50, gameManager->GetScreenSize().y / 2 + NoButton.height + 50 }, 0, 2, Fade(BLACK, 0.5f));
-				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
 				{
 					UnloadTexture(ModalWindow);
 					UnloadTexture(YesButton);
