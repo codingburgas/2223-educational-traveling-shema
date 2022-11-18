@@ -130,8 +130,8 @@ void SeaMinigame::UpdateGame()
 		ClearBackground(RAYWHITE);
 		DrawTexture(waves, 0, 0, WHITE);
 		DrawRectangle(0, 0, 1920, 1080, Fade(BLACK, 0.5f));
-		DrawText("Congratulations!", gameManager->getScreenSize().x / 2 - MeasureText("Congratulations!", 60) / 2, gameManager->getScreenSize().y/2 - 80, 60, RED);
-		DrawText("You've cleaned the sea!", gameManager->getScreenSize().x / 2 - MeasureText("You've cleaned the sea!", 60) / 2, gameManager->getScreenSize().y/2 - 20, 60, RED);
+		DrawText("Congratulations!", gameManager->GetScreenSize().x / 2 - MeasureText("Congratulations!", 60) / 2, gameManager->GetScreenSize().y/2 - 80, 60, RED);
+		DrawText("You've cleaned the sea!", gameManager->GetScreenSize().x / 2 - MeasureText("You've cleaned the sea!", 60) / 2, gameManager->GetScreenSize().y/2 - 20, 60, RED);
 		EndDrawing();
 	}
 	ShowCursor();
