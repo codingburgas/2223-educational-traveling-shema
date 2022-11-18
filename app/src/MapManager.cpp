@@ -25,7 +25,7 @@ void MapManager::DrawWaypoints(std::vector<Country> waypoints)
 	}
 }
 
-MapManager::Country MapManager::isWaypointClicked()
+MapManager::Country MapManager::IsWaypointClicked()
 {
 	for (size_t i = 0; i < waypoints.size(); i++)
 	{
@@ -65,7 +65,7 @@ void MapManager::DrawPorts(std::vector<Country> ports)
 		DrawTextureEx(this->ship, ports[i].pos, 0, ports[i].scale, WHITE);
 	}
 }
-MapManager::Country MapManager::isPortClicked()
+MapManager::Country MapManager::IsPortClicked()
 {
 	for (size_t i = 0; i < ports.size(); i++)
 	{
@@ -96,23 +96,23 @@ void MapManager::TogglePorts() {
 		DrawPorts(this->ports);
 	}
 }
-Vector2 MapManager::getMapSize()
+Vector2 MapManager::GetMapSize()
 {
 	return { this->mapWidth, this->mapHeight };
 }
 
-std::string MapManager::getChosenCountry()
+std::string MapManager::GetChosenCountry()
 {
 	return this->chosenCountry;
 }
 
-void MapManager::setChosenCountry(std::string countryName)
+void MapManager::SetChosenCountry(std::string countryName)
 {
 	this->chosenCountry = countryName;
-	unlockCountry(countryName);
+	UnlockCountry(countryName);
 }
 
-void MapManager::unlockCountry(std::string countryName)
+void MapManager::UnlockCountry(std::string countryName)
 {
 	for (size_t i = 0; i < waypoints.size(); i++)
 	{

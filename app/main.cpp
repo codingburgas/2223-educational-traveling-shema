@@ -4,7 +4,7 @@
 
 int main()
 {
-    GameManager *gameManager = GameManager::getInstance(); 
+    GameManager *gameManager = GameManager::GetInstance(); 
     Menu* mainMenu = new Menu();
     //while (!gameManager->getShouldClose())
     //{
