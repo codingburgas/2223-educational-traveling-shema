@@ -12,6 +12,12 @@ Game::Game()
 		mapManager->UpdateMap();
 		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
 		EndDrawing();
+		if (IsKeyPressed(257))
+		{
+			SeaMinigame* seaMinigame = new SeaMinigame();
+			seaMinigame->UpdateGame();
+			delete seaMinigame;
+		}
 	}
 }
 

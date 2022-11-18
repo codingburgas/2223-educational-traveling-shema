@@ -1,6 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <MapManager.hpp>
+#include <SeaMinigame.hpp>
 
 class Game
 {
