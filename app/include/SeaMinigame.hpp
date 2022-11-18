@@ -9,7 +9,7 @@ public:
 	bool IsGameWon();
 	void UpdateGame();
 private:
-	GameManager* gameManager = GameManager::getInstance();
+	GameManager* gameManager = GameManager::GetInstance();
 
 	struct rubbish {
 		int x = 0;
