@@ -28,6 +28,7 @@ public:
 	void StartTimer(double seconds);
 	bool TimerEnded();
 	~GameManager();
+	Font impact;
 
 private:
 	GameManager();

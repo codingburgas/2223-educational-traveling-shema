@@ -3,6 +3,8 @@
 Game::Game()
 {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->GetScreenSize().x / 2 - mapManager->GetMapSize().x / 2, gameManager->GetScreenSize().y / 2 - mapManager->GetMapSize().y / 2} });
+	LoadDynamicTextures();
+	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "CountryHUD.png").c_str());
 	for (int i = 0; i < 5; i++) i % 2 == 0 ? ChooseCountryAnimation(true) : ChooseCountryAnimation(false);
 	while (gameManager->currentScene == gameManager->SCENE::GAME && !gameManager->GetShouldClose())
 	{
@@ -10,7 +12,7 @@ Game::Game()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		mapManager->UpdateMap();
-		mapManager->TravelToCountry();
+		this->DrawHUD();
 		EndDrawing();
 		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
 		if (IsKeyPressed(257))
@@ -24,6 +26,25 @@ Game::Game()
 
 Game::~Game()
 {
+
+}
+
+void Game::LoadDynamicTextures()
+{
+	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "CountryHUD.png").c_str());
+	
+	this->UnlockButton = LoadTexture((gameManager->getAssetPath() + "UnlockButton.png").c_str());
+	this->UnlockButtonHover = LoadTexture((gameManager->getAssetPath() + "UnlockButtonHover.png").c_str());
+	this->UnlockButtonLocked = LoadTexture((gameManager->getAssetPath() + "UnlockButtonLocked.png").c_str());
+	this->Unlocked = LoadTexture((gameManager->getAssetPath() + "Unlocked.png").c_str());
+	
+	this->TravelButton = LoadTexture((gameManager->getAssetPath() + "TravelButton.png").c_str());
+	this->TravelButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelButtonHover.png").c_str());
+	this->TravelButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelButtonLocked.png").c_str());
+	
+	this->TravelTicketButton = LoadTexture((gameManager->getAssetPath() + "TravelTicketButton.png").c_str());
+	this->TravelTicketButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonHover.png").c_str());
+	this->TravelTicketButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonLocked.png").c_str());
 
 }
 
@@ -102,6 +123,69 @@ void Game::ChooseStartingCountry()
 			}
 			
 			EndDrawing();
+		}
+	}
+}
+
+void Game::DrawHUD()
+{
+	if (!mapManager->IsWaypointClicked().name.empty())
+	{
+		this->CountryHUD = mapManager->IsWaypointClicked().name;
+		this->CountryHUDUnlocked = mapManager->IsWaypointClicked().unlocked;
+	}
+	if (!CountryHUD.empty())
+	{
+		DrawTexture(this->CountryHUDTexture, 0, 250, WHITE);
+		DrawTextEx(gameManager->impact, TextToUpper(CountryHUD.c_str()), { 50, 290 }, 50, 2, BLACK);
+
+		if (this->CountryHUDUnlocked)
+		{
+			if (this->tickets >= 1 && mapManager->getPlayerCountry() != CountryHUD)
+			{
+				DrawTexture(this->TravelTicketButton, 50, 590, WHITE);
+				//check if hovered
+				if (CheckCollisionPointRec(GetMousePosition(), { 50, 590, float(TravelTicketButton.width), float(TravelTicketButton.height) }))
+				{
+					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+					DrawTexture(this->TravelTicketButton, 50, 590, Fade(BLACK, 0.5f));
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
+					{
+						this->tickets--;
+						mapManager->TravelToCountry(CountryHUD);
+					}
+				}
+			}
+			else
+			{
+				DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
+			}
+
+			if (balance >= 185 && mapManager->getPlayerCountry() != CountryHUD)
+			{
+				DrawTexture(this->TravelButton, 176, 590, WHITE);
+				if (CheckCollisionPointRec(GetMousePosition(), { 176, 590, float(TravelButton.width), float(TravelButton.height) }))
+				{
+					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+					DrawTexture(this->TravelButton, 176, 590, Fade(BLACK, 0.5f));
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
+					{
+						this->balance -= 185;
+						mapManager->TravelToCountry(CountryHUD);
+					}
+				}
+			}
+			else
+			{
+				DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
+			}
+			DrawTexture(this->Unlocked, 50, 685, WHITE);
+		}
+		else
+		{
+			DrawTexture(this->UnlockButton, 50, 685, WHITE);
+			DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
+			DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 		}
 	}
 }
