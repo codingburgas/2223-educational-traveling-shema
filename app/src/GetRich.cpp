@@ -3,9 +3,12 @@
 #include <stdlib.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int questionCounter = 0, answerCounter = 0;
 Color color1 = BLACK, color2 = BLACK, color3 = BLACK, color4 = BLACK;
 
+=======
+>>>>>>> 87eb3c1 (feat(backend): add questions and answers)
 const char questions[15][100] =
 {
     "In Marco Polo's day, Cathay was the name for China, and Cidngo was for:",
@@ -44,6 +47,7 @@ const char answers[60][100] =
     "Los Angeles", "Sofia", "Beijing", "Tokyo"
 };
 
+<<<<<<< HEAD
 const char reward[16][11] ={ "    0$    ", "   100$   ", "   200$   ", "   300$   ", "   500$   ", "  1,000$  ", "  2,000$  ", "  4,000$  ", "  8,000$  ", " 16,000$  ", " 32,000$ ", " 64,000$ ", " 125,000$ ", " 250,000$ ", " 500,000$ ", "1,000,000$" };
 short correctAnswers[15] = { 0, 1, 2, 1, 3, 2, 0, 2, 0, 0, 1, 1, 1, 3, 3};
 
@@ -194,8 +198,25 @@ int main()
     CloseWindow();
     return 0;
 =======
+=======
+>>>>>>> 87eb3c1 (feat(backend): add questions and answers)
 int main()
 {
+    InitWindow(1920, 1080, "Get Rich");
+    
+    SetTargetFPS(60);
 
+<<<<<<< HEAD
 >>>>>>> 967dc07 (feat(backend): add neccessary libraries)
+=======
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        EndDrawing();
+    }
+
+    CloseWindow();
+    return 0;
+>>>>>>> 87eb3c1 (feat(backend): add questions and answers)
 }
