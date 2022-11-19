@@ -13,4 +13,5 @@ private:
 	MapManager *mapManager = new MapManager();
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();
+	bool chosen = false;
 };
