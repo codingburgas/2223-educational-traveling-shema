@@ -203,6 +203,13 @@ int main()
 int main()
 {
     InitWindow(1920, 1080, "Get Rich");
+
+    Texture2D background = LoadTexture("../assets/background.png");
+    Texture2D buttonHover[4] = { LoadTexture("../assets/background-1.png"), LoadTexture("../assets/background-2.png"), LoadTexture("../assets/background-3.png"), LoadTexture("../assets/background-4.png") };
+    
+    Texture2D correctAnswer[4] = { LoadTexture("../assets/correct-answer-1.png"), LoadTexture("../assets/correct-answer-2.png"), LoadTexture("../assets/correct-answer-3.png"), LoadTexture("../assets/correct-answer-4.png") };
+    Texture2D wrongAnswer[4] = { LoadTexture("../assets/wrong-answer-1.png"), LoadTexture("../assets/wrong-answer-2.png"), LoadTexture("../assets/wrong-answer-3.png"), LoadTexture("../assets/wrong-answer-4.png") };
+    Texture2D finishScreen = LoadTexture("../assets/finish-screen.png");    
     
     SetTargetFPS(60);
 
