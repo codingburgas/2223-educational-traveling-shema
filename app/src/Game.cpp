@@ -76,7 +76,10 @@ void Game::ChooseStartingCountry()
 		
 		Texture2D ModalWindow = LoadTexture((gameManager->getAssetPath() + "CountryModal.png").c_str());
 		Texture2D YesButton = LoadTexture((gameManager->getAssetPath() + "YesButton.png").c_str());
+		Texture2D YesButtonHover = LoadTexture((gameManager->getAssetPath() + "YesButtonHover.png").c_str());
 		Texture2D NoButton = LoadTexture((gameManager->getAssetPath() + "NoButton.png").c_str());
+		Texture2D NoButtonHover = LoadTexture((gameManager->getAssetPath() + "NoButtonHover.png").c_str());
+		
 		
 		while (!chosen)
 		{
@@ -85,18 +88,16 @@ void Game::ChooseStartingCountry()
 			gameManager->Update();
 			
 			DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
-			DrawTextureEx(ModalWindow, { gameManager->GetScreenSize().x / 2 - ModalWindow.width, gameManager->GetScreenSize().y / 2 - ModalWindow.height }, 0, 2, WHITE);
+			DrawTextureEx(ModalWindow, { gameManager->GetScreenSize().x / 2 - ModalWindow.width/2, gameManager->GetScreenSize().y / 2 - ModalWindow.height/2 }, 0, 1, WHITE);
 			
-			DrawText("Are you sure you\n want to choose", gameManager->GetScreenSize().x / 2 - MeasureText("Are you sure you want to choose", 60) / 4 - 20, gameManager->GetScreenSize().y / 2 - 180, 60, BLACK);
-			DrawText(clickedCountry.c_str(), gameManager->GetScreenSize().x / 2 - MeasureText(clickedCountry.c_str(), 60) / 2, gameManager->GetScreenSize().y / 2, 60, RED);
-			
-			
+			DrawTextEx(gameManager->impact, clickedCountry.c_str(), { gameManager->GetScreenSize().x / 2 - MeasureTextEx(gameManager->impact, (clickedCountry).c_str()  , 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30}, 80, 1, RED);
+			DrawTextEx(gameManager->impact, "?", {gameManager->GetScreenSize().x / 2 + MeasureTextEx(gameManager->impact, clickedCountry.c_str(), 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30}, 80, 0, BLACK);
 			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-			DrawTextureEx(YesButton, { gameManager->GetScreenSize().x / 2 - YesButton.width * 3 + 50, gameManager->GetScreenSize().y / 2 + YesButton.height + 50 }, 0, 2, WHITE);
-			if (CheckCollisionPointRec(GetMousePosition(), {gameManager->GetScreenSize().x / 2 - YesButton.width * 3 + 50, gameManager->GetScreenSize().y / 2 + YesButton.height + 50, float(YesButton.width * 2), float(YesButton.height * 2)}))
+			DrawTexture(YesButton, 753, 657, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), {753, 657, float(YesButton.width), float(YesButton.height)}))
 			{
 				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-				DrawTextureEx(YesButton, {gameManager->GetScreenSize().x / 2 - YesButton.width * 3 + 50, gameManager->GetScreenSize().y / 2 + YesButton.height + 50}, 0, 2, Fade(BLACK, 0.5f));
+				DrawTexture(YesButtonHover, 753, 657, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
 				{
 					mapManager->SetChosenCountry(mapManager->IsWaypointClicked().name, mapManager->IsWaypointClicked().pos);
@@ -107,12 +108,12 @@ void Game::ChooseStartingCountry()
 					break;
 				}
 			}
-			
-			DrawTextureEx(NoButton, { gameManager->GetScreenSize().x / 2 + NoButton.width - 50, gameManager->GetScreenSize().y / 2 + NoButton.height + 50 }, 0, 2, WHITE);
-			if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x / 2 + NoButton.width - 50, gameManager->GetScreenSize().y / 2 + NoButton.height + 50, float(NoButton.width * 2), float(NoButton.height * 2) }))
+				
+			DrawTexture(NoButton, 1010, 657, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 1010, 657, float(NoButton.width), float(NoButton.height) }))
 			{
 				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-				DrawTextureEx(NoButton, { gameManager->GetScreenSize().x / 2 + NoButton.width - 50, gameManager->GetScreenSize().y / 2 + NoButton.height + 50 }, 0, 2, Fade(BLACK, 0.5f));
+				DrawTexture(NoButtonHover, 1010, 657, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
 				{
 					UnloadTexture(ModalWindow);
@@ -124,6 +125,7 @@ void Game::ChooseStartingCountry()
 			
 			EndDrawing();
 		}
+		
 	}
 }
 
