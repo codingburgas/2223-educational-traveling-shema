@@ -140,6 +140,8 @@ void MapManager::TravelToCountry()
 		{
 			if (this->waypoints[i].name == this->IsWaypointClicked().name && this->waypoints[i].unlocked && this->waypoints[i].name!=playerCountry)
 			{
+				Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "bus.png").c_str());
+				Vector2 BusPos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
 				gameManager->StartTimer(3);
 				HideCursor();
 				while (!gameManager->TimerEnded()) 
@@ -147,11 +149,18 @@ void MapManager::TravelToCountry()
 					BeginDrawing();
 					ClearBackground(BLACK);
 					DrawText("Traveling...", gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2, gameManager->GetScreenSize().y/2 - 150, 150, WHITE);
+					double time = GetTime();
+					while ((GetTime() - time) <= 0.01)
+					{
+						DrawTextureEx(Bus, BusPos, 0, 0.3, WHITE);
+					}
+					BusPos.x += 4.5;
 					EndDrawing();
 				}
 				this->playerCountry = waypoints[i].name;
 				this->playerPos = waypoints[i].pos;
 				ShowCursor();
+				UnloadTexture(Bus);
 			}
 		}
 	}
