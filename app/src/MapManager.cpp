@@ -141,10 +141,11 @@ void MapManager::TravelToCountry()
 			if (this->waypoints[i].name == this->IsWaypointClicked().name && this->waypoints[i].unlocked && this->waypoints[i].name!=playerCountry)
 			{
 				Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "bus.png").c_str());
-				Vector2 BusPos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
+				Texture2D Plane = LoadTexture((gameManager->getAssetPath() + "plane.png").c_str());
+				Vector2 VehiclePos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
 				gameManager->StartTimer(3);
 				HideCursor();
-				while (!gameManager->TimerEnded()) 
+				while (VehiclePos.x <= gameManager->GetScreenSize().x / 2 + MeasureText("Traveling...", 150) / 3)
 				{
 					BeginDrawing();
 					ClearBackground(BLACK);
@@ -152,9 +153,10 @@ void MapManager::TravelToCountry()
 					double time = GetTime();
 					while ((GetTime() - time) <= 0.01)
 					{
-						DrawTextureEx(Bus, BusPos, 0, 0.3, WHITE);
+						if (waypoints[i].name == "Greenland" || waypoints[i].name =="Iceland" || waypoints[i].name == "Ireland" || playerCountry == "Greenland" || playerCountry == "Iceland" || playerCountry == "Ireland") DrawTextureEx(Plane, VehiclePos, 0, 0.3, WHITE);
+						else DrawTextureEx(Bus, VehiclePos, 0, 0.3, WHITE);
 					}
-					BusPos.x += 4.5;
+					VehiclePos.x += 4.5;
 					EndDrawing();
 				}
 				this->playerCountry = waypoints[i].name;
