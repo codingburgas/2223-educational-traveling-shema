@@ -2,6 +2,9 @@
 #include <time.h>
 #include <stdlib.h>
 
+int questionCounter = 0, answerCounter = 0;
+Color color1 = BLACK, color2 = BLACK, color3 = BLACK, color4 = BLACK;
+
 const char questions[15][100] =
 {
     "In Marco Polo's day, Cathay was the name for China, and Cidngo was for:",
@@ -39,6 +42,20 @@ const char answers[60][100] =
     "Orange", "Yellow", "Brown", "White",
     "Los Angeles", "Sofia", "Beijing", "Tokyo"
 };
+
+const char reward[16][11] ={ "    0$    ", "   100$   ", "   200$   ", "   300$   ", "   500$   ", "  1,000$  ", "  2,000$  ", "  4,000$  ", "  8,000$  ", " 16,000$  ", " 32,000$ ", " 64,000$ ", " 125,000$ ", " 250,000$ ", " 500,000$ ", "1,000,000$" };
+short correctAnswers[15] = { 0, 1, 2, 1, 3, 2, 0, 2, 0, 0, 1, 1, 1, 3, 3};
+
+void displayQuestion()
+{
+    DrawText(questions[questionCounter], 190, 535, 35, RAYWHITE);
+    DrawText("BANK:", 315, 120, 30, ORANGE);
+    DrawText(reward[questionCounter], 270, 170, 40, RAYWHITE);
+    DrawText(answers[answerCounter], 190, 770, 30, color1);
+    DrawText(answers[answerCounter+1], 936, 770, 30, color2);
+    DrawText(answers[answerCounter+2], 190, 957, 30, color3);
+    DrawText(answers[answerCounter+3], 936, 957, 30, color4);
+}
 
 int main()
 {
