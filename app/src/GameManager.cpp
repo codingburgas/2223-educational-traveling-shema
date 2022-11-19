@@ -7,7 +7,7 @@ GameManager::GameManager()
 	InitWindow(1920, 1080, "Game Window");
 	std::cout << "Width: " << this->m_width << " Height: " << this->m_height << std::endl;
 	this->impact = LoadFontEx((this->getAssetPath() + "impact.ttf").c_str(), 1000, 0, 0);
-	ToggleFullscreen();
+	//ToggleFullscreen();
 }
 GameManager::~GameManager()
 {

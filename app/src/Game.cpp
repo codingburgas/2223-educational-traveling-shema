@@ -133,28 +133,28 @@ void Game::DrawHUD()
 {
 	if (!mapManager->IsWaypointClicked().name.empty())
 	{
-		this->CountryHUD = mapManager->IsWaypointClicked().name;
-		this->CountryHUDUnlocked = mapManager->IsWaypointClicked().unlocked;
+		this->ClickedCountryName = mapManager->IsWaypointClicked().name;
+		this->ClickedCountryUnlocked = mapManager->IsWaypointClicked().unlocked;
+		this->ClickedCountryPrice = mapManager->IsWaypointClicked().price;
 	}
-	if (!CountryHUD.empty())
+	if (!ClickedCountryName.empty())
 	{
 		DrawTexture(this->CountryHUDTexture, 0, 250, WHITE);
-		DrawTextEx(gameManager->impact, TextToUpper(CountryHUD.c_str()), { 50, 290 }, 50, 2, BLACK);
+		DrawTextEx(gameManager->impact, TextToUpper(ClickedCountryName.c_str()), { 50, 290 }, 50, 2, BLACK);
 
-		if (this->CountryHUDUnlocked)
+		if (this->ClickedCountryUnlocked)
 		{
-			if (this->tickets >= 1 && mapManager->getPlayerCountry() != CountryHUD)
+			if (this->tickets >= 1 && mapManager->getPlayerCountry() != ClickedCountryName)
 			{
 				DrawTexture(this->TravelTicketButton, 50, 590, WHITE);
-				//check if hovered
 				if (CheckCollisionPointRec(GetMousePosition(), { 50, 590, float(TravelTicketButton.width), float(TravelTicketButton.height) }))
 				{
 					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 					DrawTexture(this->TravelTicketButton, 50, 590, Fade(BLACK, 0.5f));
-					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 					{
 						this->tickets--;
-						mapManager->TravelToCountry(CountryHUD);
+						mapManager->TravelToCountry(ClickedCountryName);
 					}
 				}
 			}
@@ -163,17 +163,17 @@ void Game::DrawHUD()
 				DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
 			}
 
-			if (balance >= 185 && mapManager->getPlayerCountry() != CountryHUD)
+			if (balance >= 185 && mapManager->getPlayerCountry() != ClickedCountryName)
 			{
 				DrawTexture(this->TravelButton, 176, 590, WHITE);
 				if (CheckCollisionPointRec(GetMousePosition(), { 176, 590, float(TravelButton.width), float(TravelButton.height) }))
 				{
 					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 					DrawTexture(this->TravelButton, 176, 590, Fade(BLACK, 0.5f));
-					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && gameManager->TimerEnded())
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 					{
 						this->balance -= 185;
-						mapManager->TravelToCountry(CountryHUD);
+						mapManager->TravelToCountry(ClickedCountryName);
 					}
 				}
 			}
@@ -181,11 +181,31 @@ void Game::DrawHUD()
 			{
 				DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 			}
+			
+			DrawTextEx(gameManager->impact, "Already unlocked", { 117, 658 }, 25, 1, GREEN);
 			DrawTexture(this->Unlocked, 50, 685, WHITE);
 		}
 		else
 		{
-			DrawTexture(this->UnlockButton, 50, 685, WHITE);
+			if (balance >= ClickedCountryPrice)
+			{
+				DrawTexture(this->UnlockButton, 50, 685, WHITE);
+				if (CheckCollisionPointRec(GetMousePosition(), { 50, 685, float(UnlockButton.width), float(UnlockButton.height) }))
+				{
+					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+					DrawTexture(this->UnlockButtonHover, 50, 685, WHITE);
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						this->balance -= ClickedCountryPrice;
+						mapManager->UnlockCountry(ClickedCountryName);
+					}
+				}
+			}
+			else
+			{
+				DrawTexture(this->UnlockButtonLocked, 50, 685, WHITE);
+			}
+			DrawTextEx(gameManager->impact, std::to_string(ClickedCountryPrice).c_str(), { 117, 658 }, 25, 1, BLACK);
 			DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
 			DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 		}
