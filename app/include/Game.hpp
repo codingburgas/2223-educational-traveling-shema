@@ -2,6 +2,7 @@
 #include <GameManager.hpp>
 #include <MapManager.hpp>
 #include <SeaMinigame.hpp>
+#include <string>
 
 class Game
 {
@@ -15,11 +16,12 @@ private:
 	void ChooseStartingCountry();
 	bool chosen = false;
 	void DrawHUD();
-	std::string CountryHUD;
-	bool CountryHUDUnlocked;
+	std::string ClickedCountryName;
+	bool ClickedCountryUnlocked;
+	int ClickedCountryPrice;
 	void LoadDynamicTextures();
 	
-	int balance = 185;
+	int balance = 500;
 	int tickets = 1;
 
 	Texture2D CountryHUDTexture;
