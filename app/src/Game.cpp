@@ -10,9 +10,9 @@ Game::Game()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		mapManager->UpdateMap();
-		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
 		mapManager->TravelToCountry();
 		EndDrawing();
+		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
 		if (IsKeyPressed(257))
 		{
 			SeaMinigame* seaMinigame = new SeaMinigame();
@@ -44,11 +44,12 @@ void Game::ChooseCountryAnimation(bool displayText)
 
 void Game::ChooseStartingCountry()
 {
+	BeginDrawing();
+	ClearBackground(BLUE);
 	DrawText("Choose a country!", gameManager->GetScreenSize().x / 2 - MeasureText("Choose a country!", 60) / 2, 50, 60, RED);
-	gameManager->StartTimer(0.5);
-	if (!mapManager->IsWaypointClicked().name.empty())
+	gameManager->StartTimer(0.1);
+	if (!mapManager->IsWaypointClicked().name.empty() && !chosen)
 	{
-		bool chosen = false;
 		std::string clickedCountry = mapManager->IsWaypointClicked().name;
 		std::cout << clickedCountry;
 		
@@ -82,6 +83,7 @@ void Game::ChooseStartingCountry()
 					UnloadTexture(YesButton);
 					UnloadTexture(NoButton);
 					chosen = true;
+					break;
 				}
 			}
 			
