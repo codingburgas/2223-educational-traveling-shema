@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+<<<<<<< HEAD
 int questionCounter = 0, answerCounter = 0;
 Color color1 = BLACK, color2 = BLACK, color3 = BLACK, color4 = BLACK;
 
@@ -192,4 +193,9 @@ int main()
 
     CloseWindow();
     return 0;
+=======
+int main()
+{
+
+>>>>>>> 967dc07 (feat(backend): add neccessary libraries)
 }
