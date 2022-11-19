@@ -150,19 +150,16 @@ void MapManager::TravelToCountry()
 					BeginDrawing();
 					ClearBackground(BLACK);
 					DrawText("Traveling...", gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2, gameManager->GetScreenSize().y/2 - 150, 150, WHITE);
-					double time = GetTime();
-					while ((GetTime() - time) <= 0.01)
-					{
-						if (waypoints[i].name == "Greenland" || waypoints[i].name =="Iceland" || waypoints[i].name == "Ireland" || playerCountry == "Greenland" || playerCountry == "Iceland" || playerCountry == "Ireland") DrawTextureEx(Plane, VehiclePos, 0, 0.3, WHITE);
-						else DrawTextureEx(Bus, VehiclePos, 0, 0.3, WHITE);
-					}
-					VehiclePos.x += 4.5;
+					if (waypoints[i].name == "Greenland" || waypoints[i].name =="Iceland" || waypoints[i].name == "Ireland" || playerCountry == "Greenland" || playerCountry == "Iceland" || playerCountry == "Ireland") DrawTextureEx(Plane, VehiclePos, 0, 0.3, WHITE);
+					else DrawTextureEx(Bus, VehiclePos, 0, 0.3, WHITE);
+					VehiclePos.x += 200 * GetFrameTime();
 					EndDrawing();
 				}
 				this->playerCountry = waypoints[i].name;
 				this->playerPos = waypoints[i].pos;
 				ShowCursor();
 				UnloadTexture(Bus);
+				UnloadTexture(Plane);
 			}
 		}
 	}
