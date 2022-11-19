@@ -7,7 +7,6 @@ GameManager::GameManager()
 	InitWindow(1920, 1080, "Game Window");
 	std::cout << "Width: " << this->m_width << " Height: " << this->m_height << std::endl;
 	//ToggleFullscreen();
-	SetTargetFPS(this->k_windowFPS);
 }
 GameManager::~GameManager()
 {
