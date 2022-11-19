@@ -14,4 +14,27 @@ private:
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();
 	bool chosen = false;
+	void DrawHUD();
+	std::string CountryHUD;
+	bool CountryHUDUnlocked;
+	void LoadDynamicTextures();
+	
+	int balance = 185;
+	int tickets = 1;
+
+	Texture2D CountryHUDTexture;
+	
+	Texture2D UnlockButton;
+	Texture2D UnlockButtonHover;
+	Texture2D UnlockButtonLocked;
+	Texture2D Unlocked;
+	
+	Texture2D TravelButton;
+	Texture2D TravelButtonHover;
+	Texture2D TravelButtonLocked;
+	
+	Texture2D TravelTicketButton;
+	Texture2D TravelTicketButtonHover;
+	Texture2D TravelTicketButtonLocked;
+	
 };

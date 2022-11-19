@@ -10,7 +10,7 @@ MapManager::~MapManager()
 }
 
 void MapManager::UpdateMap()
-{	
+{
 	this->m_mousePos = GetMousePosition();
 	ToggleWaypoints();
 	TogglePorts();
@@ -41,7 +41,7 @@ MapManager::Country MapManager::IsWaypointClicked()
 	return Country{};
 }
 
-void MapManager::ToggleWaypoints() 
+void MapManager::ToggleWaypoints()
 {
 	DrawTexture(this->waypoint, 0, 300, WHITE);
 	if (CheckCollisionPointRec(this->m_mousePos, { 0, 300, 50, 50 }))
@@ -58,7 +58,7 @@ void MapManager::ToggleWaypoints()
 	}
 }
 
-void MapManager::DrawPorts(std::vector<Country> ports) 
+void MapManager::DrawPorts(std::vector<Country> ports)
 {
 	for (size_t i = 0; i < ports.size(); i++)
 	{
@@ -132,35 +132,37 @@ void MapManager::UnlockCountry(std::string countryName)
 	}
 }
 
-void MapManager::TravelToCountry()
+void MapManager::TravelToCountry(std::string destination)
 {
-	if (!this->IsWaypointClicked().name.empty())
+	for (size_t i = 0; i < this->waypoints.size(); i++)
 	{
-		for (size_t i = 0; i < this->waypoints.size(); i++)
+		if (this->waypoints[i].name == destination && this->waypoints[i].name != playerCountry)
 		{
-			if (this->waypoints[i].name == this->IsWaypointClicked().name && this->waypoints[i].unlocked && this->waypoints[i].name!=playerCountry)
+			Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "bus.png").c_str());
+			Texture2D Plane = LoadTexture((gameManager->getAssetPath() + "plane.png").c_str());
+			Vector2 VehiclePos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
+			gameManager->StartTimer(3);
+			HideCursor();
+			while (VehiclePos.x <= gameManager->GetScreenSize().x / 2 + MeasureText("Traveling...", 150) / 3)
 			{
-				Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "bus.png").c_str());
-				Texture2D Plane = LoadTexture((gameManager->getAssetPath() + "plane.png").c_str());
-				Vector2 VehiclePos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
-				gameManager->StartTimer(3);
-				HideCursor();
-				while (VehiclePos.x <= gameManager->GetScreenSize().x / 2 + MeasureText("Traveling...", 150) / 3)
-				{
-					BeginDrawing();
-					ClearBackground(BLACK);
-					DrawText("Traveling...", gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2, gameManager->GetScreenSize().y/2 - 150, 150, WHITE);
-					if (waypoints[i].name == "Greenland" || waypoints[i].name =="Iceland" || waypoints[i].name == "Ireland" || playerCountry == "Greenland" || playerCountry == "Iceland" || playerCountry == "Ireland") DrawTextureEx(Plane, VehiclePos, 0, 0.3, WHITE);
-					else DrawTextureEx(Bus, VehiclePos, 0, 0.3, WHITE);
-					VehiclePos.x += 200 * GetFrameTime();
-					EndDrawing();
-				}
-				this->playerCountry = waypoints[i].name;
-				this->playerPos = waypoints[i].pos;
-				ShowCursor();
-				UnloadTexture(Bus);
-				UnloadTexture(Plane);
+				BeginDrawing();
+				ClearBackground(BLACK);
+				DrawText("Traveling...", gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2, gameManager->GetScreenSize().y / 2 - 150, 150, WHITE);
+				if (waypoints[i].name == "Greenland" || waypoints[i].name == "Iceland" || waypoints[i].name == "Ireland" || playerCountry == "Greenland" || playerCountry == "Iceland" || playerCountry == "Ireland") DrawTextureEx(Plane, VehiclePos, 0, 0.3, WHITE);
+				else DrawTextureEx(Bus, VehiclePos, 0, 0.3, WHITE);
+				VehiclePos.x += 200 * GetFrameTime();
+				EndDrawing();
 			}
+			this->playerCountry = waypoints[i].name;
+			this->playerPos = waypoints[i].pos;
+			ShowCursor();
+			UnloadTexture(Bus);
+			UnloadTexture(Plane);
 		}
 	}
+}
+
+std::string MapManager::getPlayerCountry()
+{
+	return this->playerCountry;
 }
