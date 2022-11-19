@@ -4,11 +4,17 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 int questionCounter = 0, answerCounter = 0;
 Color color1 = BLACK, color2 = BLACK, color3 = BLACK, color4 = BLACK;
 
 =======
 >>>>>>> 87eb3c1 (feat(backend): add questions and answers)
+=======
+int questionCounter = 0, answerCounter = 0;
+Color color1 = BLACK, color2 = BLACK, color3 = BLACK, color4 = BLACK;
+
+>>>>>>> aa6ab0f (feat(backend): implement question printing)
 const char questions[15][100] =
 {
     "In Marco Polo's day, Cathay was the name for China, and Cidngo was for:",
@@ -48,6 +54,9 @@ const char answers[60][100] =
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> aa6ab0f (feat(backend): implement question printing)
 const char reward[16][11] ={ "    0$    ", "   100$   ", "   200$   ", "   300$   ", "   500$   ", "  1,000$  ", "  2,000$  ", "  4,000$  ", "  8,000$  ", " 16,000$  ", " 32,000$ ", " 64,000$ ", " 125,000$ ", " 250,000$ ", " 500,000$ ", "1,000,000$" };
 short correctAnswers[15] = { 0, 1, 2, 1, 3, 2, 0, 2, 0, 0, 1, 1, 1, 3, 3};
 
@@ -62,6 +71,7 @@ void displayQuestion()
     DrawText(answers[answerCounter+3], 936, 957, 30, color4);
 }
 
+<<<<<<< HEAD
 int main()
 {
     InitWindow(1920, 1080, "Get Rich");
@@ -200,6 +210,8 @@ int main()
 =======
 =======
 >>>>>>> 87eb3c1 (feat(backend): add questions and answers)
+=======
+>>>>>>> aa6ab0f (feat(backend): implement question printing)
 int main()
 {
     InitWindow(1920, 1080, "Get Rich");
