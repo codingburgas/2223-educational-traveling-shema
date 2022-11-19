@@ -222,7 +222,11 @@ int main()
     Texture2D correctAnswer[4] = { LoadTexture("../assets/correct-answer-1.png"), LoadTexture("../assets/correct-answer-2.png"), LoadTexture("../assets/correct-answer-3.png"), LoadTexture("../assets/correct-answer-4.png") };
     Texture2D wrongAnswer[4] = { LoadTexture("../assets/wrong-answer-1.png"), LoadTexture("../assets/wrong-answer-2.png"), LoadTexture("../assets/wrong-answer-3.png"), LoadTexture("../assets/wrong-answer-4.png") };
     Texture2D finishScreen = LoadTexture("../assets/finish-screen.png");    
-    
+    short x = 0, y = 0;
+    short choice = 4;
+    int wait = 0;
+    bool correct = 0;
+
     SetTargetFPS(60);
 
 <<<<<<< HEAD
@@ -232,8 +236,99 @@ int main()
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+
+        x = GetMouseX();
+        y = GetMouseY();
+
+        if (!(choice == correctAnswers[questionCounter]) && choice != 4)
+        {
+            DrawTexture(wrongAnswer[choice], 0, 0, WHITE);
+            if (wait == 80)
+            {
+                wait = 0;
+                finish = 1;
+            }
+            wait++;
+
+        }
+        else if (choice == correctAnswers[questionCounter])
+        {
+            DrawTexture(correctAnswer[choice], 0, 0, WHITE);
+            
+            if (wait == 80)
+            {
+                choice = 4;
+                wait = 0;
+                questionCounter++;
+                answerCounter += 4;
+            }
+            wait++;
+
+        }
+        else if (x >= 157 && x <= 757 && y >= 695 && y <= 835)
+        {
+            DrawTexture(buttonHover[0], 0, 0, WHITE);
+            color1 = WHITE;
+            color2 = BLACK;
+            color3 = BLACK;
+            color4 = BLACK;
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                choice = 0;
+            }
+        }
+        else if (x >= 903 && x <= 1503 && y >= 695 && y <= 835)
+        {
+            DrawTexture(buttonHover[1], 0, 0, WHITE);
+            color1 = BLACK;
+            color2 = WHITE;
+            color3 = BLACK;
+            color4 = BLACK;
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                choice = 1;
+            }
+        }
+        else if (x >= 157 && x <= 757 && y >= 885 && y <= 1020)
+        {
+            DrawTexture(buttonHover[2], 0, 0, WHITE);
+            color1 = BLACK;
+            color2 = BLACK;
+            color3 = WHITE;
+            color4 = BLACK;
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                choice = 2;
+            }
+        }
+        else if (x >= 903 && x <= 1503 && y >= 885 && y <= 1020)
+        {
+            DrawTexture(buttonHover[3], 0, 0, WHITE);
+            color1 = BLACK;
+            color2 = BLACK;
+            color3 = BLACK;
+            color4 = WHITE;
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                choice = 3;
+            }
+        }
+        else
+        {
+            DrawTexture(background, 0, 0, WHITE);
+            color1 = BLACK;
+            color2 = BLACK;
+            color3 = BLACK;
+            color4 = BLACK;
+        }
+
         EndDrawing();
     }
+
 
     CloseWindow();
     return 0;
