@@ -67,10 +67,12 @@ int main()
     Texture2D correctAnswer[4] = { LoadTexture("../assets/correct-answer-1.png"), LoadTexture("../assets/correct-answer-2.png"), LoadTexture("../assets/correct-answer-3.png"), LoadTexture("../assets/correct-answer-4.png") };
     Texture2D wrongAnswer[4] = { LoadTexture("../assets/wrong-answer-1.png"), LoadTexture("../assets/wrong-answer-2.png"), LoadTexture("../assets/wrong-answer-3.png"), LoadTexture("../assets/wrong-answer-4.png") };
     Texture2D finishScreen = LoadTexture("../assets/finish-screen.png");    
+
     short x = 0, y = 0;
     short choice = 4;
     int wait = 0;
     bool correct = 0;
+    bool finish = 0;
 
     SetTargetFPS(60);
 
@@ -82,7 +84,14 @@ int main()
         x = GetMouseX();
         y = GetMouseY();
 
-        if (!(choice == correctAnswers[questionCounter]) && choice != 4)
+        if (finish)
+        {
+            DrawTexture(finishScreen, 0, 0, WHITE);
+            DrawText("Congratulations!", 50, 250, 100, RAYWHITE);
+            DrawText("You have won ", 55, 420, 80, RAYWHITE);
+            DrawText(reward[questionCounter], 55, 570, 250, ORANGE);
+        }
+        else if (!(choice == correctAnswers[questionCounter]) && choice != 4)
         {
             DrawTexture(wrongAnswer[choice], 0, 0, WHITE);
             if (wait == 80)
@@ -96,7 +105,7 @@ int main()
         else if (choice == correctAnswers[questionCounter])
         {
             DrawTexture(correctAnswer[choice], 0, 0, WHITE);
-            
+
             if (wait == 80)
             {
                 choice = 4;
@@ -166,6 +175,15 @@ int main()
             color2 = BLACK;
             color3 = BLACK;
             color4 = BLACK;
+        }
+
+        if (!finish)
+        {
+            displayQuestion();
+        }
+        if (questionCounter == 15)
+        {
+            finish = 1;
         }
 
         EndDrawing();
