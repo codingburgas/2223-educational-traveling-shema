@@ -9,12 +9,14 @@ int main()
     Texture2D packages[4] = { LoadTexture("package-front.png"), LoadTexture("package-front-with-stamp.png"),LoadTexture("package-back.png"), LoadTexture("package-back-with-stamp.png") };
     Texture2D letters[4] = { LoadTexture("letter-front.png"), LoadTexture("letter-front-with-stamp.png"),LoadTexture("letter-back.png"), LoadTexture("letter-back-with-stamp.png") };
     Texture2D background = LoadTexture("background.png");
+    Texture2D finishScreen = LoadTexture("finish-screen.png");
 
 
     SetTargetFPS(60);
 
     int x = 0, y = 0;
 
+    int mailsLeft = 11;
     bool mailType = 0; // 1 - packages; 0 - letters
     bool nextMail = 1;
     bool side = 1;
@@ -22,6 +24,8 @@ int main()
     int front = 0;
     bool idle = 1;
     int letterX = 0, letterY = 0;
+
+    const char* money[11] = { " 0$ ", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
     short score = 0;
 
     while (!WindowShouldClose())
@@ -29,8 +33,29 @@ int main()
         BeginDrawing();
         ClearBackground(BROWN);
 
-        DrawTexture(background, 0, 0, WHITE);
-        DrawText(money[score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
+        if (mailsLeft == 0)
+        {
+            DrawTexture(finishScreen, 0, 0, WHITE);
+            DrawText("Congratulations", GetScreenWidth() / 2 - 320, 80, 80, BLACK);
+            DrawText("You have won", GetScreenWidth() / 2 - 175, 250, 50, BLACK);
+            if (score == 1 || score == 2)
+            {
+                DrawText(money[score], GetScreenWidth() / 2 - 180, 350, 200, GREEN);
+            }
+            else if (score == 0)
+            {
+                DrawText(money[score], GetScreenWidth() / 2 - 200, 350, 200, GREEN);
+            }
+            else
+            {
+                DrawText(money[score], GetScreenWidth() / 2 - 240, 350, 200, GREEN);
+            }
+        }
+        else
+        {
+            DrawTexture(background, 0, 0, WHITE);
+            DrawText(money[score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
+        }
 
         x = GetMouseX();
         y = GetMouseY();
