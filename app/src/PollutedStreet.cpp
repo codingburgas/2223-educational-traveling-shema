@@ -33,8 +33,9 @@ int main()
 
     int x = 0, y = 0;
 
-    short rubbishType[2][1] = { 0, 0 }; // 0 = rubbish, 1 - rubbish2, 2 - chips, 3 - bin, 4 - food, 5 - food2, 6 - paper 
+    short rubbishType[2][1] = { 0, 0 }; // 0 = rubbish, 1 - rubbish2, 2 - chips, 3 - manqka, 4 - food, 5 - food2, 6 - paper 
 
+    short remainingRubbish = 16;
     int counter = 0;
     int index = 0;
     int position = 0;
@@ -49,7 +50,17 @@ int main()
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawTexture(city, 0, 0, WHITE);
+        if (remainingRubbish == 0)
+        {
+            DrawTexture(finishScreen, 0, 0, WHITE);
+            DrawText("Congratulations!", GetScreenWidth() / 2 - 240, GetScreenHeight() / 2 - 250, 50, BLACK);
+            DrawText("You have collected all the", GetScreenWidth() / 2 - 300, GetScreenHeight() / 2 - 100, 40, BLACK);
+            DrawText("RUBBISH", GetScreenWidth() / 2 - 300, GetScreenHeight() / 2 - 50, 120, RED);
+        }
+        else
+        {
+            DrawTexture(city, 0, 0, WHITE);
+        }
 
         for (int i = 0; i < 16; i++)
         {
@@ -186,6 +197,7 @@ int main()
                 if (position >= 7 && position <= 12)
                 {
                     cleaned[i] = 1;
+                    remainingRubbish--;
                     position = 0;
                     ePressed = 0;
                 }
