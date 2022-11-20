@@ -3,6 +3,7 @@
 GameManager *GameManager::instance;
 GameManager::GameManager()
 {
+	srand(time(NULL));
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1920, 1080, "Game Window");
 	std::cout << "Width: " << this->m_width << " Height: " << this->m_height << std::endl;

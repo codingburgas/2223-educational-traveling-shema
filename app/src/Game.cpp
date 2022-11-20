@@ -1,5 +1,5 @@
 #include <Game.hpp>
-
+#include <Hangman.hpp>
 Game::Game()
 {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->GetScreenSize().x / 2 - mapManager->GetMapSize().x / 2, gameManager->GetScreenSize().y / 2 - mapManager->GetMapSize().y / 2} });
@@ -24,9 +24,12 @@ Game::Game()
 			//SeaMinigame* seaMinigame = new SeaMinigame();
 			//seaMinigame->UpdateGame();
 			//delete seaMinigame;
-			GetRich* getRich = new GetRich();
-			getRich->UpdateGame();
-			delete getRich;
+			//GetRich* getRich = new GetRich();
+			//getRich->UpdateGame();
+			//delete getRich;
+			Hangman* hangman = new Hangman();
+			hangman->UpdateGame();
+			delete hangman;
 		}
 	}
 }

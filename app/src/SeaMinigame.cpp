@@ -2,8 +2,6 @@
 
 SeaMinigame::SeaMinigame()
 {
-	srand(time(NULL));
-	
 	RandomizeRubbish();
 
 	HideCursor();

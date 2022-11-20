@@ -1,88 +1,75 @@
-#include <raylib.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string>
+#include <Hangman.hpp>
 
-int main()
+Hangman::Hangman()
 {
-	InitWindow(1920, 1080, "Hang");
-	FLAG_FULLSCREEN_MODE;
-
-	Texture2D rope = LoadTexture("../Hangman/rope.png");
-	Texture2D finishScreen = LoadTexture("../Hangman/finishScreen.png");
-	Texture2D bodyParts[6] = { (LoadTexture("../Hangman/head.png")), (LoadTexture("../Hangman/body.png")), (LoadTexture("../Hangman/lHand.png")), (LoadTexture("../Hangman/rHand.png")), (LoadTexture("../Hangman/rHand.png")), (LoadTexture("../Hangman/lHand.png")) };
-
-	std::string words[20] = { "dance," "dilligent", "fall", "steel", "beggar", "cleave", "page", "lush", "unruly", "trolley",
-							 "ball", "achieve", "detect", "wander", "behave", "ingest", "cart", "yield", "fast", "garden" };
-
-	bool alphabet[26] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	bool bodyPartsPrint[6] = { 0, 0, 0, 0, 0, 0 };
-
-	srand(time(NULL()));
-	int num = rand() % 20;
-
-	int x = 0, y = 0;
-
-	int counter = 0;
-	int counterBodyParts = 0;
-	int correctLetters = 0;
-	int index = 0;
-	int key = 0;
-	int length = words[num].size();
-	bool letterCounter[26] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-	bool flagEnd = false;
-
-	std::string wordConvertor = "";
-	std::string letter = "";
-	std::string copyWord = words[num];
-
-	for (int i = 0; i < length; i++)
+	Rope = LoadTexture((gameManager->getAssetPath() + "Hangman/rope.png").c_str());
+	FinishScreen = LoadTexture((gameManager->getAssetPath() + "Hangman/finishScreen.png").c_str());
+	BodyParts[0] = LoadTexture((gameManager->getAssetPath() + "Hangman/head.png").c_str());
+	BodyParts[1] = LoadTexture((gameManager->getAssetPath() + "Hangman/body.png").c_str());
+	BodyParts[2] = LoadTexture((gameManager->getAssetPath() + "Hangman/lHand.png").c_str());
+	BodyParts[3] = LoadTexture((gameManager->getAssetPath() + "Hangman/rHand.png").c_str());
+	BodyParts[4] = LoadTexture((gameManager->getAssetPath() + "Hangman/rHand.png").c_str());
+	BodyParts[5] = LoadTexture((gameManager->getAssetPath() + "Hangman/lHand.png").c_str());
+	
+	for (int i = 0; i < Length; i++)
 	{
-		wordConvertor += '_';
+		WordConvertor += '_';
 	}
+}
 
-	while (!WindowShouldClose())
+Hangman::~Hangman()
+{
+	UnloadTexture(Rope);
+	UnloadTexture(FinishScreen);
+	for (int i = 0; i < 6; i++)
+	{
+		UnloadTexture(BodyParts[i]);
+	}
+}
+
+void Hangman::UpdateGame()
+{
+	while (!FlagEnd && CounterBodyParts < 6)
 	{
 		BeginDrawing();
 		ClearBackground(BEIGE);
 
-		key = GetCharPressed();
+		Key = GetCharPressed();
 
-		while (key >= 97 && key <= 122 && alphabet[key - 97] == 0)
+		while (Key >= 97 && Key <= 122 && Alphabet[Key - 97] == 0)
 		{
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < Length; i++)
 			{
-				alphabet[key - 97] = 1;
+				Alphabet[Key - 97] = 1;
 
-				if (key == copyWord[i])
+				if (Key == CopyWord[i])
 				{
-					wordConvertor[i] = copyWord[i];
-					counter++;
-					correctLetters++;
+					WordConvertor[i] = CopyWord[i];
+					Counter++;
+					CorrectLetters++;
 				}
 			}
 
-			if (correctLetters == 0)
+			if (CorrectLetters == 0)
 			{
-				bodyPartsPrint[counterBodyParts] = 1;
-				counterBodyParts++;
+				BodyPartsPrint[CounterBodyParts] = 1;
+				CounterBodyParts++;
 			}
 
-			key = GetCharPressed();
-			correctLetters = 0;
+			Key = GetCharPressed();
+			CorrectLetters = 0;
 		}
 
-		if (counter == length)
+		if (Counter == Length)
 		{
-			flagEnd = true;
+			FlagEnd = true;
 		}
 
-		DrawTexture(rope, 100, 200, BEIGE);
+		DrawTexture(Rope, 100, 200, BEIGE);
 
 		for (int i = 0; i < 6; i++)
 		{
-			if (bodyPartsPrint[i])
+			if (BodyPartsPrint[i])
 			{
 				if (i == 0)
 				{
@@ -115,41 +102,48 @@ int main()
 					y = 639;
 				}
 
-				DrawTexture(bodyParts[i], x, y, WHITE);
+				DrawTexture(BodyParts[i], x, y, WHITE);
 			}
 		}
-		DrawText(wordConvertor.c_str(), GetScreenWidth() / 2 + 150, GetScreenHeight() / 2 - 50, 50, BLACK);
+		DrawText(WordConvertor.c_str(), GetScreenWidth() / 2 + 150, GetScreenHeight() / 2 - 50, 50, BLACK);
 		DrawText("Guesses:", GetScreenWidth() / 2 + 30, GetScreenHeight() / 2 + 150, 40, BLACK);
 
 		for (int i = 0; i < 26; i++)
 		{
-			if (alphabet[i] == 1 && letterCounter[i] == 0)
+			if (Alphabet[i] == 1 && LetterCounter[i] == 0)
 			{
-				letterCounter[i] = 1;
-				letter += ' ';
-				letter += char(i + 97);
+				LetterCounter[i] = 1;
+				Letter += ' ';
+				Letter += char(i + 97);
 			}
 		}
 
-		DrawText(letter.c_str(), GetScreenWidth() / 2 + 240, GetScreenHeight() / 2 + 150, 40, BLACK);
-
-		if (flagEnd)
-		{
-			DrawTexture(finishScreen, 0, 0, WHITE);
-			DrawText("Congratulations!", GetScreenWidth() / 2 - 170, GetScreenHeight() / 2 - 150, 45, BLACK);
-			DrawText("You've won 200 $!", GetScreenWidth() / 2 - 245, GetScreenHeight() / 2, 60, BLACK);
-		}
-
-		if (counterBodyParts == 6)
-		{
-			DrawTexture(finishScreen, 0, 0, WHITE);
-			DrawText("Failed!", GetScreenWidth() / 2 - 90, GetScreenHeight() / 2 - 150, 60, BLACK);
-			DrawText("You've lost!", GetScreenWidth() / 2 - 205, GetScreenHeight() / 2, 70, BLACK);
-		}
+		DrawText(Letter.c_str(), GetScreenWidth() / 2 + 240, GetScreenHeight() / 2 + 150, 40, BLACK);
 
 		EndDrawing();
 	}
 
-	CloseWindow();
-	return 0;
+	gameManager->StartTimer(3);
+	while (!gameManager->TimerEnded())
+	{
+		if (FlagEnd)
+		{
+			BeginDrawing();
+			ClearBackground(BEIGE);
+			DrawTexture(FinishScreen, 0, 0, WHITE);
+			DrawText("Congratulations!", GetScreenWidth() / 2 - 170, GetScreenHeight() / 2 - 150, 45, BLACK);
+			DrawText("You've won 200 $!", GetScreenWidth() / 2 - 245, GetScreenHeight() / 2, 60, BLACK);
+			EndDrawing();
+		}
+
+		if (CounterBodyParts == 6)
+		{
+			BeginDrawing();
+			ClearBackground(BEIGE);
+			DrawTexture(FinishScreen, 0, 0, WHITE);
+			DrawText("Failed!", GetScreenWidth() / 2 - 90, GetScreenHeight() / 2 - 150, 60, BLACK);
+			DrawText("You've lost!", GetScreenWidth() / 2 - 205, GetScreenHeight() / 2, 70, BLACK);
+			EndDrawing();
+		}
+	}
 }

@@ -2,6 +2,10 @@
 #include <raylib.h>
 #include <vector>
 #include <iostream>
+#include <time.h>
+#include <string>
+#include <stdlib.h>
+#include <algorithm>
 
 
 class GameManager
