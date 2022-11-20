@@ -12,6 +12,7 @@ Game::Game()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		mapManager->UpdateMap();
+		this->PassiveIncome();
 		this->DrawCountryHUD();
 		this->DrawCurrentCountryHUD();
 		EndDrawing();
@@ -228,5 +229,15 @@ void Game::DrawCurrentCountryHUD() {
 		DrawTextEx(gameManager->impact, std::to_string(this->balance).c_str(), { gameManager->GetScreenSize().x - 240, 380 }, 25, 1, BLACK);
 		mapManager->TogglePorts(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
 		mapManager->ToggleWaypoints(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
+	}
+}
+
+void Game::PassiveIncome()
+{
+	this->time += GetFrameTime();
+	if (this->time > 1)
+	{
+		this->balance++;
+		this->time = 0;
 	}
 }
