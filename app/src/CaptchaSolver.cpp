@@ -3,7 +3,7 @@
 CaptchaSolver::CaptchaSolver()
 {
 	this->FinishScreen = LoadTexture((gameManager->getAssetPath() + "captcha-solver/finish-screen.png").c_str());
-	std::random_shuffle(Words.begin(), Words.end());
+	std::random_shuffle(this->Words.begin(), this->Words.end());
 }
 
 CaptchaSolver::~CaptchaSolver()
@@ -13,86 +13,86 @@ CaptchaSolver::~CaptchaSolver()
 
 void CaptchaSolver::UpdateGame()
 {
-	while (nextWord < 10)
+	while (this->NextWord < 10)
 	{
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		DrawRectangle(GetScreenWidth() / 2 - 195, GetScreenHeight() / 2 - 10, 340, 100, LIGHTGRAY);
-		DrawText(Words[nextWord].c_str(), GetScreenWidth() / 2 - 100, GetScreenHeight() / 2 - 300, 50, BLACK);
+		DrawText(this->Words[this->NextWord].c_str(), GetScreenWidth() / 2 - 100, GetScreenHeight() / 2 - 300, 50, BLACK);
 
-		ascii = GetCharPressed();
+		this->ASCII = GetCharPressed();
 
-		while (ascii > 0)
+		while (this->ASCII > 0)
 		{
 			// Only allow keys in range [32..125]
-			if ((ascii >= 32) && (ascii <= 125) && (letterCount < maxLetters))
+			if ((this->ASCII >= 32) && (this->ASCII <= 125) && (this->LetterCount < MaxLetters))
 			{
-				text[letterCount] = (char)ascii;
-				if (letterCount != maxLetters - 1)
+				this->Text[this->LetterCount] = (char)this->ASCII;
+				if (this->LetterCount != MaxLetters - 1)
 				{
-					text[letterCount + 1] = '_'; // Add _ to the next index of the array.
+					this->Text[this->LetterCount + 1] = '_'; // Add _ to the next index of the array.
 				}
-				letterCount++;
+				this->LetterCount++;
 			}
 
-			ascii = GetCharPressed();  // Get ascii number of the next character
+			this->ASCII = GetCharPressed();  // Get ascii number of the next character
 		}
 
 		if (IsKeyPressed(KEY_BACKSPACE))
 		{
-			wrongCounter = 0;
-			letterCount--;
-			if (letterCount < 0)
+			this->WrongCounter = 0;
+			this->LetterCount--;
+			if (this->LetterCount < 0)
 			{
-				letterCount = 0;
+				this->LetterCount = 0;
 			}
-			text[letterCount] = '_';
-			text[letterCount + 1] = NULL;
+			this->Text[this->LetterCount] = '_';
+			this->Text[this->LetterCount + 1] = NULL;
 		}
 
-		for (int i = 0; i < letterCount; i++)
+		for (int i = 0; i < this->LetterCount; i++)
 		{
-			if (text[i] != Words[nextWord][i] && text[i] != '_')
+			if (this->Text[i] != this->Words[this->NextWord][i] && this->Text[i] != '_')
 			{
-				wrong = 1;
+				this->Wrong = 1;
 			}
 		}
 
-		if (wrong)
+		if (this->Wrong)
 		{
-			if (score != 0 && wrongCounter == 0)
+			if (this->Score != 0 && this->WrongCounter == 0)
 			{
-				wrongCounter = 1;
-				score--;
+				this->WrongCounter = 1;
+				this->Score--;
 			}
-			DrawText(text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, RED);
+			DrawText(this->Text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, RED);
 		}
-		else if (!wrong && letterCount == 5)
+		else if (!this->Wrong && this->LetterCount == 5)
 		{
-			DrawText(text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, GREEN);
-			if (wait == 40)
+			DrawText(this->Text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, GREEN);
+			if (this->Delay > 0.8)
 			{
-				wait = -1;
-				nextWord++;
-				text[0] = '_';
+				this->Delay = -1;
+				this->NextWord++;
+				this->Text[0] = '_';
 				for (int i = 1; i < 5; i++)
 				{
-					text[i] = NULL;
+					this->Text[i] = NULL;
 				}
-				letterCount = 0;
-				score++;
+				this->LetterCount = 0;
+				this->Score++;
 			}
-			wait++;
+			this->Delay+=GetFrameTime();
 		}
 		else
 		{
-			DrawText(text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, BLACK);
+			DrawText(this->Text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, BLACK);
 		}
 
-		wrong = 0;
+		this->Wrong = 0;
 
 		DrawText("Income:", 20, 20, 40, BLACK);
-		DrawText(money[score], 180, 22, 40, GREEN);
+		DrawText(this->Money[this->Score], 180, 22, 40, GREEN);
 
 		EndDrawing();
 	}
