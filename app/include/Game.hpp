@@ -23,6 +23,9 @@ private:
 	void LoadDynamicTextures();
 	
 	int balance = 500;
+	void PassiveIncome();
+	float time = 0;
+	
 	int tickets = 1;
 
 	Texture2D CountryHUDTexture;
