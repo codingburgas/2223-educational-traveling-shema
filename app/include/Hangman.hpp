@@ -7,6 +7,7 @@ public:
 	Hangman();
 	~Hangman();
 	void UpdateGame();
+	int getPayout();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	Texture2D Rope;
@@ -30,7 +31,7 @@ private:
 	int CorrectLetters = 0;
 	int Index = 0;
 	int Key = 0;
-	int Length = Words[RandomWord].size();
+	int Length = Words[RandomWord].length();
 	bool LetterCounter[26] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	bool FlagEnd = false;
@@ -38,4 +39,6 @@ private:
 	std::string WordConvertor = "";
 	std::string Letter = "";
 	std::string CopyWord = Words[RandomWord];
+
+	int Payout = 0;
 };

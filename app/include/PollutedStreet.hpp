@@ -7,6 +7,7 @@ public:
 	PollutedStreet();
 	~PollutedStreet();
 	void UpdateGame();
+	int getPayout();
 private:
     GameManager* gameManager = GameManager::GetInstance();
 
@@ -36,6 +37,8 @@ private:
     float Delay = 0;
     int BarPos = 0;
     bool ePressed = 0;
+
+    int Payout;
 	
     std::vector<RubbishProperties> Rubbish;
 };

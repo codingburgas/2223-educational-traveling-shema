@@ -123,7 +123,7 @@ void SeaMinigame::UpdateGame()
 		EndDrawing();
 	}
 	gameManager->StartTimer(3);
-
+	Payout = 350;
 	while (!gameManager->TimerEnded())
 	{
 		BeginDrawing();
@@ -135,9 +135,9 @@ void SeaMinigame::UpdateGame()
 		EndDrawing();
 	}
 	ShowCursor();
-	GameWon = true;
 }
-bool SeaMinigame::IsGameWon()
+
+int SeaMinigame::getPayout()
 {
-	return GameWon;
+	return Payout;
 }

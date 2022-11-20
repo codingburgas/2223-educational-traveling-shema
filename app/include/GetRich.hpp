@@ -8,7 +8,7 @@ public:
 	GetRich();
 	~GetRich();
 	void UpdateGame();
-	
+	int getPayout();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	Vector2 MousePos;
@@ -49,4 +49,5 @@ private:
     };
 	void displayQuestion();
 
+	int reward[16] = { 0, 100, 200, 300, 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000 };
 };

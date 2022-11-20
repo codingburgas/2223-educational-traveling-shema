@@ -26,13 +26,11 @@ GetRich::~GetRich()
     }
 }
 
-const char reward[16][11] = { "    0$    ", "   100$   ", "   200$   ", "   300$   ", "   500$   ", "  1,000$  ", "  2,000$  ", "  4,000$  ", "  8,000$  ", " 16,000$  ", " 32,000$ ", " 64,000$ ", " 125,000$ ", " 250,000$ ", " 500,000$ ", "1,000,000$" };
-
 void GetRich::displayQuestion()
 {
     DrawText((questions[this->QuestionCounter].question).c_str(), 190, 535, 35, RAYWHITE);
     DrawText("BANK:", 315, 120, 30, ORANGE);
-    DrawText(reward[this->QuestionCounter], 270, 170, 40, RAYWHITE);
+    DrawText((std::to_string(this->reward[this->QuestionCounter]) + "$").c_str(), 270, 170, 40, RAYWHITE);
     DrawText(questions[this->QuestionCounter].answer[0].c_str(), 190, 770, 30, this->colors[0]);
     DrawText(questions[this->QuestionCounter].answer[1].c_str(), 936, 770, 30, this->colors[1]);
     DrawText(questions[this->QuestionCounter].answer[2].c_str(), 190, 957, 30, this->colors[2]);
@@ -153,7 +151,12 @@ void GetRich::UpdateGame()
         DrawTexture(FinishScreen, 0, 0, WHITE);
         DrawText("Congratulations!", 50, 250, 100, RAYWHITE);
         DrawText("You have won ", 55, 420, 80, RAYWHITE);
-        DrawText(reward[this->QuestionCounter], 55, 570, 250, ORANGE);
+        DrawText((std::to_string(this->reward[this->QuestionCounter]) + "$").c_str(), 55, 570, 250, ORANGE);
         EndDrawing();
     }
+}
+
+int GetRich::getPayout()
+{
+	return this->reward[this->QuestionCounter];
 }

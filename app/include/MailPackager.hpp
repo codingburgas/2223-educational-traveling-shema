@@ -7,6 +7,7 @@ public:
 	MailPackager();
 	~MailPackager();
 	void UpdateGame();
+	int getPayout();
 private:
 	GameManager *gameManager = GameManager::GetInstance();
 	
@@ -26,4 +27,8 @@ private:
 	bool Idle = 1;
 	Vector2 LetterPos;
 	unsigned short Score = 0;
+
+	int money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
+
+	int Payout;
 };

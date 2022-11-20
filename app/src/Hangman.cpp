@@ -134,6 +134,7 @@ void Hangman::UpdateGame()
 			DrawText("Congratulations!", GetScreenWidth() / 2 - 170, GetScreenHeight() / 2 - 150, 45, BLACK);
 			DrawText("You've won 200 $!", GetScreenWidth() / 2 - 245, GetScreenHeight() / 2, 60, BLACK);
 			EndDrawing();
+			Payout = 200;
 		}
 
 		if (CounterBodyParts == 6)
@@ -146,4 +147,9 @@ void Hangman::UpdateGame()
 			EndDrawing();
 		}
 	}
+}
+
+int Hangman::getPayout()
+{
+	return Payout;
 }

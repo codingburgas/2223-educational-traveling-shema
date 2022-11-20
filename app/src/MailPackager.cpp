@@ -28,9 +28,6 @@ MailPackager::~MailPackager()
 
 void MailPackager::UpdateGame()
 {
-
-	const char* money[11] = { " 0$ ", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
-	
 	while (this->MailsLeft > 0)
 	{
 		MousePos = GetMousePosition();
@@ -38,7 +35,7 @@ void MailPackager::UpdateGame()
 		ClearBackground(BROWN);
 
 		DrawTexture(this->Background, 0, 0, WHITE);
-		DrawText(money[this->Score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
+		DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 50, 50, 50, GREEN);
 
 		if (this->NextMail)
 		{
@@ -132,6 +129,7 @@ void MailPackager::UpdateGame()
 
 		EndDrawing();
 	}
+	Payout = money[this->Score];
 	gameManager->StartTimer(3);
 	while (!gameManager->TimerEnded())
 	{
@@ -142,16 +140,21 @@ void MailPackager::UpdateGame()
 		DrawText("You have won", GetScreenWidth() / 2 - 175, 250, 50, BLACK);
 		if (this->Score == 1 || this->Score == 2)
 		{
-			DrawText(money[this->Score], GetScreenWidth() / 2 - 180, 350, 200, GREEN);
+			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 180, 350, 200, GREEN);
 		}
 		else if (this->Score == 0)
 		{
-			DrawText(money[this->Score], GetScreenWidth() / 2 - 200, 350, 200, GREEN);
+			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 200, 350, 200, GREEN);
 		}
 		else
 		{
-			DrawText(money[this->Score], GetScreenWidth() / 2 - 240, 350, 200, GREEN);
+			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 240, 350, 200, GREEN);
 		}
 		EndDrawing();
 	}
+}
+
+int MailPackager::getPayout()
+{
+	return Payout;
 }

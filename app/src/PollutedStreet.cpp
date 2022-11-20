@@ -113,7 +113,7 @@ void PollutedStreet::UpdateGame()
 		if (!ePressed)
 		{
 			Delay += GetFrameTime();
-			if (Delay >= 0.5)
+			if (Delay >= 1)
 			{
 				Delay = 0;
 				BarPos++;
@@ -126,6 +126,8 @@ void PollutedStreet::UpdateGame()
 
 		EndDrawing();
 	}
+
+	Payout = 400;
 
 	gameManager->StartTimer(3);
 	
@@ -140,4 +142,9 @@ void PollutedStreet::UpdateGame()
 		EndDrawing();
 	}
 
+}
+
+int PollutedStreet::getPayout()
+{
+	return Payout;
 }
