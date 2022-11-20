@@ -18,7 +18,7 @@ void Menu::drawMenu()
 {
     while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->GetShouldClose())
     {
-        if (this->animationEnd)
+        if (!this->animationEnd)
         {
             BeginDrawing();
             ClearBackground(BLACK);
@@ -40,6 +40,10 @@ void Menu::drawMenu()
             {
                 OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/");
             }
+            if (gameManager->IsButtonClicked(2))
+            {
+                OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/blob/code-refactoring/app/assets/Rules.txt");
+            }
             if (gameManager->IsButtonClicked(3))
             {
                 delete gameManager;
@@ -52,7 +56,6 @@ void Menu::drawMenu()
 
 void Menu::animation()
 {
-    std::cout << gameManager->GetScreenSize().x;
     if(!this->animationEnd)
     
     switch (this->state)
@@ -121,5 +124,5 @@ void Menu::animation()
         break;
     }
 
-    DrawRectanglePro(this->rect, Vector2{ float(this->rect.width / 2 + 40), float(this->rect.height / 2) }, this->rotation, Fade(BLUE, this->alpha));
+    DrawRectanglePro(this->rect, Vector2{ float(this->rect.width / 2 + 40), float(this->rect.height / 2) }, this->rotation, Fade(BROWN, this->alpha));
 }
