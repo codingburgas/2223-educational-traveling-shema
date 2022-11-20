@@ -56,6 +56,40 @@
 
 ## 📥 Installation
 
+If you want to clone our repo locally you can paste the following command in your preferred terminal:
+
+<pre>https://github.com/codingburgas/2223-educational-traveling-shema</pre>
+
+<br>
+
+<hr>
+
+<br>
+<h3>🖥 Application (.exe)</h3>
+Then, you can start our game by running the following commands:
+<br>
+
+<b>1.</b> Navigate to our debug folder using:
+
+<pre>cd debug</pre>
+
+<b>2.</b> Open the .exe file using:
+
+<pre>main.exe</pre>
+
+<br>
+<h3>🖥 Application (VS)</h3>
+You can also build our project by using Visual Studio 2022
+<br>
+
+<b>1.</b> Navigate to the main folder:
+
+<pre>cd 2223-educational-traveling-shema</pre>
+
+<b>2.</b> Open the .sln file by typing:
+
+<pre>game.sln</pre>
+
 ## 🧒 Our Team
 
 - <a href = "https://github.com/MMMarinov20"> Maxim Marinov </a> (Scrum trainer)
