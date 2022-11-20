@@ -4,7 +4,7 @@
 
 int main()
 {
-    InitWindow(1920, 1080, "Captcha Solver");
+    InitWindow(1920, 1080, "Mail Packager");
 
     SetTargetFPS(60);
 
@@ -32,6 +32,9 @@ int main()
     bool wrong = 0;
     short wait = 0;
     bool wrongCounter = 0;
+    
+    const char* money[11] = { "0$", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
+    int score = 0;
 
     while (!WindowShouldClose())
     {
@@ -81,6 +84,11 @@ int main()
 
         if (wrong)
         {
+            if (score != 0 && wrongCounter == 0)
+            {
+                wrongCounter = 1;
+                score--;
+            }
             DrawText(text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, RED);
         }
         else if (!wrong && letterCount == 5)
@@ -96,6 +104,7 @@ int main()
                     text[i] = NULL;
                 }
                 letterCount = 0;
+                score++;
             }
             wait++;
 
@@ -107,6 +116,9 @@ int main()
             DrawText(text, GetScreenWidth() / 2 - 150, GetScreenHeight() / 2, 80, BLACK);
         }
         wrong = 0;
+
+        DrawText("Income:", 20, 20, 40, BLACK);
+        DrawText(money[score], 180, 22, 40, GREEN);
 
         EndDrawing();
     }
