@@ -31,14 +31,173 @@ int main()
 
     SetTargetFPS(60);
 
+    int x = 0, y = 0;
+
+    short rubbishType[2][1] = { 0, 0 }; // 0 = rubbish, 1 - rubbish2, 2 - chips, 3 - bin, 4 - food, 5 - food2, 6 - paper 
+
+    int counter = 0;
+    int index = 0;
+    int position = 0;
+    int inPosition[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    bool hideBar = 1;
+    int cleaned[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    bool ePressed = 0;
+    bool flag = 0;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-		
-		DrawTexture(bar[position], 50, 50, WHITE);
-		
-		if (counter == 0)
+
+        DrawTexture(city, 0, 0, WHITE);
+
+        for (int i = 0; i < 16; i++)
+        {
+            if (inPosition[i] == 1)
+            {
+                hideBar = 0;
+            }
+        }
+        if (!hideBar)
+        {
+            DrawTexture(bar[position], 50, 50, WHITE);
+        }
+
+        if (!cleaned[0])
+        {
+            DrawTexture(rubbish2, xCoordinates[0], yCoordinates[0], GRAY);
+        }
+        if (!cleaned[1])
+        {
+            DrawTexture(paper, xCoordinates[1], yCoordinates[1], GRAY);
+        }
+        if (!cleaned[2])
+        {
+            DrawTexture(rubbish, xCoordinates[2], yCoordinates[2], GRAY);
+        }
+        if (!cleaned[3])
+        {
+            DrawTexture(food, xCoordinates[3], yCoordinates[3], GRAY);
+        }
+        if (!cleaned[4])
+        {
+            DrawTexture(rubbish, xCoordinates[4], yCoordinates[4], GRAY);
+        }
+        if (!cleaned[5])
+        {
+            DrawTexture(chips, xCoordinates[5], yCoordinates[5], GRAY);
+        }
+        if (!cleaned[6])
+        {
+            DrawTexture(food2, xCoordinates[6], yCoordinates[6], GRAY);
+        }
+        if (!cleaned[7])
+        {
+            DrawTexture(food2, xCoordinates[7], yCoordinates[7], GRAY);
+        }
+        if (!cleaned[8])
+        {
+            DrawTexture(paper, xCoordinates[8], yCoordinates[8], GRAY);
+        }
+        if (!cleaned[9])
+        {
+            DrawTexture(chips, xCoordinates[9], yCoordinates[9], GRAY);
+        }
+        if (!cleaned[10])
+        {
+            DrawTexture(bin, xCoordinates[10], yCoordinates[10], GRAY);
+        }
+        if (!cleaned[11])
+        {
+            DrawTexture(food, xCoordinates[11], yCoordinates[11], GRAY);
+        }
+        if (!cleaned[12])
+        {
+            DrawTexture(rubbish, xCoordinates[12], yCoordinates[12], GRAY);
+        }
+        if (!cleaned[13])
+        {
+            DrawTexture(chips, xCoordinates[13], yCoordinates[13], GRAY);
+        }
+        if (!cleaned[14])
+        {
+            DrawTexture(bin, xCoordinates[14], yCoordinates[14], GRAY);
+        }
+        if (!cleaned[15])
+        {
+            DrawTexture(food, xCoordinates[15], yCoordinates[15], GRAY);
+        }
+
+        x = GetMouseX();
+        y = GetMouseY();
+
+        for (int i = 0; i < 16; i++)
+        {
+            if (i == 2 || i == 4 || i == 12)
+            {
+                rubbishType[0][0] = rubbish.width;
+                rubbishType[1][0] = rubbish.height;
+            }
+            if (i == 0)
+            {
+                rubbishType[0][0] = rubbish2.width;
+                rubbishType[1][0] = rubbish2.height;
+            }
+            if (i == 1 || i == 8)
+            {
+                rubbishType[0][0] = paper.width;
+                rubbishType[1][0] = paper.height;
+            }
+            if (i == 3 || i == 11 || i == 15)
+            {
+                rubbishType[0][0] = food.width;
+                rubbishType[1][0] = food.height;
+            }
+            if (i == 5 || i == 9 || i == 13)
+            {
+                rubbishType[0][0] = chips.width;
+                rubbishType[1][0] = chips.height;
+            }
+            if (i == 6 || i == 7)
+            {
+                rubbishType[0][0] = food2.width;
+                rubbishType[1][0] = food2.height;
+            }
+            if (i == 10 || i == 14)
+            {
+                rubbishType[0][0] = bin.width;
+                rubbishType[1][0] = bin.height;
+            }
+
+            if (x >= xCoordinates[i] && x <= xCoordinates[i] + rubbishType[0][0] && y >= yCoordinates[i] - 20 && y <= yCoordinates[i] + rubbishType[1][0] && !cleaned[i])
+            {
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                {
+                    inPosition[i] = 1;
+                }
+            }
+
+            if (IsKeyPressed(KEY_E) && inPosition[i])
+            {
+                ePressed = 1;
+                inPosition[i] = 0;
+                hideBar = 1;
+
+                if (position >= 7 && position <= 12)
+                {
+                    cleaned[i] = 1;
+                    position = 0;
+                    ePressed = 0;
+                }
+                else
+                {
+                    position = 0;
+                    ePressed = 0;
+                }
+            }
+        }
+
+        if (counter == 0)
         {
             position = 0;
         }
