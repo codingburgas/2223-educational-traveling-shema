@@ -35,7 +35,12 @@ int main()
 
 	std::string wordConvertor = "";
 	std::string letter = "";
-	std::string copyWord = words[num]
+	std::string copyWord = words[num];
+
+	for (int i = 0; i < length; i++)
+	{
+		wordConvertor += '_';
+	}
 
 	while (!WindowShouldClose())
 	{
