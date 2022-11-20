@@ -2,14 +2,14 @@
 
 GetRich::GetRich()
 {
-    this->Background = LoadTexture((gameManager->getAssetPath() + "background.png").c_str());
-    this->FinishScreen = LoadTexture((gameManager->getAssetPath() + "finish-screen.png").c_str());
+    this->Background = LoadTexture((gameManager->getAssetPath() + "GetRich/background.png").c_str());
+    this->FinishScreen = LoadTexture((gameManager->getAssetPath() + "GetRich/finish-screen.png").c_str());
 
     for (int i = 0; i < 4; i++)
     {
-        this->ButtonHover[i] = LoadTexture((gameManager->getAssetPath() + "background-" + std::to_string(i + 1) + ".png").c_str());
-        this->CorrectAnswer[i] = LoadTexture((gameManager->getAssetPath() + "correct-answer-" + std::to_string(i + 1) + ".png").c_str());
-        this->WrongAnswer[i] = LoadTexture((gameManager->getAssetPath() + "wrong-answer-" + std::to_string(i + 1) + ".png").c_str());
+        this->ButtonHover[i] = LoadTexture((gameManager->getAssetPath() + "GetRich/background-" + std::to_string(i + 1) + ".png").c_str());
+        this->CorrectAnswer[i] = LoadTexture((gameManager->getAssetPath() + "GetRich/correct-answer-" + std::to_string(i + 1) + ".png").c_str());
+        this->WrongAnswer[i] = LoadTexture((gameManager->getAssetPath() + "GetRich/wrong-answer-" + std::to_string(i + 1) + ".png").c_str());
 
     }
 }

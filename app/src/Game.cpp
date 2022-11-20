@@ -2,9 +2,9 @@
 
 Game::Game()
 {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->GetScreenSize().x / 2 - mapManager->GetMapSize().x / 2, gameManager->GetScreenSize().y / 2 - mapManager->GetMapSize().y / 2} });
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Game/Map.png" }, { {gameManager->GetScreenSize().x / 2 - mapManager->GetMapSize().x / 2, gameManager->GetScreenSize().y / 2 - mapManager->GetMapSize().y / 2} });
 	LoadDynamicTextures();
-	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "CountryHUD.png").c_str());
+	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "Game/CountryHUD.png").c_str());
 	for (int i = 0; i < 5; i++) i % 2 == 0 ? ChooseCountryAnimation(true) : ChooseCountryAnimation(false);
 	while (gameManager->currentScene == gameManager->SCENE::GAME && !gameManager->GetShouldClose())
 	{
@@ -21,6 +21,7 @@ Game::Game()
 		{
 			delete this;
 			Menu* menu = new Menu();
+			break;
 		}
 	}
 }
@@ -48,28 +49,28 @@ Game::~Game()
 
 void Game::LoadDynamicTextures()
 {
-	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "CountryHUD.png").c_str());
-	this->CurrentCountryHUD = LoadTexture((gameManager->getAssetPath() + "CurrentCountryHUD.png").c_str());
+	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "Game/CountryHUD.png").c_str());
+	this->CurrentCountryHUD = LoadTexture((gameManager->getAssetPath() + "Game/CurrentCountryHUD.png").c_str());
 
-	this->Checkbox = LoadTexture((gameManager->getAssetPath() + "Checkbox.png").c_str());
-	this->Checkmark = LoadTexture((gameManager->getAssetPath() + "Checkmark.png").c_str());
+	this->Checkbox = LoadTexture((gameManager->getAssetPath() + "Game/Checkbox.png").c_str());
+	this->Checkmark = LoadTexture((gameManager->getAssetPath() + "Game/Checkmark.png").c_str());
 
-	this->UnlockButton = LoadTexture((gameManager->getAssetPath() + "UnlockButton.png").c_str());
-	this->UnlockButtonHover = LoadTexture((gameManager->getAssetPath() + "UnlockButtonHover.png").c_str());
-	this->UnlockButtonLocked = LoadTexture((gameManager->getAssetPath() + "UnlockButtonLocked.png").c_str());
-	this->Unlocked = LoadTexture((gameManager->getAssetPath() + "Unlocked.png").c_str());
+	this->UnlockButton = LoadTexture((gameManager->getAssetPath() + "Game/UnlockButton.png").c_str());
+	this->UnlockButtonHover = LoadTexture((gameManager->getAssetPath() + "Game/UnlockButtonHover.png").c_str());
+	this->UnlockButtonLocked = LoadTexture((gameManager->getAssetPath() + "Game/UnlockButtonLocked.png").c_str());
+	this->Unlocked = LoadTexture((gameManager->getAssetPath() + "Game/Unlocked.png").c_str());
 
-	this->TravelButton = LoadTexture((gameManager->getAssetPath() + "TravelButton.png").c_str());
-	this->TravelButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelButtonHover.png").c_str());
-	this->TravelButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelButtonLocked.png").c_str());
+	this->TravelButton = LoadTexture((gameManager->getAssetPath() + "Game/TravelButton.png").c_str());
+	this->TravelButtonHover = LoadTexture((gameManager->getAssetPath() + "Game/TravelButtonHover.png").c_str());
+	this->TravelButtonLocked = LoadTexture((gameManager->getAssetPath() + "Game/TravelButtonLocked.png").c_str());
 
-	this->TravelTicketButton = LoadTexture((gameManager->getAssetPath() + "TravelTicketButton.png").c_str());
-	this->TravelTicketButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonHover.png").c_str());
-	this->TravelTicketButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonLocked.png").c_str());
+	this->TravelTicketButton = LoadTexture((gameManager->getAssetPath() + "Game/TravelTicketButton.png").c_str());
+	this->TravelTicketButtonHover = LoadTexture((gameManager->getAssetPath() + "Game/TravelTicketButtonHover.png").c_str());
+	this->TravelTicketButtonLocked = LoadTexture((gameManager->getAssetPath() + "Game/TravelTicketButtonLocked.png").c_str());
 
-	this->MissionContainer = LoadTexture((gameManager->getAssetPath() + "MissionContainer.png").c_str());
-	this->MissionContainerHover = LoadTexture((gameManager->getAssetPath() + "MissionContainerHover.png").c_str());
-	this->CompletedMission = LoadTexture((gameManager->getAssetPath() + "CompletedMission.png").c_str());
+	this->MissionContainer = LoadTexture((gameManager->getAssetPath() + "Game/MissionContainer.png").c_str());
+	this->MissionContainerHover = LoadTexture((gameManager->getAssetPath() + "Game/MissionContainerHover.png").c_str());
+	this->CompletedMission = LoadTexture((gameManager->getAssetPath() + "Game/CompletedMission.png").c_str());
 }
 
 void Game::ChooseCountryAnimation(bool displayText)
@@ -100,11 +101,11 @@ void Game::ChooseStartingCountry()
 	{
 		std::string clickedCountry = mapManager->IsWaypointClicked().name;
 
-		Texture2D ModalWindow = LoadTexture((gameManager->getAssetPath() + "CountryModal.png").c_str());
-		Texture2D YesButton = LoadTexture((gameManager->getAssetPath() + "YesButton.png").c_str());
-		Texture2D YesButtonHover = LoadTexture((gameManager->getAssetPath() + "YesButtonHover.png").c_str());
-		Texture2D NoButton = LoadTexture((gameManager->getAssetPath() + "NoButton.png").c_str());
-		Texture2D NoButtonHover = LoadTexture((gameManager->getAssetPath() + "NoButtonHover.png").c_str());
+		Texture2D ModalWindow = LoadTexture((gameManager->getAssetPath() + "Game/CountryModal.png").c_str());
+		Texture2D YesButton = LoadTexture((gameManager->getAssetPath() + "Game/YesButton.png").c_str());
+		Texture2D YesButtonHover = LoadTexture((gameManager->getAssetPath() + "Game/YesButtonHover.png").c_str());
+		Texture2D NoButton = LoadTexture((gameManager->getAssetPath() + "Game/NoButton.png").c_str());
+		Texture2D NoButtonHover = LoadTexture((gameManager->getAssetPath() + "Game/NoButtonHover.png").c_str());
 
 
 		while (!chosen)

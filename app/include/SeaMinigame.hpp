@@ -18,12 +18,12 @@ private:
 	};
 	GameManager* gameManager = GameManager::GetInstance();
 
-	Texture2D waves = LoadTexture((gameManager->getAssetPath() + "waves.png").c_str());
-	Texture2D bag = LoadTexture((gameManager->getAssetPath() + "bag.png").c_str());
-	Texture2D can = LoadTexture((gameManager->getAssetPath() + "can.png").c_str());
-	Texture2D bottle = LoadTexture((gameManager->getAssetPath() + "bottle.png").c_str());
-	Texture2D hook = LoadTexture((gameManager->getAssetPath() + "hook.png").c_str());
-	Texture2D rope = LoadTexture((gameManager->getAssetPath() + "rope.png").c_str());
+	Texture2D waves = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/waves.png").c_str());
+	Texture2D bag = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/bag.png").c_str());
+	Texture2D can = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/can.png").c_str());
+	Texture2D bottle = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/bottle.png").c_str());
+	Texture2D hook = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/hook.png").c_str());
+	Texture2D rope = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/rope.png").c_str());
 
 	Vector2 MousePos;
 

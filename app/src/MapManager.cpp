@@ -141,8 +141,8 @@ void MapManager::TravelToCountry(std::string destination)
 	{
 		if (this->waypoints[i].name == destination && this->waypoints[i].name != playerCountry)
 		{
-			Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "bus.png").c_str());
-			Texture2D Plane = LoadTexture((gameManager->getAssetPath() + "plane.png").c_str());
+			Texture2D Bus = LoadTexture((gameManager->getAssetPath() + "Game/bus.png").c_str());
+			Texture2D Plane = LoadTexture((gameManager->getAssetPath() + "Game/plane.png").c_str());
 			Vector2 VehiclePos = { gameManager->GetScreenSize().x / 2 - MeasureText("Traveling...", 150) / 2,  gameManager->GetScreenSize().y / 2 };
 			gameManager->StartTimer(3);
 			HideCursor();
