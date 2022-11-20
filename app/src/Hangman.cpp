@@ -44,7 +44,24 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+		key = GetCharPressed();
 
+		while (key >= 97 && key <= 122 && alphabet[key - 97] == 0)
+		{
+			for (int i = 0; i < length; i++)
+			{
+				alphabet[key - 97] = 1;
+
+				if (key == copyWord[i])
+				{
+					wordConvertor[i] = copyWord[i];
+					counter++;
+					correctLetters++;
+				}
+			}
+
+			key = GetCharPressed();
+		}
 
 		BeginDrawing();
 		ClearBackground(BEIGE);
