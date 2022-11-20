@@ -14,6 +14,13 @@ int main()
     Texture2D food2 = LoadTexture("../assets/PollutedStreet/food2.png");
     Texture2D paper = LoadTexture("../assets/PollutedStreet/paper.png");    
 
+    int xCoordinates[16] = { GetScreenWidth() / 2 - 150, GetScreenWidth() / 2 - 325, GetScreenWidth() / 2 - rubbish.width / 2 - 420,
+                            350, 1700, 1200, 1300, 240, 904, 1830, 1449, 1390, 719, 90, 100, 40 };
+
+    int yCoordinates[16] = { GetScreenHeight() / 2 + 375, 919, 950, 924, 944, 954, 990, GetScreenHeight() - bin.height + 30,
+                            789, 724, 844, 779, 719, GetScreenHeight() / 2 + 270, GetScreenHeight() - bin.height - 20,
+                            GetScreenHeight() / 2 + 190 };
+
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
