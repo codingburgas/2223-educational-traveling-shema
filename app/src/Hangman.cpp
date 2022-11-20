@@ -60,7 +60,19 @@ int main()
 				}
 			}
 
+			if (correctLetters == 0)
+			{
+				bodyPartsPrint[counterBodyParts] = 1;
+				counterBodyParts++;
+			}
+
 			key = GetCharPressed();
+			correctLetters = 0;
+		}
+
+		if (counter == length)
+		{
+			flagEnd = true;
 		}
 
 		BeginDrawing();
