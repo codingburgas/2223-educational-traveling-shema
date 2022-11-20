@@ -28,6 +28,7 @@ int main()
     std::random_shuffle(givenWords.begin(), givenWords.end());
 
     short maxLetters = 5;
+    short nextWord = 0;
     bool wrong = 0;
     short wait = 0;
     bool wrongCounter = 0;
@@ -36,9 +37,9 @@ int main()
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        
+
         DrawRectangle(GetScreenWidth() / 2 - 195, GetScreenHeight() / 2 - 10, 340, 100, LIGHTGRAY);
-        DrawText(givenWords[0], GetScreenWidth() / 2 - 100, GetScreenHeight() / 2 - 300, 50, BLACK);
+        DrawText(givenWords[nextWord], GetScreenWidth() / 2 - 100, GetScreenHeight() / 2 - 300, 50, BLACK);
 
         ascii = GetCharPressed();
 
@@ -88,6 +89,7 @@ int main()
             if (wait == 40)
             {
                 wait = -1;
+                nextWord++;
                 text[0] = '_';
                 for (int i = 1; i < 5; i++)
                 {
