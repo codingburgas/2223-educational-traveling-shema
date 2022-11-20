@@ -44,6 +44,9 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+		BeginDrawing();
+		ClearBackground(BEIGE);
+
 		key = GetCharPressed();
 
 		while (key >= 97 && key <= 122 && alphabet[key - 97] == 0)
@@ -75,8 +78,47 @@ int main()
 			flagEnd = true;
 		}
 
-		BeginDrawing();
-		ClearBackground(BEIGE);
+		DrawTexture(rope, 100, 200, BEIGE);
+
+		for (int i = 0; i < 6; i++)
+		{
+			if (bodyPartsPrint[i])
+			{
+				if (i == 0)
+				{
+					x = 425;
+					y = 335;
+				}
+				if (i == 1)
+				{
+					x = 485;
+					y = 445;
+				}
+				if (i == 2)
+				{
+					x = 412;
+					y = 440;
+				}
+				if (i == 3)
+				{
+					x = 475;
+					y = 432;
+				}
+				if (i == 4)
+				{
+					x = 385;
+					y = 628;
+				}
+				if (i == 5)
+				{
+					x = 486;
+					y = 639;
+				}
+
+				DrawTexture(bodyParts[i], x, y, WHITE);
+			}
+		}
+
 		EndDrawing();
 	}
 
