@@ -9,7 +9,6 @@ int main()
     Texture2D packages[4] = { LoadTexture("package-front.png"), LoadTexture("package-front-with-stamp.png"),LoadTexture("package-back.png"), LoadTexture("package-back-with-stamp.png") };
     Texture2D letters[4] = { LoadTexture("letter-front.png"), LoadTexture("letter-front-with-stamp.png"),LoadTexture("letter-back.png"), LoadTexture("letter-back-with-stamp.png") };
     Texture2D background = LoadTexture("background.png");
-    Texture2D finishScreen = LoadTexture("finish-screen.png");
 
 
     SetTargetFPS(60);
@@ -23,7 +22,6 @@ int main()
     int front = 0;
     bool idle = 1;
     int letterX = 0, letterY = 0;
-
     short score = 0;
 
     while (!WindowShouldClose())
@@ -32,6 +30,7 @@ int main()
         ClearBackground(BROWN);
 
         DrawTexture(background, 0, 0, WHITE);
+        DrawText(money[score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
 
         x = GetMouseX();
         y = GetMouseY();
@@ -92,18 +91,51 @@ int main()
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 - 550 && x <= GetScreenWidth() / 2 - 400 && y >= 150 && y <= 300 && mailsLeft != 0)
         {
+            if (mailType == 0)
+            {
+                score++;
+            }
+            else
+            {
+                if (score != 0)
+                {
+                    score--;
+                }
+            }
             nextMail = 1;
             idle = 1;
         }
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 + 340 && x <= GetScreenWidth() / 2 + 500 && y >= 150 && y <= 300 && mailsLeft != 0)
         {
+            if (mailType == 1)
+            {
+                score++;
+            }
+            else
+            {
+                if (score != 0)
+                {
+                    score--;
+                }
+            }
             nextMail = 1;
             idle = 1;
         }
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 - 50 && x <= GetScreenWidth() / 2 + 150 && y >= 670 && y <= 850 && mailsLeft != 0)
         {
+            if (front == 0 && back == 2)
+            {
+                score++;
+            }
+            else
+            {
+                if (score != 0)
+                {
+                    score--;
+                }
+            }
             nextMail = 1;
             idle = 1;
         }
