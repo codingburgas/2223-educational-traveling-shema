@@ -8,9 +8,9 @@ int main()
 	InitWindow(1920, 1080, "Hang");
 	FLAG_FULLSCREEN_MODE;
 
-	Texture2D rope = LoadTexture("rope.png");
-	Texture2D finishScreen = LoadTexture("finishScreen.png");
-	Texture2D bodyParts[6] = { (LoadTexture("head.png")), (LoadTexture("body.png")), (LoadTexture("lHand.png")), (LoadTexture("rHand.png")), (LoadTexture("rHand.png")), (LoadTexture("lHand.png")) };
+	Texture2D rope = LoadTexture("../Hangman/rope.png");
+	Texture2D finishScreen = LoadTexture("../Hangman/finishScreen.png");
+	Texture2D bodyParts[6] = { (LoadTexture("../Hangman/head.png")), (LoadTexture("../Hangman/body.png")), (LoadTexture("../Hangman/lHand.png")), (LoadTexture("../Hangman/rHand.png")), (LoadTexture("../Hangman/rHand.png")), (LoadTexture("../Hangman/lHand.png")) };
 
 	std::string words[20] = { "dance," "dilligent", "fall", "steel", "beggar", "cleave", "page", "lush", "unruly", "trolley",
 							 "ball", "achieve", "detect", "wander", "behave", "ingest", "cart", "yield", "fast", "garden" };
