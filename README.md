@@ -66,7 +66,7 @@
 
 ### Presenting
 
-- [Presentation]()
+- [Presentation](https://github.com/codingburgas/2223-educational-traveling-shema/raw/main/docs/shema%20-%20Presentation.pptx)
 
 <hr>
 
