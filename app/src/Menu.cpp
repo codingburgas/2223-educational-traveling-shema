@@ -36,6 +36,10 @@ void Menu::drawMenu()
                 delete this;
                 break;
             }
+            if (gameManager->IsButtonClicked(1))
+            {
+                OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/");
+            }
             if (gameManager->IsButtonClicked(3))
             {
                 delete gameManager;

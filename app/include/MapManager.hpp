@@ -31,10 +31,10 @@ private:
 	Vector2 m_mousePos = { 0, 0 };
 	Vector2 playerPos;
 	
-	Texture2D waypoint = LoadTexture((gameManager->getAssetPath() + "Waypoint.png").c_str());
-	Texture2D LockedWaypoint = LoadTexture((gameManager->getAssetPath() + "LockedWaypoint.png").c_str());
-	Texture2D UnlockedWaypoint = LoadTexture((gameManager->getAssetPath() + "UnlockedWaypoint.png").c_str());
-	Texture2D ship = LoadTexture((gameManager->getAssetPath() + "Ship.png").c_str());
+	Texture2D waypoint = LoadTexture((gameManager->getAssetPath() + "Game/Waypoint.png").c_str());
+	Texture2D LockedWaypoint = LoadTexture((gameManager->getAssetPath() + "Game/LockedWaypoint.png").c_str());
+	Texture2D UnlockedWaypoint = LoadTexture((gameManager->getAssetPath() + "Game/UnlockedWaypoint.png").c_str());
+	Texture2D ship = LoadTexture((gameManager->getAssetPath() + "Game/Ship.png").c_str());
 	
 	bool toggleWaypoints = true;
 	bool togglePorts = false;
@@ -50,7 +50,7 @@ private:
 	
 	std::vector<Country> waypoints =
 	{
-		{"Greenland", {350,50} , 1, 1, 400}, {"Iceland", {430,220} , 1, 0, 450} , {"England", {600,580} , 1, 0, 700} , {"Ireland", {480,535} , 1, 0, 500} , 
+		{"Greenland", {350,50} , 1, 0, 400}, {"Iceland", {430,220} , 1, 0, 450} , {"England", {600,580} , 1, 0, 700} , {"Ireland", {480,535} , 1, 0, 500} , 
 		{"Norway", {820,400} , 1, 0, 650} , {"Sweden", {940,350} , 1, 0, 800} , {"Germany", {830,650} , 1, 0, 1200} , {"Bulgaria", {1200,830} , 1, 0, 500} , {"France", {700,750} , 1, 0, 1300} , 
 		{"Spain", {500,900} , 1, 0, 1000} ,
 		{"Portugal", {350,915} , 1, 0, 900} , {"Netherlands", {760,620} , 0.7, 0, 900} , {"Belgium", {740,665} , 0.75, 0, 800} , {"Finland", {1100,340} , 1, 0, 700} , 
