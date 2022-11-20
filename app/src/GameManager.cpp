@@ -4,6 +4,7 @@ GameManager *GameManager::instance;
 GameManager::GameManager()
 {
 	srand(time(NULL));
+	SetWindowIcon(LoadImage((this->getAssetPath() + "Logo.png").c_str()));
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1920, 1080, "Game Window");
 	SetExitKey(KEY_NULL);
