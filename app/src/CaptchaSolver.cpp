@@ -5,7 +5,6 @@
 int main()
 {
     InitWindow(1920, 1080, "Captcha Solver");
-
     SetTargetFPS(60);
 
     char text[6] = { '_' };
