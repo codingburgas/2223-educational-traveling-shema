@@ -118,6 +118,34 @@ int main()
 				DrawTexture(bodyParts[i], x, y, WHITE);
 			}
 		}
+		DrawText(wordConvertor.c_str(), GetScreenWidth() / 2 + 150, GetScreenHeight() / 2 - 50, 50, BLACK);
+		DrawText("Guesses:", GetScreenWidth() / 2 + 30, GetScreenHeight() / 2 + 150, 40, BLACK);
+
+		for (int i = 0; i < 26; i++)
+		{
+			if (alphabet[i] == 1 && letterCounter[i] == 0)
+			{
+				letterCounter[i] = 1;
+				letter += ' ';
+				letter += char(i + 97);
+			}
+		}
+
+		DrawText(letter.c_str(), GetScreenWidth() / 2 + 240, GetScreenHeight() / 2 + 150, 40, BLACK);
+
+		if (flagEnd)
+		{
+			DrawTexture(finishScreen, 0, 0, WHITE);
+			DrawText("Congratulations!", GetScreenWidth() / 2 - 170, GetScreenHeight() / 2 - 150, 45, BLACK);
+			DrawText("You've won 200 $!", GetScreenWidth() / 2 - 245, GetScreenHeight() / 2, 60, BLACK);
+		}
+
+		if (counterBodyParts == 6)
+		{
+			DrawTexture(finishScreen, 0, 0, WHITE);
+			DrawText("Failed!", GetScreenWidth() / 2 - 90, GetScreenHeight() / 2 - 150, 60, BLACK);
+			DrawText("You've lost!", GetScreenWidth() / 2 - 205, GetScreenHeight() / 2, 70, BLACK);
+		}
 
 		EndDrawing();
 	}
