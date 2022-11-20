@@ -21,16 +21,32 @@ Game::Game()
 		}
 		if (IsKeyPressed(257))
 		{
-			SeaMinigame* seaMinigame = new SeaMinigame();
-			seaMinigame->UpdateGame();
-			delete seaMinigame;
+			//SeaMinigame* seaMinigame = new SeaMinigame();
+			//seaMinigame->UpdateGame();
+			//delete seaMinigame;
+			GetRich* getRich = new GetRich();
+			getRich->UpdateGame();
+			delete getRich;
 		}
 	}
 }
 
 Game::~Game()
 {
-
+	UnloadTexture(CountryHUDTexture);
+	UnloadTexture(CurrentCountryHUD);
+	UnloadTexture(Checkbox);
+	UnloadTexture(Checkmark);
+	UnloadTexture(UnlockButton);
+	UnloadTexture(UnlockButtonHover);
+	UnloadTexture(UnlockButtonLocked);
+	UnloadTexture(Unlocked);
+	UnloadTexture(TravelButton);
+	UnloadTexture(TravelButtonHover);
+	UnloadTexture(TravelButtonLocked);
+	UnloadTexture(TravelTicketButton);
+	UnloadTexture(TravelTicketButtonHover);
+	UnloadTexture(TravelTicketButtonLocked);
 }
 
 void Game::LoadDynamicTextures()
