@@ -4,7 +4,8 @@
 class MapManager
 {
 private:
-	struct Country
+	// Creates a new COUNTRY structure with the following properties
+	struct COUNTRY
 	{
 		std::string name;
 		Vector2 pos;
@@ -16,39 +17,45 @@ public:
 	MapManager();
 	~MapManager();
 	Vector2 GetMapSize();
-	Country IsWaypointClicked();
-	Country IsPortClicked();
+	// Creates a functions that returns the country that was clicked
+	COUNTRY IsWaypointClicked();
+	COUNTRY IsPortClicked();
 	void UpdateMap();
-	void SetChosenCountry(std::string countryName, Vector2 pos);
-	void UnlockCountry(std::string countryName);
-	void TravelToCountry(std::string destination);
-	void ToggleWaypoints(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize);
-	void TogglePorts(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize);
+	void SetChosenCountry(std::string CountryName, Vector2 Pos);
+	void UnlockCountry(std::string CountryName);
+	void TravelToCountry(std::string Destination);
+	void ToggleWaypoints(Texture2D Checkbox, Texture2D Checkmark, Vector2 CheckboxSize, Vector2 CheckmarkSize);
+	void TogglePorts(Texture2D Checkbox, Texture2D Checkmark, Vector2 CheckboxSize, Vector2 CheckmarkSize);
+	void UnlockAllWaypoints();
+	int GetUnlockedCountries();
+	int GetCountriesSize();
 	std::string getChosenCountry();
 	std::string getPlayerCountry();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
-	Vector2 m_mousePos = { 0, 0 };
-	Vector2 playerPos;
+	Vector2 m_MousePos = { 0, 0 };
+	Vector2 m_PlayerPos = { 0, 0 };
 	
-	Texture2D waypoint = LoadTexture((gameManager->getAssetPath() + "Game/Waypoint.png").c_str());
-	Texture2D LockedWaypoint = LoadTexture((gameManager->getAssetPath() + "Game/LockedWaypoint.png").c_str());
-	Texture2D UnlockedWaypoint = LoadTexture((gameManager->getAssetPath() + "Game/UnlockedWaypoint.png").c_str());
-	Texture2D ship = LoadTexture((gameManager->getAssetPath() + "Game/Ship.png").c_str());
+	Texture2D m_Waypoint = LoadTexture((gameManager->GetAssetPath() + "Game/Waypoint.png").c_str());
+	Texture2D m_LockedWaypoint = LoadTexture((gameManager->GetAssetPath() + "Game/LockedWaypoint.png").c_str());
+	Texture2D m_UnlockedWaypoint = LoadTexture((gameManager->GetAssetPath() + "Game/UnlockedWaypoint.png").c_str());
+	Texture2D m_Ship = LoadTexture((gameManager->GetAssetPath() + "Game/Ship.png").c_str());
 	
-	bool toggleWaypoints = true;
-	bool togglePorts = false;
+	bool m_ToggleWaypoints = true;
+	bool m_TogglePorts = false;
 	
-	const float mapWidth = 1920;
-	const float mapHeight = 1080;
+	const float c_MapWidth = 1920;
+	const float c_MapHeight = 1080;
 	
-	std::string chosenCountry;
-	std::string playerCountry;
+	std::string m_ChosenCountry;
+	std::string m_PlayerCountry;
 	
-	void DrawWaypoints(std::vector<Country> waypoints);
-	void DrawPorts(std::vector<Country> ports);
+	int m_UnlockedCountries = 0;
 	
-	std::vector<Country> waypoints =
+	void DrawWaypoints(std::vector<COUNTRY> Waypoints);
+	void DrawPorts(std::vector<COUNTRY> Ports);
+	
+	std::vector<COUNTRY> m_Waypoints =
 	{
 		{"Greenland", {350,50} , 1, 0, 400}, {"Iceland", {430,220} , 1, 0, 450} , {"England", {600,580} , 1, 0, 700} , {"Ireland", {480,535} , 1, 0, 500} , 
 		{"Norway", {820,400} , 1, 0, 650} , {"Sweden", {940,350} , 1, 0, 800} , {"Germany", {830,650} , 1, 0, 1200} , {"Bulgaria", {1200,830} , 1, 0, 500} , {"France", {700,750} , 1, 0, 1300} , 
@@ -63,7 +70,7 @@ private:
 		{"Moldova", {1290,710} , 0.75, 0, 300}
 	};
 	
-	std::vector<Country> ports =
+	std::vector<COUNTRY> m_Ports =
 	{
 		{"Greenland", {430,95} , 1, 0, 0} , {"Iceland", {490,250} , 1, 0, 0} , {"England", {645,630} , 1, 0, 0} , {"Ireland", {450,590} , 1, 0, 0} , {"Norway", {800,460} , 1, 0, 0} , {"Sweden", {950,510} , 1, 0, 0} , {"Germany", {820,590} , 1, 0, 0} , {"Bulgaria", {1310,840}, 0.8, 0, 0 } , {"France", {580,685} , 0.75, 0, 0 } , {"Spain", {470,820}, 1, 0, 0} ,
 		{"Portugal", {350,870}, 1, 0, 0}, {"Netherlands", {730,620} , 0.6, 0, 0 }, {"Belgium", {705,650} , 0.75, 0, 0 }, {"Finland", {1060,400} , 1, 0, 0} , {"Romania", {1310,790} , 0.75, 0, 0 } , {"Greece", {1210,1000} , 1, 0, 0} , {"Italy", {915,900} , 1, 0, 0} , {"Ukraine", {1430,750} , 0.8, 0, 0 } , {"Belarus", {0,0} , 0, 0, 0 } , {"Poland", {1020,550} , 0.8, 0, 0 } , {"Turkey", {1400,840} , 1, 0, 0} , {"Czechia", {0,0} , 0, 0, 0 } , {"Austria", {0,0} , 0, 0, 0 } , {"Switzerland", {0,0} , 0, 0, 0 } ,

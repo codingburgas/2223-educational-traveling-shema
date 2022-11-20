@@ -7,27 +7,28 @@ public:
 	MailPackager();
 	~MailPackager();
 	void UpdateGame();
-	int getPayout();
+	int GetPayout();
 private:
+	// Gets the game manager instance
 	GameManager *gameManager = GameManager::GetInstance();
 	
-	Texture2D Packages[4];
-	Texture2D Letters[4];
-	Texture2D Background;
-	Texture2D FinishScreen;
+	Texture2D m_Packages[4];
+	Texture2D m_Letters[4];
+	Texture2D m_Background;
+	Texture2D m_FinishScreen;
 	
-	Vector2 MousePos;
-	Vector2 LetterPos;
+	Vector2 m_MousePos;
+	Vector2 m_LetterPos;
 
-	bool MailType = 0; // 1 - packages; 0 - letters
-	bool NextMail = 1;
-	bool Side = 1;
-	int money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
-	int MailsLeft = 11;
-	int Back = 0;
-	int Front = 0;
-	int Payout;
+	bool m_MailType = 0; // 1 - packages; 0 - letters
+	bool m_NextMail = 1;
+	bool m_Side = 1;
+	int m_Money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
+	int m_MailsLeft = 11;
+	int m_Back = 0;
+	int m_Front = 0;
+	int m_Payout;
 	
-	bool Idle = 1;
-	unsigned short Score = 0;
+	bool m_Idle = 1;
+	unsigned short m_Score = 0;
 };

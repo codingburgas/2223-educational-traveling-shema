@@ -3,18 +3,17 @@
 SeaMinigame::SeaMinigame()
 {
 	RandomizeRubbish();
-
 	HideCursor();
 }
 
 SeaMinigame::~SeaMinigame()
 {
-	UnloadTexture(waves);
-	UnloadTexture(bag);
-	UnloadTexture(can);
-	UnloadTexture(bottle);
-	UnloadTexture(hook);
-	UnloadTexture(rope);
+	UnloadTexture(this->m_Waves);
+	UnloadTexture(this->m_Bag);
+	UnloadTexture(this->m_Can);
+	UnloadTexture(this->m_Bottle);
+	UnloadTexture(this->m_Hook);
+	UnloadTexture(this->m_Rope);
 }
 
 
@@ -22,22 +21,22 @@ void SeaMinigame::RandomizeRubbish()
 {
 	for (int i = 0; i < 20; i++)
 	{
-		rubbishArray[i].type = rand() % 3 + 1;
+		this->m_RubbishArray[i].type = rand() % 3 + 1;
 	}
 
 	for (int i = 0; i < 20; i++)
 	{
-		rubbishArray[i].x = rand() % 1820 + 1;
-		rubbishArray[i].y = rand() % 450 + 450;
+		this->m_RubbishArray[i].x = rand() % 1820 + 1;
+		this->m_RubbishArray[i].y = rand() % 450 + 450;
 		for (int j = 0; j < i; j++)
 		{
-			while (abs(rubbishArray[i].x - rubbishArray[j].x) < 100)
+			while (abs(this->m_RubbishArray[i].x - this->m_RubbishArray[j].x) < 100)
 			{
-				rubbishArray[i].x = rand() % 1820 + 1;
+				this->m_RubbishArray[i].x = rand() % 1820 + 1;
 			}
-			while (abs(rubbishArray[i].y - rubbishArray[j].y) < 100)
+			while (abs(this->m_RubbishArray[i].y - this->m_RubbishArray[j].y) < 100)
 			{
-				rubbishArray[i].y = rand() % 450 + 450;
+				this->m_RubbishArray[i].y = rand() % 450 + 450;
 			}
 		}
 	}
@@ -45,40 +44,40 @@ void SeaMinigame::RandomizeRubbish()
 
 void SeaMinigame::UpdateGame()
 {
-	while (RemainingRubbish > 0)
+	while (this->m_RemainingRubbish > 0)
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		DrawTexture(waves, 0, 0, WHITE);
+		DrawTexture(this->m_Waves, 0, 0, WHITE);
 		
-		MousePos = GetMousePosition();
+		m_MousePos = GetMousePosition();
 
-		DrawTexture(rope, MousePos.x - 29, MousePos.y - rope.height - 10, RAYWHITE);
-		DrawTexture(hook, MousePos.x - 20, MousePos.y - 25, RAYWHITE);
+		DrawTexture(this->m_Rope, this->m_MousePos.x - 29, this->m_MousePos.y - this->m_Rope.height - 10, RAYWHITE);
+		DrawTexture(this->m_Hook, this->m_MousePos.x - 20, this->m_MousePos.y - 25, RAYWHITE);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				if ((MousePos.x >= rubbishArray[i].x && MousePos.x <= rubbishArray[i].x + 65) && (MousePos.y >= rubbishArray[i].y && MousePos.y <= rubbishArray[i].y + 55) && !rubbishArray[i].isClicked && !rubbishArray[i].isCleaned && !carrying)
+				if ((this->m_MousePos.x >= this->m_RubbishArray[i].x && this->m_MousePos.x <= this->m_RubbishArray[i].x + 65) && (this->m_MousePos.y >= this->m_RubbishArray[i].y && this->m_MousePos.y <= this->m_RubbishArray[i].y + 55) && !this->m_RubbishArray[i].isClicked && !this->m_RubbishArray[i].isCleaned && !this->m_Carrying)
 				{
-					SetMousePosition(rubbishArray[i].x + 20, rubbishArray[i].y + 20);
-					rubbishArray[i].isClicked = 1;
-					carrying = 1;
+					SetMousePosition(this->m_RubbishArray[i].x + 20, this->m_RubbishArray[i].y + 20);
+					this->m_RubbishArray[i].isClicked = 1;
+					this->m_Carrying = 1;
 					break;
 				}
-				else if ((MousePos.x >= 0 && MousePos.x <= 1920) && (MousePos.y >= 0 && MousePos.y <= 345))
+				else if ((this->m_MousePos.x >= 0 && this->m_MousePos.x <= 1920) && (this->m_MousePos.y >= 0 && this->m_MousePos.y <= 345))
 				{
 					for (int j = 0; j < 20; j++)
 					{
-						if (rubbishArray[j].isClicked == 1)
+						if (this->m_RubbishArray[j].isClicked == 1)
 						{
-							rubbishArray[j].isClicked = 0;
-							rubbishArray[j].isCleaned = 1;
-							RemainingRubbish--;
+							this->m_RubbishArray[j].isClicked = 0;
+							this->m_RubbishArray[j].isCleaned = 1;
+							this->m_RemainingRubbish--;
 							break;
 						}
 					}
-					carrying = 0;
+					this->m_Carrying = 0;
 					break;
 				}
 			}
@@ -87,34 +86,34 @@ void SeaMinigame::UpdateGame()
 		}
 		for (int i = 0; i < 20; i++)
 		{
-			if (rubbishArray[i].isClicked && !rubbishArray[i].isCleaned)
+			if (this->m_RubbishArray[i].isClicked && !this->m_RubbishArray[i].isCleaned)
 			{
-				switch (rubbishArray[i].type)
+				switch (this->m_RubbishArray[i].type)
 				{
 				case 1:
-					DrawTexture(bag, MousePos.x - 25, MousePos.y - 15, RAYWHITE);
+					DrawTexture(this->m_Bag, this->m_MousePos.x - 25, this->m_MousePos.y - 15, RAYWHITE);
 					break;
 				case 2:
-					DrawTexture(can, MousePos.x - 25, MousePos.y, RAYWHITE);
+					DrawTexture(this->m_Can, this->m_MousePos.x - 25, this->m_MousePos.y, RAYWHITE);
 					break;
 				default:
-					DrawTexture(bottle, MousePos.x - 25, MousePos.y, RAYWHITE);
+					DrawTexture(this->m_Bottle, this->m_MousePos.x - 25, this->m_MousePos.y, RAYWHITE);
 					break;
 
 				}
 			}
-			else if (!rubbishArray[i].isClicked && !rubbishArray[i].isCleaned)
+			else if (!this->m_RubbishArray[i].isClicked && !this->m_RubbishArray[i].isCleaned)
 			{
-				switch (rubbishArray[i].type)
+				switch (this->m_RubbishArray[i].type)
 				{
 				case 1:
-					DrawTexture(bag, rubbishArray[i].x, rubbishArray[i].y, RAYWHITE);
+					DrawTexture(this->m_Bag, this->m_RubbishArray[i].x, this->m_RubbishArray[i].y, RAYWHITE);
 					break;
 				case 2:
-					DrawTexture(can, rubbishArray[i].x, rubbishArray[i].y, RAYWHITE);
+					DrawTexture(this->m_Can, this->m_RubbishArray[i].x, this->m_RubbishArray[i].y, RAYWHITE);
 					break;
 				default:
-					DrawTexture(bottle, rubbishArray[i].x, rubbishArray[i].y, RAYWHITE);
+					DrawTexture(this->m_Bottle, this->m_RubbishArray[i].x, this->m_RubbishArray[i].y, RAYWHITE);
 					break;
 
 				}
@@ -122,13 +121,13 @@ void SeaMinigame::UpdateGame()
 		}
 		EndDrawing();
 	}
-	gameManager->StartTimer(3);
-	Payout = 350;
+	this->gameManager->StartTimer(3);
+	this->m_Payout = 350;
 	while (!gameManager->TimerEnded())
 	{
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
-		DrawTexture(waves, 0, 0, WHITE);
+		DrawTexture(this->m_Waves, 0, 0, WHITE);
 		DrawRectangle(0, 0, 1920, 1080, Fade(BLACK, 0.5f));
 		DrawText("Congratulations!", gameManager->GetScreenSize().x / 2 - MeasureText("Congratulations!", 60) / 2, gameManager->GetScreenSize().y/2 - 80, 60, RED);
 		DrawText("You've cleaned the sea!", gameManager->GetScreenSize().x / 2 - MeasureText("You've cleaned the sea!", 60) / 2, gameManager->GetScreenSize().y/2 - 20, 60, RED);
@@ -137,7 +136,7 @@ void SeaMinigame::UpdateGame()
 	ShowCursor();
 }
 
-int SeaMinigame::getPayout()
+int SeaMinigame::GetPayout()
 {
-	return Payout;
+	return this->m_Payout;
 }

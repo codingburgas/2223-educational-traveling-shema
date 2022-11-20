@@ -7,30 +7,32 @@ public:
 	SeaMinigame();
 	~SeaMinigame();;
 	void UpdateGame();
-	int getPayout();
+	int GetPayout();
 private:
-	struct rubbish {
+	// Creates a rubbish structure with the following properties
+	struct RUBBISH {
 		int x = 0;
 		int y = 0;
 		short type = 0;
 		bool isClicked = 0;
 		bool isCleaned = 0;
 	};
+	// Gets the game manager instance
 	GameManager* gameManager = GameManager::GetInstance();
 
-	Texture2D waves = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/waves.png").c_str());
-	Texture2D bag = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/bag.png").c_str());
-	Texture2D can = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/can.png").c_str());
-	Texture2D bottle = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/bottle.png").c_str());
-	Texture2D hook = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/hook.png").c_str());
-	Texture2D rope = LoadTexture((gameManager->getAssetPath() + "SeaMinigame/rope.png").c_str());
+	Texture2D m_Waves = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/waves.png").c_str());
+	Texture2D m_Bag = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/bag.png").c_str());
+	Texture2D m_Can = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/can.png").c_str());
+	Texture2D m_Bottle = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/bottle.png").c_str());
+	Texture2D m_Hook = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/hook.png").c_str());
+	Texture2D m_Rope = LoadTexture((gameManager->GetAssetPath() + "SeaMinigame/rope.png").c_str());
 
-	Vector2 MousePos;
+	Vector2 m_MousePos;
 
-	rubbish rubbishArray[20];
-	bool carrying = 0;
-	short RemainingRubbish = 20;
-	int Payout = 0;
+	RUBBISH m_RubbishArray[20];
+	bool m_Carrying = 0;
+	short m_RemainingRubbish = 20;
+	int m_Payout = 0;
 
 
 	void RandomizeRubbish();

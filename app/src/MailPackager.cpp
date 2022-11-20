@@ -2,159 +2,162 @@
 
 MailPackager::MailPackager()
 {
-	this->Packages[0] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageFront.png").c_str());
-	this->Packages[1] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageFrontStamp.png").c_str());
-	this->Packages[2] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageBack.png").c_str());
-	this->Packages[3] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageBackStamp.png").c_str());
+	// Loads all the textures
+	this->m_Packages[0] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/PackageFront.png").c_str());
+	this->m_Packages[1] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/PackageFrontStamp.png").c_str());
+	this->m_Packages[2] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/PackageBack.png").c_str());
+	this->m_Packages[3] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/PackageBackStamp.png").c_str());
 
-	this->Letters[0] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterFront.png").c_str());
-	this->Letters[1] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterFrontStamp.png").c_str());
-	this->Letters[2] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterBack.png").c_str());
-	this->Letters[3] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterBackStamp.png").c_str());
+	this->m_Letters[0] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/LetterFront.png").c_str());
+	this->m_Letters[1] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/LetterFrontStamp.png").c_str());
+	this->m_Letters[2] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/LetterBack.png").c_str());
+	this->m_Letters[3] = LoadTexture((gameManager->GetAssetPath() + "MailPackager/LetterBackStamp.png").c_str());
 
-	this->Background = LoadTexture((gameManager->getAssetPath() + "MailPackager/Background.png").c_str());
-	this->FinishScreen = LoadTexture((gameManager->getAssetPath() + "MailPackager/FinishScreen.png").c_str());
+	this->m_Background = LoadTexture((gameManager->GetAssetPath() + "MailPackager/Background.png").c_str());
+	this->m_FinishScreen = LoadTexture((gameManager->GetAssetPath() + "MailPackager/FinishScreen.png").c_str());
 }
 MailPackager::~MailPackager()
 {
+	// Unloads all the textures
 	for (int i = 0; i < 4; i++)
 	{
-		UnloadTexture(this->Packages[i]);
-		UnloadTexture(this->Letters[i]);
+		UnloadTexture(this->m_Packages[i]);
+		UnloadTexture(this->m_Letters[i]);
 	}
-	UnloadTexture(this->Background);
-	UnloadTexture(this->FinishScreen);
+	UnloadTexture(this->m_Background);
+	UnloadTexture(this->m_FinishScreen);
 }
 
 void MailPackager::UpdateGame()
 {
-	while (this->MailsLeft > 0)
+	// Displays the background
+	while (this->m_MailsLeft > 0)
 	{
-		MousePos = GetMousePosition();
+		this->m_MousePos = GetMousePosition();
 		BeginDrawing();
 		ClearBackground(BROWN);
 
-		DrawTexture(this->Background, 0, 0, WHITE);
-		DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 50, 50, 50, GREEN);
+		DrawTexture(this->m_Background, 0, 0, WHITE);
+		DrawText((std::to_string(m_Money[this->m_Score]) + "$").c_str(), GetScreenWidth() / 2 - 50, 50, 50, GREEN);
 
-		if (this->NextMail)
+		if (this->m_NextMail)
 		{
-			this->MailType = rand() % 2; // random number from 0 to 1
-			this->Front = rand() % 2;
-			this->Back = rand() % 2 + 2; // random number from 2 to 3
-			this->NextMail = 0;
-			this->MailsLeft--;
+			this->m_MailType = rand() % 2; // random number from 0 to 1
+			this->m_Front = rand() % 2;
+			this->m_Back = rand() % 2 + 2; // random number from 2 to 3
+			this->m_NextMail = 0;
+			this->m_MailsLeft--;
 		}
 
-		if (this->Idle)
+		if (this->m_Idle)
 		{
-			this->LetterPos.x = GetScreenWidth() / 2 - 80;
-			this->LetterPos.y = 300;
+			this->m_LetterPos.x = GetScreenWidth() / 2 - 80;
+			this->m_LetterPos.y = 300;
 		}
 		else
 		{
-			this->LetterPos.x = MousePos.x - 65;
-			this->LetterPos.y = MousePos.y - 30;
+			this->m_LetterPos.x = this->m_MousePos.x - 65;
+			this->m_LetterPos.y = this->m_MousePos.y - 30;
 		}
 
-		if (this->MailType && this->MailsLeft != 0)
+		if (this->m_MailType && this->m_MailsLeft != 0)
 		{
-			DrawTexture(this->Side ? this->Packages[this->Front] : this->Packages[this->Back], this->LetterPos.x, this->LetterPos.y, WHITE);
+			DrawTexture(this->m_Side ? this->m_Packages[this->m_Front] : this->m_Packages[this->m_Back], this->m_LetterPos.x, this->m_LetterPos.y, WHITE);
 		}
-		else if (this->MailsLeft != 0)
+		else if (this->m_MailsLeft != 0)
 		{
-			DrawTexture(this->Side ? this->Letters[this->Front] : this->Letters[this->Back], this->LetterPos.x, this->LetterPos.y, WHITE);
+			DrawTexture(this->m_Side ? this->m_Letters[this->m_Front] : this->m_Letters[this->m_Back], this->m_LetterPos.x, this->m_LetterPos.y, WHITE);
 		}
 
 		if (IsKeyPressed(KEY_F))
 		{
-			this->Side = !this->Side;
+			this->m_Side = !this->m_Side;
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && MousePos.x >= GetScreenWidth() / 2 - 80 && MousePos.x <= GetScreenWidth() / 2 + 50 && MousePos.y >= 300 && MousePos.y <= 400)
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && this->m_MousePos.x >= GetScreenWidth() / 2 - 80 && this->m_MousePos.x <= GetScreenWidth() / 2 + 50 && this->m_MousePos.y >= 300 && this->m_MousePos.y <= 400)
 		{
-			this->Idle = 0;
+			this->m_Idle = 0;
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 - 550 && MousePos.x <= GetScreenWidth() / 2 - 400 && MousePos.y >= 150 && MousePos.y <= 300 && this->MailsLeft != 0)
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->m_Idle && this->m_MousePos.x >= GetScreenWidth() / 2 - 550 && this->m_MousePos.x <= GetScreenWidth() / 2 - 400 && this->m_MousePos.y >= 150 && this->m_MousePos.y <= 300 && this->m_MailsLeft != 0)
 		{
-			if (this->MailType == 0)
+			if (this->m_MailType == 0)
 			{
-				this->Score++;
+				this->m_Score++;
 			}
 			else
 			{
-				if (this->Score != 0)
+				if (this->m_Score != 0)
 				{
-					this->Score--;
+					this->m_Score--;
 				}
 			}
-			this->NextMail = 1;
-			this->Idle = 1;
+			this->m_NextMail = 1;
+			this->m_Idle = 1;
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 + 340 && MousePos.x <= GetScreenWidth() / 2 + 500 && MousePos.y >= 150 && MousePos.y <= 300 && this->MailsLeft != 0)
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->m_Idle && this->m_MousePos.x >= GetScreenWidth() / 2 + 340 && this->m_MousePos.x <= GetScreenWidth() / 2 + 500 && this->m_MousePos.y >= 150 && this->m_MousePos.y <= 300 && this->m_MailsLeft != 0)
 		{
-			if (this->MailType == 1)
+			if (this->m_MailType == 1)
 			{
-				this->Score++;
+				this->m_Score++;
 			}
 			else
 			{
-				if (this->Score != 0)
+				if (this->m_Score != 0)
 				{
-					this->Score--;
+					this->m_Score--;
 				}
 			}
-			this->NextMail = 1;
-			this->Idle = 1;
+			this->m_NextMail = 1;
+			this->m_Idle = 1;
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 - 50 && MousePos.x <= GetScreenWidth() / 2 + 150 && MousePos.y >= 670 && MousePos.y <= 850 && this->MailsLeft != 0)
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->m_Idle && this->m_MousePos.x >= GetScreenWidth() / 2 - 50 && this->m_MousePos.x <= GetScreenWidth() / 2 + 150 && this->m_MousePos.y >= 670 && this->m_MousePos.y <= 850 && this->m_MailsLeft != 0)
 		{
-			if (this->Front == 0 && this->Back == 2)
+			if (this->m_Front == 0 && this->m_Back == 2)
 			{
-				this->Score++;
+				this->m_Score++;
 			}
 			else
 			{
-				if (this->Score != 0)
+				if (this->m_Score != 0)
 				{
-					this->Score--;
+					this->m_Score--;
 				}
 			}
-			this->NextMail = 1;
-			this->Idle = 1;
+			this->m_NextMail = 1;
+			this->m_Idle = 1;
 		}
 
 		EndDrawing();
 	}
-	Payout = money[this->Score];
+	this->m_Payout = this->m_Money[this->m_Score];
 	gameManager->StartTimer(3);
 	while (!gameManager->TimerEnded())
 	{
 		BeginDrawing();
 		ClearBackground(BROWN);
-		DrawTexture(this->FinishScreen, 0, 0, WHITE);
+		DrawTexture(this->m_FinishScreen, 0, 0, WHITE);
 		DrawText("Congratulations", GetScreenWidth() / 2 - 320, 80, 80, BLACK);
 		DrawText("You have won", GetScreenWidth() / 2 - 175, 250, 50, BLACK);
-		if (this->Score == 1 || this->Score == 2)
+		if (this->m_Score == 1 || this->m_Score == 2)
 		{
-			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 180, 350, 200, GREEN);
+			DrawText((std::to_string(this->m_Money[this->m_Score]) + "$").c_str(), GetScreenWidth() / 2 - 180, 350, 200, GREEN);
 		}
-		else if (this->Score == 0)
+		else if (this->m_Score == 0)
 		{
-			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 200, 350, 200, GREEN);
+			DrawText((std::to_string(this->m_Money[this->m_Score]) + "$").c_str(), GetScreenWidth() / 2 - 200, 350, 200, GREEN);
 		}
 		else
 		{
-			DrawText((std::to_string(money[this->Score]) + "$").c_str(), GetScreenWidth() / 2 - 240, 350, 200, GREEN);
+			DrawText((std::to_string(this->m_Money[this->m_Score]) + "$").c_str(), GetScreenWidth() / 2 - 240, 350, 200, GREEN);
 		}
 		EndDrawing();
 	}
 }
 
-int MailPackager::getPayout()
+int MailPackager::GetPayout()
 {
-	return Payout;
+	return this->m_Payout;
 }

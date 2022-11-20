@@ -11,6 +11,7 @@
 class GameManager
 {
 public:
+	// Creates a getter for the instance
 	static GameManager* GetInstance();
 	
 	enum SCENE
@@ -20,10 +21,11 @@ public:
 		GAME
 	};
 	
-	Font impact;
-	SCENE currentScene = NO_SCENE;
+	// Font intialization
+	Font m_Impact;
+	SCENE CurrentScene = NO_SCENE;
 	Vector2 GetScreenSize();
-	std::string getAssetPath();
+	std::string GetAssetPath();
 	void Update();
 	void LoadScene(SCENE sceneID, std::vector<std::string> textureFiles, std::vector<Vector2> positions);
 	void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
@@ -39,17 +41,17 @@ public:
 private:
 	GameManager();
 	static GameManager* instance;
-	Vector2 m_mousePos = {0, 0};
-	std::vector<Texture2D> m_textures;
-	std::vector<Vector2> m_texturePositions;
-	std::vector<Texture2D> m_buttons;
-	std::vector<Texture2D> m_onHoverButtons;
-	std::vector<Vector2> m_buttonPositions;
-	const std::string m_assetPath = "./assets/";
-	const int k_windowFPS = 60;
-	float m_width = GetScreenWidth();
-	float m_height = GetScreenHeight();
-	double m_startTime = 0;
-	double m_timerDuration = 0;
+	Vector2 m_MousePos = {0, 0};
+	std::vector<Texture2D> m_Textures;
+	std::vector<Vector2> m_TexturePositions;
+	std::vector<Texture2D> m_Buttons;
+	std::vector<Texture2D> m_OnHoverButtons;
+	std::vector<Vector2> m_ButtonPositions;
+	const std::string m_AssetPath = "./assets/";
+	const int c_WindowFPS = 60;
+	float m_Width = GetScreenWidth();
+	float m_Height = GetScreenHeight();
+	double m_StartTime = 0;
+	double m_TimerDuration = 0;
 	
 };

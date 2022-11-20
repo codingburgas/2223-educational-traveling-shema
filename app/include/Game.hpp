@@ -17,51 +17,55 @@ public:
 	Game();
 	~Game();
 private:
+	// Gets the Game manager instance
 	GameManager* gameManager = GameManager::GetInstance();
+	// Gets the Map manager instance
 	MapManager* mapManager = new MapManager();
-	std::vector<std::string> missions = { "Clean the sea", "Captcha solver", "Clean the street", "Get rich", "Hangman", "Mail packager" };
-	std::string currentCountry = mapManager->getPlayerCountry();
-	std::string ClickedCountryName;
+	std::vector<std::string> m_Missions = { "Clean the sea", "Captcha solver", "Clean the street", "Get rich", "Hangman", "Mail packager" };
+	std::string m_CurrentCountry = mapManager->getPlayerCountry();
+	std::string m_ClickedCountryName;
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();
 	void DrawCountryHUD();
 	void DrawCurrentCountryHUD();
 	void LoadDynamicTextures();
-	void showMissions();
+	void ShowMissions();
+	void ShowClickedCountryMissions();
 	void PassiveIncome();
+	void GameOver();
 	
-	int tickets = 1;
-	int ClickedCountryPrice;
-	int balance = 500;
-	float time = 0;
+	int m_Tickets = 1;
+	int m_ClickedCountryPrice;
+	int m_Balance = 500;
+	float m_Time = 0;
 	
-	bool FinishedMissions[3] = {0, 0, 0};
-	bool ClickedCountryUnlocked;
-	bool chosen = false;
+	bool m_FinishedMissions[3] = {0, 0, 0};
+	bool m_ClickedCountryUnlocked;
+	bool m_Chosen = false;
 
+	Texture2D m_CountryHUDTexture;
+	Texture2D m_CurrentCountryHUD;
 
+	Texture2D m_Checkbox;
+	Texture2D m_Checkmark;
 
-	Texture2D CountryHUDTexture;
-	Texture2D CurrentCountryHUD;
+	Texture2D m_UnlockButton;
+	Texture2D m_UnlockButtonHover;
+	Texture2D m_UnlockButtonLocked;
+	Texture2D m_Unlocked;
 
-	Texture2D Checkbox;
-	Texture2D Checkmark;
+	Texture2D m_TravelButton;
+	Texture2D m_TravelButtonHover;
+	Texture2D m_TravelButtonLocked;
 
-	Texture2D UnlockButton;
-	Texture2D UnlockButtonHover;
-	Texture2D UnlockButtonLocked;
-	Texture2D Unlocked;
+	Texture2D m_TravelTicketButton;
+	Texture2D m_TravelTicketButtonHover;
+	Texture2D m_TravelTicketButtonLocked;
 
-	Texture2D TravelButton;
-	Texture2D TravelButtonHover;
-	Texture2D TravelButtonLocked;
+	Texture2D m_MissionContainer;
+	Texture2D m_MissionContainerHover;
+	Texture2D m_CompletedMission;
+	Texture2D m_LockedMissionContainer;
 
-	Texture2D TravelTicketButton;
-	Texture2D TravelTicketButtonHover;
-	Texture2D TravelTicketButtonLocked;
-
-	Texture2D MissionContainer;
-	Texture2D MissionContainerHover;
-	Texture2D CompletedMission;
-
+	Texture2D m_FinishScreen;
 };

@@ -2,11 +2,12 @@
 
 Menu::Menu()
 {
-    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, this->images, this->imagePositions);
+	// Loads all the textures
+    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, this->m_Images, this->m_ImagePositions);
 
-    gameManager->LoadButtons(this->buttons, this->buttonsHover, this->buttonPositions);
+    gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions);
 
-    this->drawMenu();
+    this->DrawMenu();
 }
 
 Menu::~Menu()
@@ -14,15 +15,16 @@ Menu::~Menu()
     
 }
 
-void Menu::drawMenu()
+void Menu::DrawMenu()
 {
-    while (gameManager->currentScene == gameManager->SCENE::MAIN_MENU && !gameManager->GetShouldClose())
+	// Displays the background
+    while (gameManager->CurrentScene == gameManager->SCENE::MAIN_MENU && !gameManager->GetShouldClose())
     {
-        if (!this->animationEnd)
+        if (!this->m_AnimationEnd)
         {
             BeginDrawing();
             ClearBackground(BLACK);
-            this->animation();
+            this->Animation();
             EndDrawing();
         }
         else
@@ -36,14 +38,8 @@ void Menu::drawMenu()
                 delete this;
                 break;
             }
-            if (gameManager->IsButtonClicked(1))
-            {
-                OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/");
-            }
-            if (gameManager->IsButtonClicked(2))
-            {
-                OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/blob/code-refactoring/app/assets/Rules.txt");
-            }
+            if (gameManager->IsButtonClicked(1)) OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/");
+            if (gameManager->IsButtonClicked(2)) OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/blob/code-refactoring/app/assets/Rules.txt");
             if (gameManager->IsButtonClicked(3))
             {
                 delete gameManager;
@@ -54,75 +50,76 @@ void Menu::drawMenu()
     }
 }
 
-void Menu::animation()
+void Menu::Animation()
 {
-    if(!this->animationEnd)
+    // Starts the animation
+    if(!this->m_AnimationEnd)
     
-    switch (this->state)
+    switch (this->m_State)
     {
     case 0:
     {
-        this->framesCounter += 2.00f;
+        this->m_FramesCounter += 2.00f;
 
-        this->rect.y = EaseElasticOut((float)this->framesCounter, - 100, gameManager->GetScreenSize().y / 2.0f + 100, 120);
+        this->m_Rect.y = EaseElasticOut((float)this->m_FramesCounter, - 100, gameManager->GetScreenSize().y / 2.0f + 100, 120);
 
-        if (this->framesCounter >= 120)
+        if (this->m_FramesCounter >= 120)
         {
-            this->framesCounter = 0;
-            this->state = 1;
+            this->m_FramesCounter = 0;
+            this->m_State = 1;
         }
     } break;
     case 1:
     {
-        this->framesCounter += 2.00f;
-        this->rect.height = EaseBounceOut((float)this->framesCounter, 100, -90, 120);
-        this->rect.width = EaseBounceOut((float)this->framesCounter, 100, gameManager->GetScreenSize().x + 180, 120);
+        this->m_FramesCounter += 2.00f;
+        this->m_Rect.height = EaseBounceOut((float)this->m_FramesCounter, 100, -90, 120);
+        this->m_Rect.width = EaseBounceOut((float)this->m_FramesCounter, 100, gameManager->GetScreenSize().x + 180, 120);
 
-        if (this->framesCounter >= 120)
+        if (this->m_FramesCounter >= 120)
         {
-            this->framesCounter = 0;
-            state = 2;
+            this->m_FramesCounter = 0;
+            m_State = 2;
         }
     } break;
     case 2:
     {
-        this->framesCounter += 3.00f;
-        this->rotation = EaseQuadOut((float)this->framesCounter, 0.0f, 270.0f, 240);
+        this->m_FramesCounter += 3.00f;
+        this->m_Rotation = EaseQuadOut((float)this->m_FramesCounter, 0.0f, 270.0f, 240);
 
-        if (this->framesCounter >= 240)
+        if (this->m_FramesCounter >= 240)
         {
-            this->framesCounter = 0;
-            this->state = 3;
+            this->m_FramesCounter = 0;
+            this->m_State = 3;
         }
     } break;
     case 3:
     {
-        this->framesCounter += 3.00f;
-        this->rect.height = EaseCircOut((float)this->framesCounter, 10, gameManager->GetScreenSize().x + 180, 120);
+        this->m_FramesCounter += 3.00f;
+        this->m_Rect.height = EaseCircOut((float)this->m_FramesCounter, 10, gameManager->GetScreenSize().x + 180, 120);
 
-        if (this->framesCounter >= 80)
-            this->animationEnd = true;
+        if (this->m_FramesCounter >= 80)
+            this->m_AnimationEnd = true;
 
-        if (this->framesCounter >= 120)
+        if (this->m_FramesCounter >= 120)
         {
-            this->framesCounter = 0;
-            this->state = 4;
+            this->m_FramesCounter = 0;
+            this->m_State = 4;
         }
     } break;
     case 4:
     {
-        this->framesCounter += 2.00f;
-        this->alpha = EaseSineOut((float)this->framesCounter, 1.0f, -1.0f, 160);
+        this->m_FramesCounter += 2.00f;
+        this->m_Alpha = EaseSineOut((float)this->m_FramesCounter, 1.0f, -1.0f, 160);
 
-        if (this->framesCounter >= 160)
+        if (this->m_FramesCounter >= 160)
         {
-            this->framesCounter = 0;
-            this->state = 5;
+            this->m_FramesCounter = 0;
+            this->m_State = 5;
         }
     } break;
     default:
         break;
     }
 
-    DrawRectanglePro(this->rect, Vector2{ float(this->rect.width / 2 + 40), float(this->rect.height / 2) }, this->rotation, Fade(BROWN, this->alpha));
+    DrawRectanglePro(this->m_Rect, Vector2{ float(this->m_Rect.width / 2 + 40), float(this->m_Rect.height / 2) }, this->m_Rotation, Fade(BROWN, this->m_Alpha));
 }

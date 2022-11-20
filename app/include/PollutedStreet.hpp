@@ -7,38 +7,40 @@ public:
 	PollutedStreet();
 	~PollutedStreet();
 	void UpdateGame();
-	int getPayout();
+	int GetPayout();
 private:
-    struct RubbishProperties {
+    // Creates a rubbish properties structure with the following properties
+    struct RUBBISH_PROPERTIES {
         Vector2 pos;
         Texture2D type;
         bool cleaned;
         bool clicked;
     };
+	// Gets the game manager instance
     GameManager* gameManager = GameManager::GetInstance();
 
-    Vector2 MousePos = {0, 0};
+    Vector2 m_MousePos = {0, 0};
 	
 
-    Texture2D Background;
-    Texture2D FinishScreen;
+    Texture2D m_Background;
+    Texture2D m_FinishScreen;
 
-    Texture2D Bar[12];
+    Texture2D m_Bar[12];
 	
-    Texture2D Rubbish1;
-    Texture2D Rubbish2;
-    Texture2D Chips;
-    Texture2D Bin;
-    Texture2D Food;
-    Texture2D Food2;
-    Texture2D Paper;
+    Texture2D m_Rubbish1;
+    Texture2D m_Rubbish2;
+    Texture2D m_Chips;
+    Texture2D m_Bin;
+    Texture2D m_Food;
+    Texture2D m_Food2;
+    Texture2D m_Paper;
 	
-    int BarPos = 0;
-    int Payout;
-    short RemainingRubbish = 16;
-    float Delay = 0;
-    bool ePressed = 0;
+    int m_BarPos = 0;
+    int m_Payout;
+    short m_RemainingRubbish = 16;
+    float m_Delay = 0;
+    bool m_ePressed = 0;
 
 	
-    std::vector<RubbishProperties> Rubbish;
+    std::vector<RUBBISH_PROPERTIES> m_Rubbish;
 };
