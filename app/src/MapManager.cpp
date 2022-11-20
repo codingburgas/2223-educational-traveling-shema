@@ -12,8 +12,9 @@ MapManager::~MapManager()
 void MapManager::UpdateMap()
 {
 	this->m_mousePos = GetMousePosition();
-	ToggleWaypoints();
-	TogglePorts();
+	if(this->getChosenCountry().empty()) {
+		DrawWaypoints(this->waypoints);
+	}
 }
 
 void MapManager::DrawWaypoints(std::vector<Country> waypoints)
@@ -41,10 +42,10 @@ MapManager::Country MapManager::IsWaypointClicked()
 	return Country{};
 }
 
-void MapManager::ToggleWaypoints()
+void MapManager::ToggleWaypoints(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize)
 {
-	DrawTexture(this->waypoint, 0, 300, WHITE);
-	if (CheckCollisionPointRec(this->m_mousePos, { 0, 300, 50, 50 }))
+	DrawTextureEx(checkbox, { gameManager->GetScreenSize().x - 65, 416 }, 0, 1, WHITE);
+	if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x - 65, 416, float(checkboxSize.x), float(checkboxSize.y) }))
 	{
 		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -55,6 +56,7 @@ void MapManager::ToggleWaypoints()
 	if (this->toggleWaypoints)
 	{
 		DrawWaypoints(this->waypoints);
+		DrawTextureEx(checkmark, { gameManager->GetScreenSize().x - 65, 416 }, 0, 1, WHITE);
 	}
 }
 
@@ -81,9 +83,9 @@ MapManager::Country MapManager::IsPortClicked()
 	return Country{};
 }
 
-void MapManager::TogglePorts() {
-	DrawTexture(this->ship, 8, 370, WHITE);
-	if (CheckCollisionPointRec(this->m_mousePos, { 8, 370, 40, 40 }))
+void MapManager::TogglePorts(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize) {
+	DrawTextureEx(checkbox, { gameManager->GetScreenSize().x - 65, 447 }, 0, 1, WHITE);
+	if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x - 65, 447, float(checkboxSize.x), float(checkboxSize.y) }))
 	{
 		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -94,6 +96,7 @@ void MapManager::TogglePorts() {
 	if (this->togglePorts)
 	{
 		DrawPorts(this->ports);
+		DrawTextureEx(checkmark, { gameManager->GetScreenSize().x - 65, 447 }, 0, 1, WHITE);
 	}
 }
 Vector2 MapManager::GetMapSize()
@@ -101,7 +104,7 @@ Vector2 MapManager::GetMapSize()
 	return { this->mapWidth, this->mapHeight };
 }
 
-std::string MapManager::GetChosenCountry()
+std::string MapManager::getChosenCountry()
 {
 	return this->chosenCountry;
 }
