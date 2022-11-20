@@ -143,6 +143,7 @@
     <ClCompile Include="src\MailPackager.cpp" />
     <ClCompile Include="src\MapManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\PollutedStreet.cpp" />
     <ClCompile Include="src\SeaMinigame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="include\MailPackager.hpp" />
     <ClInclude Include="include\MapManager.hpp" />
     <ClInclude Include="include\Menu.hpp" />
+    <ClInclude Include="include\PollutedStreet.hpp" />
     <ClInclude Include="include\reasings.hpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClInclude Include="include\SeaMinigame.hpp" />
