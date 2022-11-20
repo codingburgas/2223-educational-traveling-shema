@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GetRich.cpp" />
     <ClCompile Include="src\MapManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\SeaMinigame.cpp" />
