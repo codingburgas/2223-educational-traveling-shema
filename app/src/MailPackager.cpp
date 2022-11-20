@@ -1,174 +1,158 @@
-#include <raylib.h>
-#include <time.h>
-#include <stdlib.h>
+#include <MailPackager.hpp>
 
-int main()
+MailPackager::MailPackager()
 {
-    InitWindow(1920, 1080, "Mail Packager");
+	this->Packages[0] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageFront.png").c_str());
+	this->Packages[1] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageFrontStamp.png").c_str());
+	this->Packages[2] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageBack.png").c_str());
+	this->Packages[3] = LoadTexture((gameManager->getAssetPath() + "MailPackager/PackageBackStamp.png").c_str());
 
-    Texture2D packages[4] = { LoadTexture("package-front.png"), LoadTexture("package-front-with-stamp.png"),LoadTexture("package-back.png"), LoadTexture("package-back-with-stamp.png") };
-    Texture2D letters[4] = { LoadTexture("letter-front.png"), LoadTexture("letter-front-with-stamp.png"),LoadTexture("letter-back.png"), LoadTexture("letter-back-with-stamp.png") };
-    Texture2D background = LoadTexture("background.png");
-    Texture2D finishScreen = LoadTexture("finish-screen.png");
+	this->Letters[0] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterFront.png").c_str());
+	this->Letters[1] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterFrontStamp.png").c_str());
+	this->Letters[2] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterBack.png").c_str());
+	this->Letters[3] = LoadTexture((gameManager->getAssetPath() + "MailPackager/LetterBackStamp.png").c_str());
 
+	this->Background = LoadTexture((gameManager->getAssetPath() + "MailPackager/Background.png").c_str());
+	this->FinishScreen = LoadTexture((gameManager->getAssetPath() + "MailPackager/FinishScreen.png").c_str());
+}
+MailPackager::~MailPackager()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		UnloadTexture(this->Packages[i]);
+		UnloadTexture(this->Letters[i]);
+	}
+	UnloadTexture(this->Background);
+	UnloadTexture(this->FinishScreen);
+}
 
-    SetTargetFPS(60);
+void MailPackager::UpdateGame()
+{
 
-    int x = 0, y = 0;
+	const char* money[11] = { " 0$ ", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
+	
+	while (this->MailsLeft > 0)
+	{
+		MousePos = GetMousePosition();
+		BeginDrawing();
+		ClearBackground(BROWN);
 
-    int mailsLeft = 11;
-    bool mailType = 0; // 1 - packages; 0 - letters
-    bool nextMail = 1;
-    bool side = 1;
-    int back = 0;
-    int front = 0;
-    bool idle = 1;
-    int letterX = 0, letterY = 0;
+		DrawTexture(this->Background, 0, 0, WHITE);
+		DrawText(money[this->Score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
 
-    const char* money[11] = { " 0$ ", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
-    short score = 0;
+		if (this->NextMail)
+		{
+			srand(time(NULL));
+			this->MailType = rand() % 2; // random number from 0 to 1
+			this->Front = rand() % 2;
+			this->Back = rand() % 2 + 2; // random number from 2 to 3
+			this->NextMail = 0;
+			this->MailsLeft--;
+		}
 
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(BROWN);
+		if (this->Idle)
+		{
+			this->LetterPos.x = GetScreenWidth() / 2 - 80;
+			this->LetterPos.y = 300;
+		}
+		else
+		{
+			this->LetterPos.x = MousePos.x - 65;
+			this->LetterPos.y = MousePos.y - 30;
+		}
 
-        if (mailsLeft == 0)
-        {
-            DrawTexture(finishScreen, 0, 0, WHITE);
-            DrawText("Congratulations", GetScreenWidth() / 2 - 320, 80, 80, BLACK);
-            DrawText("You have won", GetScreenWidth() / 2 - 175, 250, 50, BLACK);
-            if (score == 1 || score == 2)
-            {
-                DrawText(money[score], GetScreenWidth() / 2 - 180, 350, 200, GREEN);
-            }
-            else if (score == 0)
-            {
-                DrawText(money[score], GetScreenWidth() / 2 - 200, 350, 200, GREEN);
-            }
-            else
-            {
-                DrawText(money[score], GetScreenWidth() / 2 - 240, 350, 200, GREEN);
-            }
-        }
-        else
-        {
-            DrawTexture(background, 0, 0, WHITE);
-            DrawText(money[score], GetScreenWidth() / 2 - 50, 50, 50, GREEN);
-        }
+		if (this->MailType && this->MailsLeft != 0)
+		{
+			DrawTexture(this->Side ? this->Packages[this->Front] : this->Packages[this->Back], this->LetterPos.x, this->LetterPos.y, WHITE);
+		}
+		else if (this->MailsLeft != 0)
+		{
+			DrawTexture(this->Side ? this->Letters[this->Front] : this->Letters[this->Back], this->LetterPos.x, this->LetterPos.y, WHITE);
+		}
 
-        x = GetMouseX();
-        y = GetMouseY();
+		if (IsKeyPressed(KEY_F))
+		{
+			this->Side = !this->Side;
+		}
 
-        if (nextMail)
-        {
-            srand(time(NULL));
-            mailType = rand() % 2; // random number from 0 to 1
-            front = rand() % 2;
-            back = rand() % 2 + 2; // random number from 2 to 3
-            nextMail = 0;
-            mailsLeft--;
-        }
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && MousePos.x >= GetScreenWidth() / 2 - 80 && MousePos.x <= GetScreenWidth() / 2 + 50 && MousePos.y >= 300 && MousePos.y <= 400)
+		{
+			this->Idle = 0;
+		}
 
-        if (idle)
-        {
-            letterX = GetScreenWidth() / 2 - 80;
-            letterY = 300;
-        }
-        else
-        {
-            letterX = x - 65;
-            letterY = y - 30;
-        }
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 - 550 && MousePos.x <= GetScreenWidth() / 2 - 400 && MousePos.y >= 150 && MousePos.y <= 300 && this->MailsLeft != 0)
+		{
+			if (this->MailType == 0)
+			{
+				this->Score++;
+			}
+			else
+			{
+				if (this->Score != 0)
+				{
+					this->Score--;
+				}
+			}
+			this->NextMail = 1;
+			this->Idle = 1;
+		}
 
-        if (mailType && mailsLeft != 0)
-        {
-            if (side)
-            {
-                DrawTexture(packages[front], letterX, letterY, WHITE);
-            }
-            else
-            {
-                DrawTexture(packages[back], letterX, letterY, WHITE);
-            }
-        }
-        else if (mailsLeft != 0)
-        {
-            if (side)
-            {
-                DrawTexture(letters[front], letterX, letterY, WHITE);
-            }
-            else
-            {
-                DrawTexture(letters[back], letterX, letterY, WHITE);
-            }
-        }
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 + 340 && MousePos.x <= GetScreenWidth() / 2 + 500 && MousePos.y >= 150 && MousePos.y <= 300 && this->MailsLeft != 0)
+		{
+			if (this->MailType == 1)
+			{
+				this->Score++;
+			}
+			else
+			{
+				if (this->Score != 0)
+				{
+					this->Score--;
+				}
+			}
+			this->NextMail = 1;
+			this->Idle = 1;
+		}
 
-        if (IsKeyPressed(KEY_F))
-        {
-            side = !side;
-        }
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !this->Idle && MousePos.x >= GetScreenWidth() / 2 - 50 && MousePos.x <= GetScreenWidth() / 2 + 150 && MousePos.y >= 670 && MousePos.y <= 850 && this->MailsLeft != 0)
+		{
+			if (this->Front == 0 && this->Back == 2)
+			{
+				this->Score++;
+			}
+			else
+			{
+				if (this->Score != 0)
+				{
+					this->Score--;
+				}
+			}
+			this->NextMail = 1;
+			this->Idle = 1;
+		}
 
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && x >= GetScreenWidth() / 2 - 80 && x <= GetScreenWidth() / 2 + 50 && y >= 300 && y <= 400)
-        {
-            idle = 0;
-        }
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 - 550 && x <= GetScreenWidth() / 2 - 400 && y >= 150 && y <= 300 && mailsLeft != 0)
-        {
-            if (mailType == 0)
-            {
-                score++;
-            }
-            else
-            {
-                if (score != 0)
-                {
-                    score--;
-                }
-            }
-            nextMail = 1;
-            idle = 1;
-        }
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 + 340 && x <= GetScreenWidth() / 2 + 500 && y >= 150 && y <= 300 && mailsLeft != 0)
-        {
-            if (mailType == 1)
-            {
-                score++;
-            }
-            else
-            {
-                if (score != 0)
-                {
-                    score--;
-                }
-            }
-            nextMail = 1;
-            idle = 1;
-        }
-
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !idle && x >= GetScreenWidth() / 2 - 50 && x <= GetScreenWidth() / 2 + 150 && y >= 670 && y <= 850 && mailsLeft != 0)
-        {
-            if (front == 0 && back == 2)
-            {
-                score++;
-            }
-            else
-            {
-                if (score != 0)
-                {
-                    score--;
-                }
-            }
-            nextMail = 1;
-            idle = 1;
-        }
-
-        EndDrawing();
-    }
-
-
-    CloseWindow();
-    return 0;
+		EndDrawing();
+	}
+	gameManager->StartTimer(3);
+	while (!gameManager->TimerEnded())
+	{
+		BeginDrawing();
+		ClearBackground(BROWN);
+		DrawTexture(this->FinishScreen, 0, 0, WHITE);
+		DrawText("Congratulations", GetScreenWidth() / 2 - 320, 80, 80, BLACK);
+		DrawText("You have won", GetScreenWidth() / 2 - 175, 250, 50, BLACK);
+		if (this->Score == 1 || this->Score == 2)
+		{
+			DrawText(money[this->Score], GetScreenWidth() / 2 - 180, 350, 200, GREEN);
+		}
+		else if (this->Score == 0)
+		{
+			DrawText(money[this->Score], GetScreenWidth() / 2 - 200, 350, 200, GREEN);
+		}
+		else
+		{
+			DrawText(money[this->Score], GetScreenWidth() / 2 - 240, 350, 200, GREEN);
+		}
+		EndDrawing();
+	}
 }

@@ -140,6 +140,7 @@
     <ClCompile Include="src\CaptchaSolver.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GetRich.cpp" />
+    <ClCompile Include="src\MailPackager.cpp" />
     <ClCompile Include="src\MapManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\SeaMinigame.cpp" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="include\CaptchaSolver.hpp" />
     <ClInclude Include="include\Game.hpp" />
+    <ClInclude Include="include\MailPackager.hpp" />
     <ClInclude Include="include\MapManager.hpp" />
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\reasings.hpp" />
