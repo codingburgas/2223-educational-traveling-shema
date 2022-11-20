@@ -2,7 +2,7 @@
 
 Menu::Menu()
 {
-    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, this->clouds, this->cloudsPositions);
+    gameManager->LoadScene(gameManager->SCENE::MAIN_MENU, this->images, this->imagePositions);
 
     gameManager->LoadButtons(this->buttons, this->buttonsHover, this->buttonPositions);
 
