@@ -3,7 +3,6 @@
 #include <MapManager.hpp>
 #include <SeaMinigame.hpp>
 #include <GetRich.hpp>
-#include <string>
 
 class Game
 {

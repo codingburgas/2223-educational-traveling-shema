@@ -1,7 +1,5 @@
 #pragma once
 #include <GameManager.hpp>
-#include <algorithm>
-#include <vector>
 
 class CaptchaSolver
 {

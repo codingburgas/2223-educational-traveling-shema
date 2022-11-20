@@ -42,7 +42,6 @@ void MailPackager::UpdateGame()
 
 		if (this->NextMail)
 		{
-			srand(time(NULL));
 			this->MailType = rand() % 2; // random number from 0 to 1
 			this->Front = rand() % 2;
 			this->Back = rand() % 2 + 2; // random number from 2 to 3
