@@ -35,6 +35,65 @@ int main()
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+		
+		DrawTexture(bar[position], 50, 50, WHITE);
+		
+		if (counter == 0)
+        {
+            position = 0;
+        }
+        if (counter == 80)
+        {
+            position = 1;
+        }
+        if (counter == 160)
+        {
+            position = 2;
+        }
+        if (counter == 240)
+        {
+            position = 3;
+        }
+        if (counter == 320)
+        {
+            position = 4;
+        }
+        if (counter == 400)
+        {
+            position = 5;
+        }
+        if (counter == 480)
+        {
+            position = 6;
+        }
+        if (counter == 560)
+        {
+            position = 7;
+        }
+        if (counter == 640)
+        {
+            position = 8;
+        }
+        if (counter == 720)
+        {
+            position = 9;
+        }
+        if (counter == 800)
+        {
+            position = 10;
+        }
+        if (counter == 880)
+        {
+            position = 11;
+        }
+        if (counter == 960)
+        {
+            counter = 0;
+        }
+        else if (!ePressed)
+        {
+            counter += 20;
+        }
 
         EndDrawing();
     }
