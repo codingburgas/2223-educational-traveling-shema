@@ -49,6 +49,8 @@ void SeaMinigame::UpdateGame()
 {
 	while (RemainingRubbish > 0)
 	{
+		BeginDrawing();
+		ClearBackground(BLACK);
 		DrawTexture(waves, 0, 0, WHITE);
 		
 		MousePos = GetMousePosition();
