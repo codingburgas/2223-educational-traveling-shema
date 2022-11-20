@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="include\CaptchaSolver.hpp" />
     <ClInclude Include="include\Game.hpp" />
+    <ClInclude Include="include\GetRich.hpp" />
     <ClInclude Include="include\Hangman.hpp" />
     <ClInclude Include="include\MailPackager.hpp" />
     <ClInclude Include="include\MapManager.hpp" />

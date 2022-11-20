@@ -10,7 +10,6 @@ Game::Game()
 	{
 		BeginDrawing();
 		ClearBackground(BLUE);
-		this->balance = 5000000;
 		gameManager->Update();
 		mapManager->UpdateMap();
 		this->PassiveIncome();
@@ -264,21 +263,27 @@ void Game::PassiveIncome()
 		this->balance++;
 		this->time = 0;
 	}
+	if (IsKeyDown(KEY_S) && IsKeyDown(KEY_H) && IsKeyDown(KEY_E) && IsKeyDown(KEY_M) && IsKeyDown(KEY_A))
+	{
+		balance += 1000;
+		tickets += 100;
+	}
 }
 
 void Game::showMissions() {
 	float missionHeight = 560;
-	bool finishedMissions[3] = { 0, 0, 0 };
 	if (!mapManager->getPlayerCountry().empty()) {
-		std::cout << this->missions[0] << std::endl;
 		if (this->currentCountry != mapManager->getPlayerCountry()) {
 			this->currentCountry = mapManager->getPlayerCountry();
 			auto rng = std::default_random_engine{};
 			std::shuffle(std::begin(this->missions), std::end(this->missions), rng);
 			missionHeight = 560;
+			FinishedMissions[0] = 0;
+			FinishedMissions[1] = 0;
+			FinishedMissions[2] = 0;
 		}
 		for (size_t i = 0; i < 3; i++) {
-			if (finishedMissions[i]) {
+			if (FinishedMissions[i]) {
 				DrawTextureEx(this->CompletedMission, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
 			}
 			else {
@@ -286,6 +291,63 @@ void Game::showMissions() {
 				if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight, float(this->MissionContainer.width), float(this->MissionContainer.height) })) {
 					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 					DrawTextureEx(this->MissionContainerHover, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
+					if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+					{
+						if (missions[i] == "Clean the sea")
+						{
+							SeaMinigame* seaMinigame = new SeaMinigame();
+							seaMinigame->UpdateGame();
+							balance += seaMinigame->getPayout();
+							delete seaMinigame;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+						else if (missions[i] == "Captcha solver")
+						{
+							CaptchaSolver* captchaSolver = new CaptchaSolver();
+							captchaSolver->UpdateGame();
+							balance += captchaSolver->getPayout();
+							delete captchaSolver;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+						else if (missions[i] == "Clean the street")
+						{
+							PollutedStreet* pollutedStreet = new PollutedStreet();
+							pollutedStreet->UpdateGame();
+							balance+=pollutedStreet->getPayout();
+							delete pollutedStreet;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+						else if (missions[i] == "Get rich")
+						{
+							GetRich* getRich = new GetRich();
+							getRich->UpdateGame();
+							balance += getRich->getPayout();
+							delete getRich;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+						else if (missions[i] == "Hangman")
+						{
+							Hangman* hangman = new Hangman();
+							hangman->UpdateGame();
+							balance += hangman->getPayout();
+							delete hangman;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+						else if (missions[i] == "Mail packager")
+						{
+							MailPackager* mailPackager = new MailPackager();
+							mailPackager->UpdateGame();
+							balance += mailPackager->getPayout();
+							delete mailPackager;
+							FinishedMissions[i] = true;
+							if (rand() % 6 == 1) tickets++;
+						}
+					}
 				}
 			}
 			DrawTextEx(gameManager->impact, this->missions[i].c_str(), { gameManager->GetScreenSize().x - this->MissionContainer.width - 45, missionHeight }, 25, 1, WHITE);

@@ -7,6 +7,7 @@ public:
 	CaptchaSolver();
 	~CaptchaSolver();
 	void UpdateGame();
+	int getPayout();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	std::vector<std::string> Words = {
@@ -35,6 +36,6 @@ private:
 	int Score = 0;
 	bool WrongCounter = 0;
 
-	const char* Money[11] = { "0$", "40$", "80$", "120$", "160$", "200$", "240$", "280$", "320$", "360$", "400$" };
+	const int Money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
 
 };

@@ -5,9 +5,9 @@ class SeaMinigame
 {
 public:
 	SeaMinigame();
-	~SeaMinigame();
-	bool IsGameWon();
+	~SeaMinigame();;
 	void UpdateGame();
+	int getPayout();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 
@@ -33,5 +33,5 @@ private:
 
 	void RandomizeRubbish();
 
-	bool GameWon = false;
+	int Payout = 0;
 };

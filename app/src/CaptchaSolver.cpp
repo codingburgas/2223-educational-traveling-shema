@@ -92,7 +92,7 @@ void CaptchaSolver::UpdateGame()
 		this->Wrong = 0;
 
 		DrawText("Income:", 20, 20, 40, BLACK);
-		DrawText(this->Money[this->Score], 180, 22, 40, GREEN);
+		DrawText((std::to_string(this->Money[this->Score]) + "$").c_str(), 180, 22, 40, GREEN);
 
 		EndDrawing();
 	}
@@ -109,5 +109,10 @@ void CaptchaSolver::UpdateGame()
 		DrawText("CAPTCHAS", GetScreenWidth() / 2 - 420, GetScreenHeight() / 2 - 50, 150, YELLOW);
 		EndDrawing();
 	}
+}
+
+int CaptchaSolver::getPayout()
+{
+	return this->Money[this->Score];
 }
 

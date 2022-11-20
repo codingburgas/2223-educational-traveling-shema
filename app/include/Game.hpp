@@ -3,6 +3,11 @@
 #include <MapManager.hpp>
 #include <SeaMinigame.hpp>
 #include <GetRich.hpp>
+#include <CaptchaSolver.hpp>
+#include <PollutedStreet.hpp>
+#include <Hangman.hpp>
+#include <GetRich.hpp>
+#include <MailPackager.hpp>
 #include <random>
 
 class Game
@@ -54,4 +59,6 @@ private:
 	Texture2D MissionContainer;
 	Texture2D MissionContainerHover;
 	Texture2D CompletedMission;
+
+	bool FinishedMissions[3] = {0, 0, 0};
 };
