@@ -15,7 +15,8 @@ private:
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();
 	bool chosen = false;
-	void DrawHUD();
+	void DrawCountryHUD();
+	void DrawCurrentCountryHUD();
 	std::string ClickedCountryName;
 	bool ClickedCountryUnlocked;
 	int ClickedCountryPrice;
@@ -25,6 +26,10 @@ private:
 	int tickets = 1;
 
 	Texture2D CountryHUDTexture;
+	Texture2D CurrentCountryHUD;
+
+	Texture2D Checkbox;
+	Texture2D Checkmark;
 	
 	Texture2D UnlockButton;
 	Texture2D UnlockButtonHover;
