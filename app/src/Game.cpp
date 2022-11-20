@@ -16,17 +16,11 @@ Game::Game()
 		this->DrawCountryHUD();
 		this->DrawCurrentCountryHUD();
 		EndDrawing();
-		if (mapManager->getChosenCountry().empty()) {
-			ChooseStartingCountry();
-		}
-		if (IsKeyPressed(257))
+		if (mapManager->getChosenCountry().empty()) ChooseStartingCountry();
+		if (IsKeyPressed(KEY_ESCAPE))
 		{
-			//SeaMinigame* seaMinigame = new SeaMinigame();
-			//seaMinigame->UpdateGame();
-			//delete seaMinigame;
-			GetRich* getRich = new GetRich();
-			getRich->UpdateGame();
-			delete getRich;
+			delete this;
+			Menu* menu = new Menu();
 		}
 	}
 }
@@ -81,11 +75,13 @@ void Game::LoadDynamicTextures()
 void Game::ChooseCountryAnimation(bool displayText)
 {
 	gameManager->StartTimer(0.5);
-	while (!gameManager->TimerEnded()) {
+	while (!gameManager->TimerEnded())
+	{
 		BeginDrawing();
 		ClearBackground(BLUE);
 		gameManager->Update();
-		if (displayText) {
+		if (displayText)
+		{
 			DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
 			DrawText("Choose a country", gameManager->GetScreenSize().x / 2 - MeasureText("Choose a country", 100) / 2, gameManager->GetScreenSize().y / 2 - 20 / 2, 100, RED);
 		}
@@ -103,7 +99,6 @@ void Game::ChooseStartingCountry()
 	if (!mapManager->IsWaypointClicked().name.empty() && !chosen)
 	{
 		std::string clickedCountry = mapManager->IsWaypointClicked().name;
-		std::cout << clickedCountry;
 
 		Texture2D ModalWindow = LoadTexture((gameManager->getAssetPath() + "CountryModal.png").c_str());
 		Texture2D YesButton = LoadTexture((gameManager->getAssetPath() + "YesButton.png").c_str());
@@ -189,10 +184,7 @@ void Game::DrawCountryHUD()
 					}
 				}
 			}
-			else
-			{
-				DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
-			}
+			else DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
 
 			if (balance >= 185 && mapManager->getPlayerCountry() != ClickedCountryName)
 			{
@@ -208,10 +200,7 @@ void Game::DrawCountryHUD()
 					}
 				}
 			}
-			else
-			{
-				DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
-			}
+			else DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 
 			DrawTextEx(gameManager->impact, "Already unlocked", { 117, 658 }, 25, 1, GREEN);
 			DrawTexture(this->Unlocked, 50, 685, WHITE);
@@ -233,10 +222,8 @@ void Game::DrawCountryHUD()
 					}
 				}
 			}
-			else
-			{
-				DrawTexture(this->UnlockButtonLocked, 50, 685, WHITE);
-			}
+			else DrawTexture(this->UnlockButtonLocked, 50, 685, WHITE);
+			
 			DrawTextEx(gameManager->impact, std::to_string(ClickedCountryPrice).c_str(), { 117, 658 }, 25, 1, BLACK);
 			DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
 			DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
@@ -245,7 +232,8 @@ void Game::DrawCountryHUD()
 }
 
 void Game::DrawCurrentCountryHUD() {
-	if (!mapManager->getPlayerCountry().empty()) {
+	if (!mapManager->getPlayerCountry().empty())
+	{
 		DrawTextureEx(this->CurrentCountryHUD, { gameManager->GetScreenSize().x - this->CurrentCountryHUD.width, 250 }, 0, 1, WHITE);
 		DrawTextEx(gameManager->impact, TextToUpper(mapManager->getPlayerCountry().c_str()), { gameManager->GetScreenSize().x - 274, 290 }, 50, 2, BLACK);
 		DrawTextEx(gameManager->impact, std::to_string(this->balance).c_str(), { gameManager->GetScreenSize().x - 240, 380 }, 25, 1, BLACK);
@@ -272,8 +260,10 @@ void Game::PassiveIncome()
 
 void Game::showMissions() {
 	float missionHeight = 560;
-	if (!mapManager->getPlayerCountry().empty()) {
-		if (this->currentCountry != mapManager->getPlayerCountry()) {
+	if (!mapManager->getPlayerCountry().empty())
+	{
+		if (this->currentCountry != mapManager->getPlayerCountry())
+		{
 			this->currentCountry = mapManager->getPlayerCountry();
 			auto rng = std::default_random_engine{};
 			std::shuffle(std::begin(this->missions), std::end(this->missions), rng);
@@ -282,10 +272,9 @@ void Game::showMissions() {
 			FinishedMissions[1] = 0;
 			FinishedMissions[2] = 0;
 		}
-		for (size_t i = 0; i < 3; i++) {
-			if (FinishedMissions[i]) {
-				DrawTextureEx(this->CompletedMission, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
-			}
+		for (size_t i = 0; i < 3; i++)
+		{
+			if (FinishedMissions[i]) DrawTextureEx(this->CompletedMission, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
 			else {
 				DrawTextureEx(this->MissionContainer, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
 				if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight, float(this->MissionContainer.width), float(this->MissionContainer.height) })) {

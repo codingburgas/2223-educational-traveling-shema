@@ -9,16 +9,16 @@ public:
 	void UpdateGame();
 	int getPayout();
 private:
-    GameManager* gameManager = GameManager::GetInstance();
-
-    Vector2 MousePos = {0, 0};
-	
     struct RubbishProperties {
         Vector2 pos;
         Texture2D type;
         bool cleaned;
         bool clicked;
     };
+    GameManager* gameManager = GameManager::GetInstance();
+
+    Vector2 MousePos = {0, 0};
+	
 
     Texture2D Background;
     Texture2D FinishScreen;
@@ -33,12 +33,12 @@ private:
     Texture2D Food2;
     Texture2D Paper;
 	
+    int BarPos = 0;
+    int Payout;
     short RemainingRubbish = 16;
     float Delay = 0;
-    int BarPos = 0;
     bool ePressed = 0;
 
-    int Payout;
 	
     std::vector<RubbishProperties> Rubbish;
 };

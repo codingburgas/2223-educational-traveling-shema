@@ -10,26 +10,29 @@ public:
 	void UpdateGame();
 	int getPayout();
 private:
-	GameManager* gameManager = GameManager::GetInstance();
-	Vector2 MousePos;
-	Texture2D Background;
-	Texture2D ButtonHover[4];
-	Texture2D CorrectAnswer[4];
-	Texture2D WrongAnswer[4];
-	Texture2D FinishScreen;
-	Color colors[4] = { BLACK, BLACK, BLACK, BLACK };
-	unsigned SelectedQuestion = 4;
-	float Delay = 0;
-	int QuestionCounter = 0;
-	int	AnswerCounter = 0;
-	/*bool Correct = 0;*/
-	bool Finish = 0;
 	struct questionPool
 	{
 		std::string question;
 		std::string answer[4];
 		size_t correctIndex;
 	};
+	
+	GameManager* gameManager = GameManager::GetInstance();
+	Color colors[4] = { BLACK, BLACK, BLACK, BLACK };
+	Vector2 MousePos;
+	Texture2D Background;
+	Texture2D ButtonHover[4];
+	Texture2D CorrectAnswer[4];
+	Texture2D WrongAnswer[4];
+	Texture2D FinishScreen;
+	unsigned SelectedQuestion = 4;
+	int reward[16] = { 0, 100, 200, 300, 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000 };
+	int QuestionCounter = 0;
+	int	AnswerCounter = 0;
+	float Delay = 0;
+	bool Finish = 0;
+	void displayQuestion();
+	
     questionPool questions[15] = {
 		{"In Marco Polo's day, Cathay was the name for China, and Cidngo was for:", {"Japan", "Bulgaria", "Iran", "Mongolia"}, 0},
 		{"Thailand was once called:", {"Sesam", "Siam", "Susam", "Sumatra",}, 1},
@@ -47,7 +50,4 @@ private:
 		{"What colour were the Pyramids of Giza originally?", {"Orange", "Yellow", "Brown", "White"}, 3},
 		{"Which city will host the 2028 Olympic Games?", {"Los Angeles", "Sofia", "Beijing", "Tokyo"}, 3}
     };
-	void displayQuestion();
-
-	int reward[16] = { 0, 100, 200, 300, 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000 };
 };

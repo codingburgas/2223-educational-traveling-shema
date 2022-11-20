@@ -9,8 +9,6 @@ public:
 	void UpdateGame();
 	int getPayout();
 private:
-	GameManager* gameManager = GameManager::GetInstance();
-
 	struct rubbish {
 		int x = 0;
 		int y = 0;
@@ -18,6 +16,8 @@ private:
 		bool isClicked = 0;
 		bool isCleaned = 0;
 	};
+	GameManager* gameManager = GameManager::GetInstance();
+
 	Texture2D waves = LoadTexture((gameManager->getAssetPath() + "waves.png").c_str());
 	Texture2D bag = LoadTexture((gameManager->getAssetPath() + "bag.png").c_str());
 	Texture2D can = LoadTexture((gameManager->getAssetPath() + "can.png").c_str());
@@ -30,8 +30,8 @@ private:
 	rubbish rubbishArray[20];
 	bool carrying = 0;
 	short RemainingRubbish = 20;
+	int Payout = 0;
+
 
 	void RandomizeRubbish();
-
-	int Payout = 0;
 };

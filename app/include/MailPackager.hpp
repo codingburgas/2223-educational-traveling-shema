@@ -17,18 +17,17 @@ private:
 	Texture2D FinishScreen;
 	
 	Vector2 MousePos;
+	Vector2 LetterPos;
 
-	int MailsLeft = 11;
 	bool MailType = 0; // 1 - packages; 0 - letters
 	bool NextMail = 1;
 	bool Side = 1;
+	int money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
+	int MailsLeft = 11;
 	int Back = 0;
 	int Front = 0;
-	bool Idle = 1;
-	Vector2 LetterPos;
-	unsigned short Score = 0;
-
-	int money[11] = { 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400 };
-
 	int Payout;
+	
+	bool Idle = 1;
+	unsigned short Score = 0;
 };

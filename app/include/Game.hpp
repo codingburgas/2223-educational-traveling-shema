@@ -9,6 +9,7 @@
 #include <GetRich.hpp>
 #include <MailPackager.hpp>
 #include <random>
+#include <Menu.hpp>
 
 class Game
 {
@@ -18,24 +19,27 @@ public:
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	MapManager* mapManager = new MapManager();
+	std::vector<std::string> missions = { "Clean the sea", "Captcha solver", "Clean the street", "Get rich", "Hangman", "Mail packager" };
+	std::string currentCountry = mapManager->getPlayerCountry();
+	std::string ClickedCountryName;
 	void ChooseCountryAnimation(bool displayText);
 	void ChooseStartingCountry();
-	bool chosen = false;
 	void DrawCountryHUD();
 	void DrawCurrentCountryHUD();
-	std::string ClickedCountryName;
-	bool ClickedCountryUnlocked;
-	int ClickedCountryPrice;
 	void LoadDynamicTextures();
 	void showMissions();
-	std::string currentCountry = mapManager->getPlayerCountry();
-	std::vector<std::string> missions = { "Clean the sea", "Captcha solver", "Clean the street", "Get rich", "Hangman", "Mail packager" };
-
-	int balance = 500;
 	void PassiveIncome();
-	float time = 0;
-
+	
 	int tickets = 1;
+	int ClickedCountryPrice;
+	int balance = 500;
+	float time = 0;
+	
+	bool FinishedMissions[3] = {0, 0, 0};
+	bool ClickedCountryUnlocked;
+	bool chosen = false;
+
+
 
 	Texture2D CountryHUDTexture;
 	Texture2D CurrentCountryHUD;
@@ -60,5 +64,4 @@ private:
 	Texture2D MissionContainerHover;
 	Texture2D CompletedMission;
 
-	bool FinishedMissions[3] = {0, 0, 0};
 };
