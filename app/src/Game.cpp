@@ -12,9 +12,12 @@ Game::Game()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		mapManager->UpdateMap();
-		this->DrawHUD();
+		this->DrawCountryHUD();
+		this->DrawCurrentCountryHUD();
 		EndDrawing();
-		if (mapManager->GetChosenCountry().empty()) ChooseStartingCountry();
+		if (mapManager->getChosenCountry().empty()) {
+			ChooseStartingCountry();
+		}
 		if (IsKeyPressed(257))
 		{
 			SeaMinigame* seaMinigame = new SeaMinigame();
@@ -32,16 +35,20 @@ Game::~Game()
 void Game::LoadDynamicTextures()
 {
 	this->CountryHUDTexture = LoadTexture((gameManager->getAssetPath() + "CountryHUD.png").c_str());
-	
+	this->CurrentCountryHUD = LoadTexture((gameManager->getAssetPath() + "CurrentCountryHUD.png").c_str());
+
+	this->Checkbox = LoadTexture((gameManager->getAssetPath() + "Checkbox.png").c_str());
+	this->Checkmark = LoadTexture((gameManager->getAssetPath() + "Checkmark.png").c_str());
+
 	this->UnlockButton = LoadTexture((gameManager->getAssetPath() + "UnlockButton.png").c_str());
 	this->UnlockButtonHover = LoadTexture((gameManager->getAssetPath() + "UnlockButtonHover.png").c_str());
 	this->UnlockButtonLocked = LoadTexture((gameManager->getAssetPath() + "UnlockButtonLocked.png").c_str());
 	this->Unlocked = LoadTexture((gameManager->getAssetPath() + "Unlocked.png").c_str());
-	
+
 	this->TravelButton = LoadTexture((gameManager->getAssetPath() + "TravelButton.png").c_str());
 	this->TravelButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelButtonHover.png").c_str());
 	this->TravelButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelButtonLocked.png").c_str());
-	
+
 	this->TravelTicketButton = LoadTexture((gameManager->getAssetPath() + "TravelTicketButton.png").c_str());
 	this->TravelTicketButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonHover.png").c_str());
 	this->TravelTicketButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonLocked.png").c_str());
@@ -58,7 +65,8 @@ void Game::ChooseCountryAnimation(bool displayText)
 		if (displayText) {
 			DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
 			DrawText("Choose a country", gameManager->GetScreenSize().x / 2 - MeasureText("Choose a country", 100) / 2, gameManager->GetScreenSize().y / 2 - 20 / 2, 100, RED);
-		} else DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
+		}
+		else DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
 		EndDrawing();
 	}
 }
@@ -73,28 +81,28 @@ void Game::ChooseStartingCountry()
 	{
 		std::string clickedCountry = mapManager->IsWaypointClicked().name;
 		std::cout << clickedCountry;
-		
+
 		Texture2D ModalWindow = LoadTexture((gameManager->getAssetPath() + "CountryModal.png").c_str());
 		Texture2D YesButton = LoadTexture((gameManager->getAssetPath() + "YesButton.png").c_str());
 		Texture2D YesButtonHover = LoadTexture((gameManager->getAssetPath() + "YesButtonHover.png").c_str());
 		Texture2D NoButton = LoadTexture((gameManager->getAssetPath() + "NoButton.png").c_str());
 		Texture2D NoButtonHover = LoadTexture((gameManager->getAssetPath() + "NoButtonHover.png").c_str());
-		
-		
+
+
 		while (!chosen)
 		{
 			BeginDrawing();
 			ClearBackground(BLUE);
 			gameManager->Update();
-			
+
 			DrawRectangle(0, 0, gameManager->GetScreenSize().x, gameManager->GetScreenSize().y, Fade(BLACK, 0.5f));
-			DrawTextureEx(ModalWindow, { gameManager->GetScreenSize().x / 2 - ModalWindow.width/2, gameManager->GetScreenSize().y / 2 - ModalWindow.height/2 }, 0, 1, WHITE);
-			
-			DrawTextEx(gameManager->impact, clickedCountry.c_str(), { gameManager->GetScreenSize().x / 2 - MeasureTextEx(gameManager->impact, (clickedCountry).c_str()  , 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30}, 80, 1, RED);
-			DrawTextEx(gameManager->impact, "?", {gameManager->GetScreenSize().x / 2 + MeasureTextEx(gameManager->impact, clickedCountry.c_str(), 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30}, 80, 0, BLACK);
+			DrawTextureEx(ModalWindow, { gameManager->GetScreenSize().x / 2 - ModalWindow.width / 2, gameManager->GetScreenSize().y / 2 - ModalWindow.height / 2 }, 0, 1, WHITE);
+
+			DrawTextEx(gameManager->impact, clickedCountry.c_str(), { gameManager->GetScreenSize().x / 2 - MeasureTextEx(gameManager->impact, (clickedCountry).c_str()  , 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30 }, 80, 1, RED);
+			DrawTextEx(gameManager->impact, "?", { gameManager->GetScreenSize().x / 2 + MeasureTextEx(gameManager->impact, clickedCountry.c_str(), 80, 1).x / 2, gameManager->GetScreenSize().y / 2 - 30 }, 80, 0, BLACK);
 			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 			DrawTexture(YesButton, 753, 657, WHITE);
-			if (CheckCollisionPointRec(GetMousePosition(), {753, 657, float(YesButton.width), float(YesButton.height)}))
+			if (CheckCollisionPointRec(GetMousePosition(), { 753, 657, float(YesButton.width), float(YesButton.height) }))
 			{
 				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 				DrawTexture(YesButtonHover, 753, 657, WHITE);
@@ -108,7 +116,7 @@ void Game::ChooseStartingCountry()
 					break;
 				}
 			}
-				
+
 			DrawTexture(NoButton, 1010, 657, WHITE);
 			if (CheckCollisionPointRec(GetMousePosition(), { 1010, 657, float(NoButton.width), float(NoButton.height) }))
 			{
@@ -122,14 +130,14 @@ void Game::ChooseStartingCountry()
 					break;
 				}
 			}
-			
+
 			EndDrawing();
 		}
-		
+
 	}
 }
 
-void Game::DrawHUD()
+void Game::DrawCountryHUD()
 {
 	if (!mapManager->IsWaypointClicked().name.empty())
 	{
@@ -181,13 +189,13 @@ void Game::DrawHUD()
 			{
 				DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 			}
-			
+
 			DrawTextEx(gameManager->impact, "Already unlocked", { 117, 658 }, 25, 1, GREEN);
 			DrawTexture(this->Unlocked, 50, 685, WHITE);
 		}
 		else
 		{
-			if (balance >= ClickedCountryPrice)
+			if (this->balance >= this->ClickedCountryPrice)
 			{
 				DrawTexture(this->UnlockButton, 50, 685, WHITE);
 				if (CheckCollisionPointRec(GetMousePosition(), { 50, 685, float(UnlockButton.width), float(UnlockButton.height) }))
@@ -198,6 +206,7 @@ void Game::DrawHUD()
 					{
 						this->balance -= ClickedCountryPrice;
 						mapManager->UnlockCountry(ClickedCountryName);
+						this->ClickedCountryUnlocked = true;
 					}
 				}
 			}
@@ -209,5 +218,15 @@ void Game::DrawHUD()
 			DrawTexture(this->TravelTicketButtonLocked, 50, 590, WHITE);
 			DrawTexture(this->TravelButtonLocked, 176, 590, WHITE);
 		}
+	}
+}
+
+void Game::DrawCurrentCountryHUD() {
+	if (!mapManager->getPlayerCountry().empty()) {
+		DrawTextureEx(this->CurrentCountryHUD, { gameManager->GetScreenSize().x - this->CurrentCountryHUD.width, 250}, 0, 1, WHITE);
+		DrawTextEx(gameManager->impact, TextToUpper(mapManager->getPlayerCountry().c_str()), { gameManager->GetScreenSize().x - 274, 290 }, 50, 2, BLACK);
+		DrawTextEx(gameManager->impact, std::to_string(this->balance).c_str(), { gameManager->GetScreenSize().x - 240, 380 }, 25, 1, BLACK);
+		mapManager->TogglePorts(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
+		mapManager->ToggleWaypoints(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
 	}
 }

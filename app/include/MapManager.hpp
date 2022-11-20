@@ -17,20 +17,20 @@ public:
 	MapManager();
 	~MapManager();
 	Vector2 GetMapSize();
-	void UpdateMap();
-	std::string GetChosenCountry();
-	void SetChosenCountry(std::string countryName, Vector2 pos);
 	Country IsWaypointClicked();
 	Country IsPortClicked();
+	void UpdateMap();
+	void SetChosenCountry(std::string countryName, Vector2 pos);
 	void UnlockCountry(std::string countryName);
 	void TravelToCountry(std::string destination);
+	void ToggleWaypoints(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize);
+	void TogglePorts(Texture2D checkbox, Texture2D checkmark, Vector2 checkboxSize, Vector2 checkmarkSize);
+	std::string getChosenCountry();
 	std::string getPlayerCountry();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	void DrawWaypoints(std::vector<Country> waypoints);
 	void DrawPorts(std::vector<Country> ports);
-	void ToggleWaypoints();
-	void TogglePorts();
 	Texture2D waypoint = LoadTexture((gameManager->getAssetPath() + "Waypoint.png").c_str());
 	Texture2D LockedWaypoint = LoadTexture((gameManager->getAssetPath() + "LockedWaypoint.png").c_str());
 	Texture2D UnlockedWaypoint = LoadTexture((gameManager->getAssetPath() + "UnlockedWaypoint.png").c_str());
