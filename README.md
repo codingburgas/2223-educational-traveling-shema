@@ -54,6 +54,22 @@
 
 ## 📄 Documents
 
+### QA Documentation
+
+- [Test Plan](https://github.com/codingburgas/2223-educational-traveling-shema/raw/main/docs/shema%20-%20Test%20plan.docx)
+- [QA Documentation](https://github.com/codingburgas/2223-educational-traveling-shema/raw/main/docs/shema%20-%20QA%20Documentation.xlsx)
+
+### Code & Team Documentation
+
+- [Doxygen](https://mmmarinov20.github.io/shema-doxygen/)
+- [Team Documentation](https://github.com/codingburgas/2223-educational-traveling-shema/raw/main/docs/shema%20-%20Documentation.docx)
+
+### Presenting
+
+- [Presentation]()
+
+<hr>
+
 ## 📥 Installation
 
 If you want to clone our repo locally you can paste the following command in your preferred terminal:
