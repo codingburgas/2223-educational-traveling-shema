@@ -1,5 +1,5 @@
 #include <Game.hpp>
-#include <Hangman.hpp>
+
 Game::Game()
 {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Map.png" }, { {gameManager->GetScreenSize().x / 2 - mapManager->GetMapSize().x / 2, gameManager->GetScreenSize().y / 2 - mapManager->GetMapSize().y / 2} });
@@ -10,6 +10,7 @@ Game::Game()
 	{
 		BeginDrawing();
 		ClearBackground(BLUE);
+		this->balance = 5000000;
 		gameManager->Update();
 		mapManager->UpdateMap();
 		this->PassiveIncome();
@@ -24,12 +25,9 @@ Game::Game()
 			//SeaMinigame* seaMinigame = new SeaMinigame();
 			//seaMinigame->UpdateGame();
 			//delete seaMinigame;
-			//GetRich* getRich = new GetRich();
-			//getRich->UpdateGame();
-			//delete getRich;
-			Hangman* hangman = new Hangman();
-			hangman->UpdateGame();
-			delete hangman;
+			GetRich* getRich = new GetRich();
+			getRich->UpdateGame();
+			delete getRich;
 		}
 	}
 }
@@ -50,6 +48,9 @@ Game::~Game()
 	UnloadTexture(TravelTicketButton);
 	UnloadTexture(TravelTicketButtonHover);
 	UnloadTexture(TravelTicketButtonLocked);
+	UnloadTexture(MissionContainer);
+	UnloadTexture(MissionContainerHover);
+	UnloadTexture(CompletedMission);
 }
 
 void Game::LoadDynamicTextures()
@@ -73,6 +74,9 @@ void Game::LoadDynamicTextures()
 	this->TravelTicketButtonHover = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonHover.png").c_str());
 	this->TravelTicketButtonLocked = LoadTexture((gameManager->getAssetPath() + "TravelTicketButtonLocked.png").c_str());
 
+	this->MissionContainer = LoadTexture((gameManager->getAssetPath() + "MissionContainer.png").c_str());
+	this->MissionContainerHover = LoadTexture((gameManager->getAssetPath() + "MissionContainerHover.png").c_str());
+	this->CompletedMission = LoadTexture((gameManager->getAssetPath() + "CompletedMission.png").c_str());
 }
 
 void Game::ChooseCountryAnimation(bool displayText)
@@ -243,9 +247,10 @@ void Game::DrawCountryHUD()
 
 void Game::DrawCurrentCountryHUD() {
 	if (!mapManager->getPlayerCountry().empty()) {
-		DrawTextureEx(this->CurrentCountryHUD, { gameManager->GetScreenSize().x - this->CurrentCountryHUD.width, 250}, 0, 1, WHITE);
+		DrawTextureEx(this->CurrentCountryHUD, { gameManager->GetScreenSize().x - this->CurrentCountryHUD.width, 250 }, 0, 1, WHITE);
 		DrawTextEx(gameManager->impact, TextToUpper(mapManager->getPlayerCountry().c_str()), { gameManager->GetScreenSize().x - 274, 290 }, 50, 2, BLACK);
 		DrawTextEx(gameManager->impact, std::to_string(this->balance).c_str(), { gameManager->GetScreenSize().x - 240, 380 }, 25, 1, BLACK);
+		this->showMissions();
 		mapManager->TogglePorts(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
 		mapManager->ToggleWaypoints(this->Checkbox, this->Checkmark, { float(this->Checkbox.width), float(this->Checkbox.height) }, { float(this->Checkmark.width), float(this->Checkmark.height) });
 	}
@@ -258,5 +263,33 @@ void Game::PassiveIncome()
 	{
 		this->balance++;
 		this->time = 0;
+	}
+}
+
+void Game::showMissions() {
+	float missionHeight = 560;
+	bool finishedMissions[3] = { 0, 0, 0 };
+	if (!mapManager->getPlayerCountry().empty()) {
+		std::cout << this->missions[0] << std::endl;
+		if (this->currentCountry != mapManager->getPlayerCountry()) {
+			this->currentCountry = mapManager->getPlayerCountry();
+			auto rng = std::default_random_engine{};
+			std::shuffle(std::begin(this->missions), std::end(this->missions), rng);
+			missionHeight = 560;
+		}
+		for (size_t i = 0; i < 3; i++) {
+			if (finishedMissions[i]) {
+				DrawTextureEx(this->CompletedMission, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
+			}
+			else {
+				DrawTextureEx(this->MissionContainer, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
+				if (CheckCollisionPointRec(GetMousePosition(), { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight, float(this->MissionContainer.width), float(this->MissionContainer.height) })) {
+					SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+					DrawTextureEx(this->MissionContainerHover, { gameManager->GetScreenSize().x - this->MissionContainer.width - 50, missionHeight }, 0, 1, WHITE);
+				}
+			}
+			DrawTextEx(gameManager->impact, this->missions[i].c_str(), { gameManager->GetScreenSize().x - this->MissionContainer.width - 45, missionHeight }, 25, 1, WHITE);
+			missionHeight += 40;
+		}
 	}
 }

@@ -24,7 +24,7 @@ private:
     Vector2 mousePos = GetMousePosition();
     std::vector<std::string> buttons = { "Play.png", "Options.png", "Rules.png", "Exit.png" };
     std::vector<Vector2> buttonPositions = { {gameManager->GetScreenSize().x / 2 - this->buttonWidth / 2, gameManager->GetScreenSize().y / 2 - this->buttonHeight / 2 - 10}, {gameManager->GetScreenSize().x / 2 - this->buttonWidth / 2, gameManager->GetScreenSize().y / 2 - this->buttonHeight / 2 + 85}, {gameManager->GetScreenSize().x / 2 - this->buttonWidth / 2, gameManager->GetScreenSize().y / 2 - this->buttonHeight / 2 + 180}, {gameManager->GetScreenSize().x / 2 - this->buttonWidth / 2, gameManager->GetScreenSize().y / 2 - this->buttonHeight / 2 + 275} };
-	std::vector<std::string> buttonsHover = { "PlayHover.png", "OptionsHover.png", "RulesHover.png", "ExitHover.png " };
+	std::vector<std::string> buttonsHover = { "PlayHover.png", "OptionsHover.png", "RulesHover.png", "ExitHover.png" };
     std::vector<std::string> images = { "MenuBackground.png" };
     std::vector<Vector2> imagePositions = { {0, 0} };
 };
