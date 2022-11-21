@@ -4,7 +4,7 @@
 
 int main()
 {
-    // Creates instance of the Game manager class
+    // Gets the Game manager instance
     GameManager* gameManager = GameManager::GetInstance();
 	// Creates instance of the Menu class
     Menu* mainMenu = new Menu();

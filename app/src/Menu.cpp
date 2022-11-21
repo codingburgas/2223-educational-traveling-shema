@@ -39,7 +39,7 @@ void Menu::DrawMenu()
                 break;
             }
             if (gameManager->IsButtonClicked(1)) OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/");
-            if (gameManager->IsButtonClicked(2)) OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/blob/code-refactoring/app/assets/Rules.txt");
+            if (gameManager->IsButtonClicked(2)) OpenURL("https://github.com/codingburgas/2223-educational-traveling-shema/blob/main/app/assets/Rules.md");
             if (gameManager->IsButtonClicked(3))
             {
                 delete gameManager;
